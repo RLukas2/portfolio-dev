@@ -1,0 +1,59 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+/vitest-test-results
+
+# next.js
+.next/
+out/
+
+# production
+build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+next-serverEnv.d.ts
+
+# vercel
+.vercel
+
+# local env files
+.env
+.env*.local
+
+# Sentry Config File
+.env.sentry-build-plugin
+
+# Database
+src/generated/prisma/
+/prisma/db.sqlite
+/prisma/db.sqlite-journal
+db.sqlite
+
+
+# Content Collections (Blog) cache
+.content-collections
+.content-collections/generated/index.js
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+*.tsbuildinfo
+.idea
+.env
