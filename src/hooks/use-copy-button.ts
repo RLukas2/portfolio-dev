@@ -6,7 +6,6 @@ import {
   useState,
 } from 'react';
 
-
 /**
  * A hook to manage the state of a copy button.
  *
