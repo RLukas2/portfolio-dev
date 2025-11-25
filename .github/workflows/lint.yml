@@ -29,9 +29,6 @@ jobs:
       - name: 📥 Download deps
         run: pnpm install --frozen-lockfile
 
-      - name: 🗂️ Generate Content Collections
-        run: pnpm run build:content
-
       - name: 🔬 Lint
         run: pnpm run lint:strict || true
         continue-on-error: true
