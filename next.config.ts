@@ -36,7 +36,6 @@ const nextConfig: NextConfig = {
 
   // Image optimization
   images: {
-    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     remotePatterns: [
@@ -97,7 +96,6 @@ const nextConfig: NextConfig = {
 
   experimental: {
     optimizePackageImports: ['lucide-react', 'framer-motion', 'react-icons'],
-    viewTransition: true,
   },
 
   // TurboPack configuration

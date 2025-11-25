@@ -7,13 +7,13 @@ export const formatEndorserNames = (
   const count = endorsers.length;
 
   if (count === 0) return '';
-  if (count === 1) return `Endorsed by ${endorsers[0].name}`;
+  if (count === 1) return `Endorsed by ${endorsers[0]?.name ?? 'Unknown'}`;
 
   if (count <= maxVisible) {
     return `Endorsed by ${endorsers
       .slice(0, -1)
       .map((e) => e.name)
-      .join(', ')}, and ${endorsers[count - 1].name}`;
+      .join(', ')}, and ${endorsers[count - 1]?.name ?? 'Unknown'}`;
   }
 
   return `Endorsed by ${endorsers

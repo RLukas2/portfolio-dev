@@ -14,11 +14,15 @@ const FlipWords = ({
   duration?: number;
   className?: string;
 }) => {
-  const [currentWord, setCurrentWord] = useState<string>(words[0]);
+  if (words.length === 0) {
+    words = [''];
+  }
+
+  const [currentWord, setCurrentWord] = useState<string>(words[0] ?? '');
   const [isAnimating, setIsAnimating] = useState(false);
 
   const startAnimation = useCallback(() => {
-    const word = words[words.indexOf(currentWord) + 1] ?? words[0];
+    const word = words[words.indexOf(currentWord) + 1] ?? words[0] ?? '';
     setCurrentWord(word);
     setIsAnimating(true);
   }, [currentWord, words]);

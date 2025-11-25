@@ -4,9 +4,11 @@ const config = {
     '@tailwindcss/postcss': {},
     'postcss-flexbugs-fixes': {},
     'postcss-preset-env': {
-      stage: 2,
+      stage: 1,
       features: {
         'logical-properties-and-values': true,
+        'color-mix': false,
+        'oklab-function': false,
       },
     },
   },

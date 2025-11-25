@@ -12,13 +12,13 @@ export const authOptions: NextAuthOptions = {
   secret: env.NEXTAUTH_SECRET,
   providers: [
     GitHubProvider({
-      clientId: env.GITHUB_ID,
-      clientSecret: env.GITHUB_SECRET,
+      clientId: env.GITHUB_ID ?? '',
+      clientSecret: env.GITHUB_SECRET ?? '',
       checks: 'none',
     }),
     GoogleProvider({
-      clientId: env.GOOGLE_ID,
-      clientSecret: env.GOOGLE_SECRET,
+      clientId: env.GOOGLE_ID ?? '',
+      clientSecret: env.GOOGLE_SECRET ?? '',
       checks: 'none',
     }),
   ],

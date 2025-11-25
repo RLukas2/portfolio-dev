@@ -56,7 +56,7 @@ export const getDevices = async (): Promise<Array<Device>> => {
     isActive: device.is_active,
     type: device.type,
     model: pairDevices[device.type]?.model ?? 'Unknown device',
-    id: pairDevices[device.type].id ?? 'unknown-device-id',
+    id: pairDevices[device.type]?.id ?? 'unknown-device-id',
   }));
 
   return devices;

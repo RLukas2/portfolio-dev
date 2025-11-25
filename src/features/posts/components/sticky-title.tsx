@@ -38,7 +38,7 @@ const StickyTitle = ({ title, elementRef, gap = -64 }: StickyTitleProps) => {
 
   const isScrolled = useScroll(threshold + gap);
 
-  const transition = { duration: 0.3, ease: 'easeInOut' };
+  const transition = { duration: 0.3, ease: [0.42, 0, 0.58, 1] as const }; // cubic-bezier easing
   const variants = {
     initial: { opacity: isScrolled ? 0 : 1, y: isScrolled ? gap : 0 },
     animate: { opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : gap },

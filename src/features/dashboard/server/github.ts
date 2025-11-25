@@ -14,7 +14,7 @@ const GITHUB_USERNAME = SITE.author.github.username;
 
 const GITHUB_USER_API_URL = `https://api.github.com/users/${GITHUB_USERNAME}`;
 const GITHUB_USER_GRAPHQL_URL = 'https://api.github.com/graphql';
-const PERSONAL_ACCESS_TOKEN = env.GITHUB_READ_USER_TOKEN_PERSONAL;
+const PERSONAL_ACCESS_TOKEN = env.GITHUB_READ_USER_TOKEN_PERSONAL ?? '';
 
 const GITHUB_USER_QUERY = `query($username: String!) {
   user(login: $username) {
@@ -41,6 +41,10 @@ const GITHUB_USER_QUERY = `query($username: String!) {
 }`;
 
 export const getGitHubUser = async (): Promise<GitHubUser> => {
+  if (!PERSONAL_ACCESS_TOKEN) {
+    throw new Error('GitHub personal access token is not set');
+  }
+
   try {
     return await fetcher<GitHubUser>(GITHUB_USER_API_URL, {
       headers: {
@@ -56,6 +60,10 @@ export const getGitHubUser = async (): Promise<GitHubUser> => {
 export const getGitHubUserRepositories = async (): Promise<
   GitHubRepository[]
 > => {
+  if (!PERSONAL_ACCESS_TOKEN) {
+    throw new Error('GitHub personal access token is not set');
+  }
+
   try {
     return await fetcher<GitHubRepository[]>(`${GITHUB_USER_API_URL}/repos`, {
       headers: {
@@ -70,6 +78,10 @@ export const getGitHubUserRepositories = async (): Promise<
 
 export const getGitHubUserContributions =
   async (): Promise<UserContributionsCollection> => {
+    if (!PERSONAL_ACCESS_TOKEN) {
+      throw new Error('GitHub personal access token is not set');
+    }
+
     try {
       const response = await fetcher<{
         data: { user: UserContributionsCollection };

@@ -27,7 +27,7 @@ const NowPlayingBar = ({
   const activeDevice = devices.find((device) => device.isActive);
   const availableDevices = devices.map((device) => ({
     ...device,
-    icon: pairDevices[device.type].icon ?? (
+    icon: pairDevices[device.type]?.icon ?? (
       <MonitorSpeakerIcon className="size-6" />
     ),
   }));

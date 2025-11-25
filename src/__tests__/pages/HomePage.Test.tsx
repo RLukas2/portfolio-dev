@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 
-import Hero from '@/features/home/components/hero';
 import { TooltipProvider } from '@/components/ui/tooltip';
+import Hero from '@/features/home/components/hero';
 
 describe('Homepage', () => {
   it('renders the Components', () => {

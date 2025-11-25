@@ -1,4 +1,4 @@
-/* eslint-disable react-hooks/static-components */
+/* eslint-disable react/jsx-props-no-spreading */
 import './shiki.css';
 
 import { useMDXComponent } from '@content-collections/mdx/react';

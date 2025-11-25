@@ -12,6 +12,7 @@ import type {
 const ALL_TIME_SINCE_TODAY_ENDPOINT =
   'https://wakatime.com/api/v1/users/current/all_time_since_today';
 const STATS_ENDPOINT = 'https://wakatime.com/api/v1/users/current/stats';
+const KEY = env.WAKATIME_API_KEY ?? '';
 
 const ALLOWED_LANGUAGES = [
   'TypeScript',
@@ -25,10 +26,14 @@ const ALLOWED_LANGUAGES = [
 ];
 
 const generateBasicAuthorizationBase64 = (): string =>
-  `Basic ${Buffer.from(env.WAKATIME_API_KEY).toString('base64')}`;
+  `Basic ${Buffer.from(KEY).toString('base64')}`;
 
 export const getAllTimeSinceToday =
   async (): Promise<WakaTimeAllTimeSinceToday> => {
+    if (!KEY) {
+      throw new Error('WakaTime API key is not set');
+    }
+
     try {
       const response = await fetcher<
         APISingleResponse<WakaTimeAllTimeSinceToday>
@@ -46,6 +51,10 @@ export const getAllTimeSinceToday =
   };
 
 export const getLastSevenDaysStats = async (): Promise<WakaTimeStats> => {
+  if (!KEY) {
+    throw new Error('WakaTime API key is not set');
+  }
+
   try {
     const response = await fetcher<APISingleResponse<WakaTimeStats>>(
       `${STATS_ENDPOINT}/last_7_days`,

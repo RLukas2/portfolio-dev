@@ -339,11 +339,13 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply rounded-[3px] bg-transparent;
+    background: var(--background-secondary);
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply rounded-[3px] border-2 bg-neutral-200 dark:bg-neutral-700;
+    background: var(--secondary);
+    border-radius: 8px;
+    transition: background 0.2s ease;
   }
 
   ::-webkit-scrollbar-thumb:hover {
