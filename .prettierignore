@@ -2,4 +2,10 @@
 .next
 dist
 node_modules
+
+# Ignore static assets
 public
+
+# Ignore lockfiles
+package.json
+pnpm-lock.yaml
