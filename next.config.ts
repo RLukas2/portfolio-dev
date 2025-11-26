@@ -32,6 +32,7 @@ const nextConfig: NextConfig = {
   env: {
     // Pass the URL here so it can be used on server and client side
     NEXT_PUBLIC_APP_URL: serverUrl,
+    NEXTAUTH_URL: serverUrl,
   },
 
   // Image optimization

@@ -22,7 +22,7 @@ const GuestbookAuth = () => {
           <Button
             variant="ghost"
             className="border-border flex items-center gap-3 border text-sm font-medium"
-            onClick={() => signIn('github')}
+            onClick={() => signIn('google')}
           >
             <Google className="hidden sm:flex" />
             <span>Sign in with Google</span>
