@@ -60,7 +60,7 @@ const CurrentTechStacks = () => {
           <TooltipTrigger asChild>
             <motion.div
               className={cn(
-                'text-muted-foreground size-5 rounded-md transition-transform duration-200 hover:scale-110 md:size-6',
+                'text-muted-foreground rounded-md text-xl transition-transform duration-200 hover:scale-110 md:size-6',
                 className,
               )}
               variants={animation}

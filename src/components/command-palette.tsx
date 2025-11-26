@@ -161,7 +161,7 @@ export const CommandPalette = () => {
         aria-label="Open command menu"
       >
         <span className="sr-only">Open command menu</span>
-        <CommandIcon />
+        <CommandIcon className="size-5" />
       </Button>
       <CommandDialog open={isOpen} onOpenChange={setIsOpen}>
         <CommandInput placeholder={placeholder} />
