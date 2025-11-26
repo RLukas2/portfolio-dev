@@ -1,3 +1,5 @@
+@import 'katex/dist/katex.min.css';
+
 .shiki span {
   color: var(--shiki-light);
 }

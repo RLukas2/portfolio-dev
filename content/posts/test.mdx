@@ -1,0 +1,322 @@
+---
+title: MDX Content Collection Test
+excerpt: A complete test for markdown, MDX, and content collection functionality
+date: 2025-11-11T11:44:00.000Z
+modifiedDate: 2025-11-11T11:44:00.000Z
+published: true
+keywords: [test, markdown, mdx, content-collection, LaTex]
+tags: [test, mdx]
+image: https://avatars.githubusercontent.com/u/37453691?s=280&v=4
+---
+
+# MDX Test
+
+## Text Formatting
+
+This paragraph contains **bold text**, _italic text_, **_bold and italic_**, ~~strikethrough~~, and `inline code`.
+
+You can also use HTML-style formatting: <strong>strong</strong>, <em>emphasis</em>, and <code>code</code>.
+
+You can use emojis if it work in the first place: :tent:, :joy:, :fire:.
+
+## Headings
+
+### Heading Level 3
+
+#### Heading Level 4
+
+##### Heading Level 5
+
+###### Heading Level 6
+
+## Unordered Lists
+
+- First item
+- Second item
+- Third item with sub-items
+  - Nested item 1
+  - Nested item 2
+- Fourth item
+
+## Ordered Lists
+
+1. First step
+2. Second step
+3. Third step
+   1. Sub-step A
+   2. Sub-step B
+4. Fourth step
+
+## Mixed Lists
+
+1. First ordered item
+   - Unordered sub-item
+   - Another unordered sub-item
+2. Second ordered item
+   1. Nested ordered sub-item
+   2. Another nested ordered item
+
+## Code Blocks
+
+### JavaScript
+
+```javascript title="example.js"
+function greet(name) {
+  return `Hello, ${name}!`;
+}
+
+const result = greet('World');
+console.log(result);
+```
+
+### Python
+
+```python title="example.py"
+def calculate_sum(a, b):
+    """Calculate the sum of two numbers."""
+    return a + b
+
+result = calculate_sum(5, 3)
+print(f"Result: {result}")
+```
+
+### JSX
+
+```jsx title="Component.jsx"
+export default function Component() {
+  return (
+    <div className="container">
+      <h1>Hello from MDX</h1>
+      <p>This is a JSX component in MDX</p>
+    </div>
+  );
+}
+```
+
+### HTML
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Test Page</title>
+  </head>
+  <body>
+    <h1>Welcome</h1>
+    <p>This is a test HTML document.</p>
+  </body>
+</html>
+```
+
+### SQL
+
+```sql
+SELECT users.id, users.name, COUNT(posts.id) as post_count
+FROM users
+LEFT JOIN posts ON users.id = posts.user_id
+GROUP BY users.id, users.name
+ORDER BY post_count DESC;
+```
+
+### Bash
+
+```bash
+#!/bin/bash
+echo "Building project..."
+npm run build
+npm run start
+echo "Build complete!"
+```
+
+## Blockquotes
+
+> This is a simple blockquote.
+
+> This is a blockquote with multiple lines.
+> It can span across multiple lines
+> and contains several sentences.
+
+> **Nested blockquote with formatting**
+>
+> - List item in blockquote
+> - Another list item
+>
+> `Code in blockquote`
+
+## Tables
+
+| Feature           | Status | Notes                |
+| ----------------- | ------ | -------------------- |
+| Markdown          | ✅     | Fully supported      |
+| MDX               | ✅     | Fully supported      |
+| JSX               | ✅     | Fully supported      |
+| Custom Components | ✅     | Can import and use   |
+| LaTeX/KaTeX       | ❓     | Testing in this file |
+
+| Column 1 | Column 2 | Column 3 |
+| -------- | -------- | -------- |
+| Left     | Center   | Right    |
+| Data     | Data     | Data     |
+| More     | More     | More     |
+
+## Horizontal Rules
+
+---
+
+---
+
+---
+
+## Links and Images
+
+[Link to OpenAI](https://openai.com)
+
+[Link with title](https://github.com 'GitHub')
+
+Auto-linked URL: https://example.com
+
+### Image Syntax
+
+![Alt text for image](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbGF1bGbe-X1_1z74XdE0z8ZS7arM6EfRcYAOb7Rnri1DzTGPeJ7VgVfAwC5RHLq8OJOrqwUFc8lU4Np3zzq1Wt4z_Jo66ewLqk4mNHws&s=10 'Image title')
+
+## Escape Characters
+
+\*This text should not be italic\*
+
+\[This should not be a link\]
+
+## HTML Elements in Markdown
+
+<div
+  style={{ backgroundColor: '#f0f0f0', padding: '10px', borderRadius: '5px' }}
+>
+  This is an HTML div with inline styles.
+</div>
+
+<span style={{ color: 'red' }}>Red colored text</span>
+
+## Inline HTML Tags
+
+This paragraph has <mark>highlighted text</mark>, <kbd>keyboard input</kbd>, <var>variables</var>, and <samp>sample output</samp>.
+
+## Task Lists
+
+- [x] Completed task
+- [ ] Incomplete task
+- [x] Another completed task
+- [ ] Another incomplete task
+
+## Definition Lists (if supported)
+
+```
+Term 1
+: Definition 1
+
+Term 2
+: Definition 2a
+: Definition 2b
+```
+
+## Footnotes (if supported)
+
+This is text with a footnote[^1].
+
+[^1]: This is the footnote content.
+
+## LaTeX / KaTeX Testing
+
+### Inline LaTeX
+
+Testing inline math: The equation $x^2 + y^2 = z^2$ is the Pythagorean theorem.
+
+The quadratic formula is $x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.
+
+### Block LaTeX
+
+$$
+E = mc^2
+$$
+
+$$
+\int_0^{\infty} e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+$$
+
+$$
+\begin{align}
+a &= b \\
+c &= d
+\end{align}
+$$
+
+### Complex LaTeX Expression
+
+$$
+f(x) = \begin{cases}
+x^2 & \text{if } x \geq 0 \\
+-x^2 & \text{if } x < 0
+\end{cases}
+$$
+
+$$
+\sum_{i=1}^{n} i = \frac{n(n+1)}{2}
+$$
+
+$$
+\prod_{i=1}^{n} x_i = x_1 \cdot x_2 \cdot \ldots \cdot x_n
+$$
+
+## Special Characters and Symbols
+
+© ® ™ € £ ¥ § ¶ † ‡ • … ‰ ′ ″ ‹ › « » — – ‐ ‑ ‒ – — ―
+
+Math symbols: ∀ ∃ ∈ ∉ ∪ ∩ ⊆ ⊇ ⊂ ⊃ ∧ ∨ ¬ ∴ ∵
+
+## Details / Summary (if supported)
+
+<details>
+  <summary>Click to expand</summary>
+  
+This is hidden content that reveals when clicked.
+
+```javascript
+// You can put code in details too
+const example = 'content';
+```
+
+</details>
+
+## Additional Content Features
+
+### Emphasis and Strong Emphasis
+
+_italic_
+**bold**
+**_bold italic_**
+
+_italic with underscores_
+**bold with underscores**
+**_bold italic with underscores_**
+
+### Nested Formatting
+
+**Bold with _italic_ inside**
+
+_Italic with **bold** inside_
+
+**\*All three with **extra bold** and _extra italic_\***
+
+### Code and Formatting
+
+Use `inline code` in your text. You can also have **bold `code`** and _italic `code`_.
+
+## Line Breaks
+
+This is a line.
+This is another line (single line break - may not create new line).
+
+This is after a blank line (double line break - creates new paragraph).
+
+## Comments (MDX-specific)
+
+{/* This is an MDX comment and should not render */}

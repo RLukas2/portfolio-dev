@@ -46,6 +46,12 @@ const components: MDXComponents = {
       <Pre>{props.children}</Pre>
     </CodeBlock>
   ),
+  span: ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
+    if (className?.includes('katex-display')) {
+      return <span className={cn('my-6', className)} {...props} />;
+    }
+    return <span className={className} {...props} />;
+  },
 
   // Custom components
   AppsGrid,
@@ -58,7 +64,7 @@ const Mdx = ({ code, className }: { code: string; className?: string }) => {
   const MdxContent = useMDXComponent(code);
 
   return (
-    <div className={cn('prose dark:prose-dark w-full max-w-none', className)}>
+    <div className={cn('prose dark:prose-invert w-full max-w-none', className)}>
       <MdxContent components={{ ...components }} />
     </div>
   );

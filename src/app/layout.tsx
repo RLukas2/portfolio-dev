@@ -20,6 +20,12 @@ import { cn } from '@/lib/utils';
 
 export const metadata: Metadata = seo({
   ...DEFAULT_METADATA,
+  openGraph: {
+    images: ['/media/site/og-image.png'],
+  },
+  twitter: {
+    images: ['/media/site/og-image.png'],
+  },
 });
 
 export const viewport: Viewport = {
@@ -51,6 +57,22 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       <meta
         name="apple-mobile-web-app-title"
         content={DEFAULT_METADATA.applicationName ?? ''}
+      />
+
+      {/* KaTeX CSS */}
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css"
+        integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi"
+        crossOrigin="anonymous"
+      />
+
+      {/* KaTeX JS */}
+      <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js"
+        integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ"
+        crossOrigin="anonymous"
       />
     </head>
     <body

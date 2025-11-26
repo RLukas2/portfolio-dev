@@ -34,6 +34,17 @@ export const DEFAULT_METADATA: Metadata = {
   robots: {
     index: true,
     follow: true,
+    noarchive: false,
+    nosnippet: false,
+    noimageindex: false,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
   },
   twitter: {
     title: SITE.title,
@@ -42,5 +53,9 @@ export const DEFAULT_METADATA: Metadata = {
     site: SITE.author.twitter,
     creator: SITE.author.twitter,
     images: defaultOgImage,
+  },
+  other: {
+    'msapplication-TileColor': '#2563eb',
+    'theme-color': '#2563eb',
   },
 };
