@@ -24,7 +24,7 @@ const Footer = () => {
           transition={{ duration: 0.5 }}
         >
           {/* Logo and Description */}
-          <div className="col-span-1">
+          <div className="col-span-2 md:col-span-1">
             <h1 className={cn('text-xl font-bold')}>{SITE.author.name}</h1>
             <p className={cn('text-muted-foreground/80 mt-3 text-xs')}>
               A blog about software development, web technologies, and
