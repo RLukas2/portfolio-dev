@@ -39,7 +39,7 @@ export default function ProfileImage() {
       />
 
       {/* Profile Image */}
-      <div className="relative h-auto min-h-[280px] w-[90%] max-w-[450px] overflow-hidden rounded-full border-4 border-white">
+      <div className="pointer-events-none relative h-auto min-h-[280px] w-[90%] max-w-[450px] overflow-hidden rounded-full border-4 border-white shadow-lg shadow-black/20 dark:border-gray-800">
         <Image
           src="/media/rlukas/rlukas.jpg"
           alt="Ngo Hoang Tuan - Backend Engineer"

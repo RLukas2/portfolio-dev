@@ -11,7 +11,7 @@ import Link from '../link';
 
 const Footer = () => {
   return (
-    <footer className={cn('bg-grid mt-24 mb-10 pt-16 text-sm')}>
+    <footer className={cn('bg-grid mb-10 pt-16 text-sm')}>
       {/* Horizontal Line*/}
       <div className={cn('border-muted-background col-span-1 border-b')} />
 
@@ -66,7 +66,9 @@ const Footer = () => {
             &copy; {new Date().getFullYear()}{' '}
             <Link href="/">{SITE.author.name}</Link> ——{' '}
             <em className={cn('text-muted-foreground')}>
-              Ho Chi Minh, Vietnam
+              <Link href="https://www.google.com/maps/place/Ho+Chi+Minh+City,+Vietnam">
+                Ho Chi Minh, Vietnam
+              </Link>
             </em>
           </div>
           <div className={cn('flex gap-4')}>
@@ -76,7 +78,7 @@ const Footer = () => {
                 href={url}
                 title={title}
                 className={cn(
-                  'text-muted-foreground transition-colors duration-200 ease-out',
+                  'text-muted-foreground text-lg transition-colors duration-200 ease-out',
                   className,
                 )}
               >

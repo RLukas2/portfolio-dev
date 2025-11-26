@@ -31,7 +31,7 @@ const NowPlayingCard = ({
     <div
       className={cn(
         'fixed bottom-0 z-[999] w-full',
-        !expanded && 'flex justify-end',
+        !expanded && 'flex justify-start p-5',
       )}
     >
       {expanded ? (
@@ -74,7 +74,7 @@ const NowPlayingCard = ({
           size="icon"
           variant="ghost"
         >
-          <Spotify className="animate-pulse" />
+          <Spotify className="size-5 animate-pulse" />
         </Button>
       )}
     </div>

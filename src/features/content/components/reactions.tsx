@@ -77,7 +77,7 @@ const Reactions = ({ slug }: { slug: string }) => {
       initial={{ y: 16, opacity: 0, pointerEvents: 'none' }}
       animate={controls}
     >
-      <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4">
         {emojiReactions.map(
           ({
             title,
@@ -87,7 +87,10 @@ const Reactions = ({ slug }: { slug: string }) => {
             type,
             counter,
           }) => (
-            <div key={title} className="flex flex-col items-center gap-2">
+            <div
+              key={title}
+              className="flex flex-col items-center gap-1 sm:gap-2"
+            >
               <EmojiReaction
                 title={title}
                 defaultEmoji={defaultEmoji}

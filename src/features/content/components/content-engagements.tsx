@@ -17,7 +17,7 @@ const ContentEngagements = ({
         className,
       )}
     >
-      <div className="bg-card relative flex w-full items-center justify-between gap-4 rounded-lg p-4">
+      <div className="bg-card relative flex w-full flex-wrap items-center justify-center gap-4 rounded-lg p-4 md:justify-between">
         <Reactions slug={slug} />
         <ShareButton slug={slug} />
       </div>

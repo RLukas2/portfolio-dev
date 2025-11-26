@@ -111,6 +111,7 @@ const EmojiReaction = ({
           />
         </motion.div>
       ))}
+
       <motion.div className="pointer-events-none size-10" variants={variants}>
         <Image
           alt={title}

@@ -16,8 +16,8 @@ const PostThumbnail = () => {
 
   return (
     <figure
-      className="pointer-events-none absolute top-0 -right-[calc(100vw_-_100%)] -left-[calc(100vw_-_100%)] -z-1 max-w-[calc(100vw_+_calc(100vw_-_100%))] overflow-hidden opacity-70 blur saturate-125 transition dark:opacity-65"
-      style={{ height: '85vh', maxHeight: 380, width: '100vw' }}
+      className="pointer-events-none absolute top-0 -right-[calc(100vw-100%)] -left-[calc(100vw-100%)] -z-1 max-w-[calc(100vw+calc(100vw-100%))] overflow-hidden opacity-70 blur saturate-125 transition dark:opacity-65"
+      style={{ height: '85vh', maxHeight: 380 }}
     >
       <Image
         src={image as string}
