@@ -34,6 +34,11 @@ export const NAV_LINKS: NavLink[] = [
     onlyShowOnDropdownMenu: true,
   },
   {
+    path: ROUTES.about,
+    label: 'About',
+    icon: <AtSign />,
+  },
+  {
     path: ROUTES.blog,
     label: 'Blog',
     icon: <Pencil />,
@@ -64,11 +69,6 @@ export const NAV_LINKS: NavLink[] = [
     label: 'Endorsements',
     icon: <Medal />,
   },
-  {
-    path: ROUTES.about,
-    label: 'About',
-    icon: <AtSign />,
-  },
 ];
 
 /**
@@ -82,6 +82,15 @@ export const COMMAND_PAGES: CommandMenuItem[] = [
     icon: <Home />,
     isExternal: false,
     eventName: 'Pages: Home',
+    type: 'PAGE',
+    closeOnSelect: true,
+  },
+  {
+    label: 'About',
+    href: ROUTES.about,
+    icon: <AtSign />,
+    isExternal: false,
+    eventName: 'Pages: About',
     type: 'PAGE',
     closeOnSelect: true,
   },
@@ -139,15 +148,6 @@ export const COMMAND_PAGES: CommandMenuItem[] = [
     closeOnSelect: true,
   },
   {
-    label: 'About',
-    href: ROUTES.about,
-    icon: <AtSign />,
-    isExternal: false,
-    eventName: 'Pages: About',
-    type: 'PAGE',
-    closeOnSelect: true,
-  },
-  {
     label: 'Uses',
     href: ROUTES.uses,
     icon: <Monitor />,
@@ -166,7 +166,7 @@ export const COMMAND_PAGES: CommandMenuItem[] = [
 export const COMMAND_SOCIAL_MEDIA: CommandMenuItem[] = [
   {
     label: 'Email',
-    href: `mailto:${SITE.author.email}?subject=Hi Bona!`,
+    href: `mailto:${SITE.author.email}?subject=Hi Tuan!`,
     icon: <Email />,
     isExternal: true,
     eventName: 'Contact: Email',

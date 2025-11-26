@@ -32,7 +32,7 @@ const OGImage = ({
       <div tw="absolute bottom-16 left-12 flex items-center">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={`${BASE_URL}/media/site/logo.svg`}
+          src={`${BASE_URL}/media/site/logo.png`}
           width="48"
           height="48"
           alt={SITE.author.name}

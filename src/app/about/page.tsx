@@ -18,7 +18,7 @@ export const metadata: Metadata = seo({
 });
 
 const AboutPage = () => {
-  const isAvailableForHire = env.NEXT_PUBLIC_AVAILABLE_FOR_HIRE;
+  const isAvailableForHire = env.NEXT_PUBLIC_AVAILABLE_FOR_HIRE || true;
 
   return (
     <>
@@ -32,7 +32,7 @@ const AboutPage = () => {
               width={256}
               height={256}
               placeholder="blur"
-              blurDataURL="/media/bonabrian/bonabrian-small.jpg"
+              blurDataURL="/media/rlukas/rlukas.jpg"
               className="rounded-full object-cover transition-all duration-300 hover:scale-105 xl:rounded-lg"
               quality={100}
             />

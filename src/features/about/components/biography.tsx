@@ -82,7 +82,7 @@ const Biography = () => {
       <p>
         Questions or collaborations? Reach out to me at{' '}
         <Link
-          href={`mailto:${SITE.author.email}?subject=Hi Bona!`}
+          href={`mailto:${SITE.author.email}?subject=Hi Tuan!`}
           className="underline"
         >
           {SITE.author.email}
@@ -103,7 +103,7 @@ const Biography = () => {
           <LinkedIn className="size-5" />
         </Link>
         <Link
-          href={`mailto:${SITE.author.email}?subject=Hi Bona!`}
+          href={`mailto:${SITE.author.email}?subject=Hi Tuan!`}
           className="text-muted-foreground hover:text-foreground transition-colors duration-200"
         >
           <Email className="size-5" />

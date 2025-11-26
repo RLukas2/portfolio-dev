@@ -41,7 +41,7 @@ export default function ProfileImage() {
       {/* Profile Image */}
       <div className="relative h-auto min-h-[280px] w-[90%] max-w-[450px] overflow-hidden rounded-full border-4 border-white">
         <Image
-          src="/images/profile.jpg"
+          src="/media/rlukas/rlukas.jpg"
           alt="Ngo Hoang Tuan - Backend Engineer"
           objectFit="cover"
           priority

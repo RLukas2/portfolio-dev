@@ -12,7 +12,7 @@ import { allPosts } from '.content-collections/generated';
 export const metadata: Metadata = seo({
   title: 'Blog',
   description:
-    'Blog posts by Bona Brian Siagian. Here I share some thoughts, stories, information, and more about software development.',
+    'Blog posts by Tuan Ngo. Here I share some thoughts, stories, information, and more about software development.',
   keywords: [
     'blog',
     'story',

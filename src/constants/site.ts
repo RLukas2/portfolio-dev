@@ -28,11 +28,12 @@ export const SITE: Site = {
   url: BASE_URL,
   name: 'RLukas2 Portfolio',
   title: 'Tuan Ngo-Hoang',
-  description: 'This is my awesome app built with Next.js',
+  description:
+    'Portfolio of Tuan Ngo-Hoang - Software Engineer specializing in back-end development, building scalable and efficient applications.',
   author: {
     name: 'Tuan Ngo-Hoang',
     url: 'https://rlukas2.vercel.app/',
-    avatar: '/avatar.png',
+    avatar: '/media/rlukas/rlukas.jpg',
     email: 'nhtuan314@gmail.com',
     linkedIn: 'https://linkedin.com/in/xbrk',
     github: {

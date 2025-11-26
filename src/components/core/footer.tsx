@@ -18,7 +18,7 @@ const Footer = () => {
       {/* Footer Content */}
       <Container className={cn('mt-8 flex flex-col gap-8 md:mt-16')}>
         <motion.div
-          className={cn('mb-4 grid grid-cols-1 gap-6 md:grid-cols-4')}
+          className={cn('mb-4 grid grid-cols-2 gap-6 md:grid-cols-4')}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}

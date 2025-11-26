@@ -18,6 +18,9 @@ export const DEFAULT_METADATA: Metadata = {
     name: SITE.author.name,
     url: SITE.author.url,
   },
+  creator: SITE.author.name,
+  publisher: SITE.author.name,
+  category: 'Portfolio',
   keywords: SITE.keywords,
   openGraph: {
     type: 'website',
