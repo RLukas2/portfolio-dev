@@ -59,20 +59,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         content={DEFAULT_METADATA.applicationName ?? ''}
       />
 
-      {/* KaTeX CSS */}
-      <link
-        rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.css"
-        integrity="sha384-WcoG4HRXMzYzfCgiyfrySxx90XSl2rxY5mnVY5TwtWE6KLrArNKn0T/mOgNL0Mmi"
-        crossOrigin="anonymous"
-      />
-
-      {/* KaTeX JS */}
-      <script
-        defer
-        src="https://cdn.jsdelivr.net/npm/katex@0.16.25/dist/katex.min.js"
-        integrity="sha384-J+9dG2KMoiR9hqcFao0IBLwxt6zpcyN68IgwzsCSkbreXUjmNVRhPFTssqdSGjwQ"
-        crossOrigin="anonymous"
+      <meta
+        name="google-site-verification"
+        content="k6PyMiGShL7wrz11l4Nvahbt-UpiTcg4o1peE9-HOhI"
       />
     </head>
     <body
