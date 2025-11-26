@@ -40,7 +40,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
       .filter((project) => project.published)
       .map((project) => `${ROUTES.projects}/${project.slug}`),
   ].map((route) => ({
-    url: `${BASE_URL}${route},`,
+    url: `${BASE_URL}${route}`,
     lastModified: new Date().toISOString().split('T')[0],
   }));
 
