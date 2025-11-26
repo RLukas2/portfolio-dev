@@ -13,61 +13,85 @@ const Biography = () => {
     <>
       <p>Hi there! Thanks for visiting my digital home on the internet.</p>
       <p>
-        I'm Bona Brian Siagian, a Software Engineer passionate about building
-        innovative digital solutions that drive real business impact. I
-        specialize in both frontend development—the coding you see on the
-        screen—and backend development, the processes happening behind the
-        scenes.
+        I'm Ngo Hoang Tuan, a software engineer who genuinely enjoys building
+        things that work and more importantly, things that matter to education,
+        businesses, and users. I spend my time juggling both ends of the stack:
+        frontend work and backend development.
       </p>
       <p>
-        I have extensive experience in crafting scalable software systems that
-        align with both technical and business needs, leveraging a wide range of
-        technologies:
+        Over the years, I've learned how to architect systems that don't just
+        technically work, but actually solve real problems. I've worked across
+        the full spectrum, from crafting interactive user experiences to
+        designing robust backend infrastructure that scales. Here's the toolkit
+        I've built up:
       </p>
       <ul>
         <li>
           Languages:{' '}
           <Link href="https://www.typescriptlang.org/">TypeScript</Link>,{' '}
           <Link href="https://www.javascript.com/">JavaScript</Link>,{' '}
-          <Link href="https://www.php.net/">PHP</Link>,{' '}
-          <Link href="https://kotlinlang.org/">Kotlin</Link>{' '}
+          <Link href="https://www.python.org/">Python</Link>,{' '}
+          <Link href="https://go.dev/">Go</Link>,{' '}
+          <Link href="https://en.cppreference.com/w/">C++</Link>
         </li>
+
         <li>
-          Frontend Frameworks & Meta-frameworks:{' '}
-          <Link href="https://reactjs.org/">React</Link>,{' '}
-          <Link href="https://vuejs.org/">Vue</Link>,{' '}
-          <Link href="https://nextjs.org/">Next.js</Link>,{' '}
-          <Link href="https://nuxt.com/">Nuxt.js</Link>
+          Frontend Frameworks: <Link href="https://reactjs.org/">React</Link>,{' '}
+          <Link href="https://nextjs.org/">Next.js</Link>
         </li>
+
         <li>
-          Backend Frameworks: <Link href="https://laravel.com/">Laravel</Link>,{' '}
-          <Link href="https://spring.io/">Spring</Link>
+          Backend Frameworks:{' '}
+          <Link href="https://expressjs.com/">Express.js</Link>,{' '}
+          <Link href="https://fastapi.tiangolo.com/">FastAPI</Link>,{' '}
+          <Link href="https://flask.palletsprojects.com/">Flask</Link>,{' '}
+          <Link href="https://gin-gonic.com/">Gin (Go)</Link>,{' '}
+          <Link href="https://pkg.go.dev/net/http">Go net/http</Link>
+        </li>
+
+        <li>
+          Databases: <Link href="https://www.postgresql.org/">PostgreSQL</Link>,{' '}
+          <Link href="https://www.mongodb.com/">MongoDB</Link>
+        </li>
+
+        <li>
+          Tools & Platforms: <Link href="https://www.docker.com/">Docker</Link>,{' '}
+          <Link href="https://www.postman.com/">Postman</Link>,{' '}
+          <Link href="https://git-scm.com/">Git</Link>,{' '}
+          <Link href="https://vercel.com/">Vercel</Link>,{' '}
+          <Link href="https://railway.app/">Railway</Link>,{' '}
+          <Link href="https://supabase.com/">Supabase</Link>
+        </li>
+
+        <li>
+          Other Experience: Web scraping (Python), REST API development,
+          Full-stack development, Cloud storage system design
         </li>
       </ul>
+
       <p>
-        As a Software Engineer, I take ownership of designing, developing, and
-        maintaining software that meets technical specifications while
-        delivering tangible business value. I work closely with organizations to
-        understand their unique requirements and apply my technical expertise to
-        build customized solutions that drive success.
+        What I really enjoy about my work is the collaborative side,
+        understanding what an organization actually needs (beyond the technical
+        requirements) and then engineering solutions suitable to those goals.
+        It's not just about writing clean code; it's about writing code that
+        creates tangible value.
       </p>
       <p>
-        I consider myself a curious and inquisitive learner, always eager to
-        expand my skills. In my free time, I enjoy working on personal side
-        projects, as they allow me to explore new technologies and refine my
-        expertise. I actively seek out new learning opportunities to stay ahead
-        of industry trends and advancements.
+        Outside of work, I'm perpetually curious about new tools and approaches.
+        You'll find me tinkering on side projects most nights, partly because I
+        genuinely love exploring emerging tech, and partly because it keeps my
+        skills sharp. The tech landscape moves fast, so staying engaged with
+        what's new keeps things interesting.
       </p>
       <p>
-        Besides hacking, I also have a strong appreciation for video games and
-        music. I find that these activities provide an important balance to my
-        professional life, allowing me to relax and recharge after a long day at
-        work. I believe that maintaining a healthy work-life balance is is the
-        key to keeping both my code and my spirits bug-free! 🎮🎶
+        When I'm not coding, I'm usually unwinding with video games or music.
+        Honestly, I think they're essential for maintaining sanity in this
+        field. A healthy balance between shipping code and actually having a
+        life? That's the real debugging skill. 🎮🎶
       </p>
       <p>
-        If you'd like to learn more about my professional background and
-        qualifications, feel free to explore my resume.{' '}
+        Want to dig deeper into what I've worked on? Check out my resume to see
+        the full picture.{' '}
       </p>
       <Link href={ROUTES.resume} className="text-inherit">
         <Button variant="shadow" className="gap-x-1">
