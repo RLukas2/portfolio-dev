@@ -3,7 +3,15 @@
 import { motion } from 'framer-motion';
 import type { JSX } from 'react';
 
-import { JavaScript, NextJS, PostgreSQL, TypeScript } from '@/components/icons';
+import {
+  GoLang,
+  JavaScript,
+  MongoDB,
+  NextJS,
+  PostgreSQL,
+  Python,
+  TypeScript,
+} from '@/components/icons';
 import {
   Tooltip,
   TooltipContent,
@@ -34,6 +42,16 @@ const stacks: Stack[] = [
     icon: <JavaScript />,
   },
   {
+    title: 'Python',
+    className: 'hover:text-[#3776AB]',
+    icon: <Python />,
+  },
+  {
+    title: 'Go',
+    className: 'hover:text-[#00ADD8]',
+    icon: <GoLang />,
+  },
+  {
     title: 'Next.js',
     className: 'hover:text-black dark:hover:text-white',
     icon: <NextJS />,
@@ -42,6 +60,11 @@ const stacks: Stack[] = [
     title: 'PostgreSQL',
     className: 'hover:text-[#4169E1]',
     icon: <PostgreSQL />,
+  },
+  {
+    title: 'MongoDB',
+    className: 'hover:text-[#47A248]',
+    icon: <MongoDB />,
   },
 ];
 

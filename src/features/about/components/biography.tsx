@@ -11,12 +11,15 @@ import TechStacks from './tech-stacks';
 const Biography = () => {
   return (
     <>
-      <p>Hi there! Thanks for visiting my digital home on the internet.</p>
+      <p className="text-xl font-semibold">
+        Hi there! Thanks for visiting my digital home on the internet.
+      </p>
       <p>
-        I'm Ngo Hoang Tuan, a software engineer who genuinely enjoys building
-        things that work and more importantly, things that matter to education,
-        businesses, and users. I spend my time juggling both ends of the stack:
-        frontend work and backend development.
+        I'm <span className="text-primary font-bold">Ngo Hoang Tuan</span>, a
+        software engineer who genuinely enjoys building things that work and
+        more importantly, things that matter to education, businesses, and
+        users. I spend my time juggling both ends of the stack: frontend work
+        and backend development.
       </p>
       <p>
         Over the years, I've learned how to architect systems that don't just
@@ -44,14 +47,15 @@ const Biography = () => {
           Backend Frameworks:{' '}
           <Link href="https://expressjs.com/">Express.js</Link>,{' '}
           <Link href="https://fastapi.tiangolo.com/">FastAPI</Link>,{' '}
-          <Link href="https://flask.palletsprojects.com/">Flask</Link>,{' '}
           <Link href="https://gin-gonic.com/">Gin (Go)</Link>,{' '}
           <Link href="https://pkg.go.dev/net/http">Go net/http</Link>
         </li>
 
         <li>
           Databases: <Link href="https://www.postgresql.org/">PostgreSQL</Link>,{' '}
-          <Link href="https://www.mongodb.com/">MongoDB</Link>
+          <Link href="https://www.mongodb.com/">MongoDB</Link>,{' '}
+          <Link href="https://redis.io/">Redis</Link>,{' '}
+          <Link href="https://supabase.com/">Supabase</Link>
         </li>
 
         <li>
@@ -61,11 +65,6 @@ const Biography = () => {
           <Link href="https://vercel.com/">Vercel</Link>,{' '}
           <Link href="https://railway.app/">Railway</Link>,{' '}
           <Link href="https://supabase.com/">Supabase</Link>
-        </li>
-
-        <li>
-          Other Experience: Web scraping (Python), REST API development,
-          Full-stack development, Cloud storage system design
         </li>
       </ul>
 

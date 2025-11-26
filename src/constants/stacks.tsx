@@ -1,62 +1,62 @@
 import type { JSX } from 'react';
 
 import {
-  Android,
-  Bootstrap,
+  CPP,
+  Docker,
+  ExpressJS,
   FramerMotion,
+  Gin,
   Git,
+  GoLang,
   JavaScript,
   Jest,
-  JQuery,
-  Kotlin,
-  Laravel,
   MDX,
-  MySQL,
+  MongoDB,
   NextJS,
-  NuxtJS,
-  PHP,
   PostgreSQL,
+  Postman,
   Prisma,
-  RabbitMQ,
+  Python,
   ReactJS,
   Redis,
-  Ruby,
-  RubyOnRails,
   ShadcnUI,
-  Spring,
   Supabase,
   TailwindCSS,
   TypeScript,
   Vercel,
-  VueJS,
 } from '@/components/icons';
 
 export const STACKS: { [key: string]: JSX.Element } = {
+  // --- Languages ---
   TypeScript: <TypeScript className="size-5 fill-[#3178C6]" />,
   JavaScript: <JavaScript className="size-5 fill-[#F7DF1E]" />,
-  PHP: <PHP className="size-5 fill-[#777BB4]" />,
-  Kotlin: <Kotlin className="size-5 fill-[#7F52FF]" />,
-  Ruby: <Ruby className="size-5 fill-[#CC342D]" />,
-  'Next.js': <NextJS className="size-5 fill-black dark:fill-white" />,
-  'React.js': <ReactJS className="size-5 fill-[#61DAFB]" />,
-  'Nuxt.js': <NuxtJS className="size-5 fill-[#00DC82]" />,
-  'Vue.js': <VueJS className="size-5 fill-[#4FC08D]" />,
-  Jest: <Jest className="size-4 fill-[#C21325]" />,
-  Laravel: <Laravel className="size-5 fill-[#FF2D20]" />,
-  Spring: <Spring className="size-5 fill-[#6DB33F]" />,
-  'Ruby on Rails': <RubyOnRails className="size-4 fill-[#D30001]" />,
-  'Tailwind CSS': <TailwindCSS className="size-5 fill-[#06B6D4]" />,
-  MDX: <MDX className="size-5 fill-black dark:fill-white" />,
-  MySQL: <MySQL className="size-5 fill-[#4479A1]" />,
+  Python: <Python className="size-5 fill-[#3776AB]" />,
+  Go: <GoLang className="size-5 fill-[#00ADD8]" />,
+  CPP: <CPP className="size-5 fill-[#00599C]" />,
+
+  // --- Frontend ---
+  NextJS: <NextJS className="size-5 fill-black dark:fill-white" />,
+  ReactJS: <ReactJS className="size-5 fill-[#61DAFB]" />,
+  TailwindCSS: <TailwindCSS className="size-5 fill-[#06B6D4]" />,
+
+  // --- Backend Frameworks ---
+  ExpressJS: <ExpressJS className="size-5 fill-black dark:fill-white" />,
+  Gin: <Gin className="size-5 fill-[#00ADD8]" />,
+
+  // --- Databases ---
   PostgreSQL: <PostgreSQL className="size-5 fill-[#4169E1]" />,
+  MongoDB: <MongoDB className="size-5 fill-[#47A248]" />,
   Redis: <Redis className="size-5 fill-[#FF4438]" />,
-  Prisma: <Prisma className="size-5 fill-[##2D3748] dark:fill-white" />,
-  RabbitMQ: <RabbitMQ className="size-5 fill-[#FF6600]" />,
-  Git: <Git className="size-5 fill-[#F05032]" />,
-  JQuery: <JQuery className="size-5 fill-[#3FCF8E]" />,
-  Bootstrap: <Bootstrap className="size-5 fill-[#7952B3]" />,
   Supabase: <Supabase className="size-5 fill-[#3FCF83]" />,
-  Android: <Android className="size-5 fill-[#34A853]" />,
+  Prisma: <Prisma className="size-5 fill-[#2D3748] dark:fill-white" />,
+
+  // --- Tools & Platforms ---
+  Docker: <Docker className="size-5 fill-[#2496ED]" />,
+  Git: <Git className="size-5 fill-[#F05032]" />,
+  Postman: <Postman className="size-5 fill-[#FF6C37]" />,
+  Vercel: <Vercel className="size-5 fill-black dark:fill-white" />,
+  Jest: <Jest className="size-5 fill-[#C21325]" />,
+  MDX: <MDX className="size-5 fill-black dark:fill-white" />,
 };
 
 export const CORE_STACKS: {
