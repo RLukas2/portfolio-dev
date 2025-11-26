@@ -12,6 +12,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Derive the application URL based on environment variables
 const derivedUrl =
+  (process.env.NEXT_PUBLIC_APP_URL && process.env.NEXT_PUBLIC_APP_URL) ||
   (process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`) ||
   (process.env.RAILWAY_PUBLIC_DOMAIN &&
     `https://${process.env.RAILWAY_PUBLIC_DOMAIN}`) ||
@@ -134,7 +135,7 @@ const millionConfig = {
 export default isDevelopment
   ? withContentCollections(MillionLint.next(millionConfig)(nextConfig))
   : withContentCollections(
-      MillionLint.next(millionConfig)(
-        withSentryConfig(nextConfig, SentryWebpackPluginOptions),
-      ),
-    );
+    MillionLint.next(millionConfig)(
+      withSentryConfig(nextConfig, SentryWebpackPluginOptions),
+    ),
+  );
