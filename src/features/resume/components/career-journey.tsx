@@ -1,29 +1,38 @@
-import { differenceInMonths, differenceInYears } from 'date-fns';
-import { format } from 'date-fns-tz';
 import { FileTextIcon } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants/routes';
-import { formatDate } from '@/lib/utils';
+import { cn, formatDate } from '@/lib/utils';
 
+import { EDUCATION } from '../education';
 import { EXPERIENCES } from '../experiences';
+import type { Experience } from '../types';
+import EducationEntry from './education-entry';
+import ExperienceEntry from './experience-entry';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 86400; // 24 hours
 
 const CareerJourney = () => {
-  const lastUpdated = formatDate('2025-03-10');
+  const lastUpdated = formatDate('2025-11-16');
+
+  // Helper function to check if an entry is an experience
+  const isExperience = (entry: any): entry is Experience => {
+    return 'company' in entry && 'role' in entry;
+  };
+
+  // Combine experiences and education into a single timeline
+  const timelineEntries = [
+    ...EXPERIENCES.map((exp) => ({ ...exp, type: 'experience' as const })),
+    ...EDUCATION.map((edu) => ({ ...edu, type: 'education' as const })),
+  ].sort(
+    (a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime(),
+  );
 
   return (
     <>
-      <div className="flex items-center justify-end">
+      <div className="mb-8 flex items-center justify-end">
         <Button asChild variant="shadow">
           <Link
             href={`${ROUTES.resume}/download`}
@@ -35,113 +44,57 @@ const CareerJourney = () => {
           </Link>
         </Button>
       </div>
-      <div className="prose dark:prose-dark max-w-none px-4">
-        <ol className="border-border list-none space-y-4 border-l pl-10">
-          {EXPERIENCES.map(
-            ({
-              company,
-              role,
-              startDate,
-              endDate,
-              stacks,
-              accomplishments,
-            }) => {
-              const start = new Date(startDate);
-              const end = endDate ? new Date(endDate) : new Date();
 
-              const durationInYears = differenceInYears(end, start);
-              const durationInMonths = differenceInMonths(end, start) % 12;
-
-              let durationText = '';
-
-              if (durationInYears > 0) {
-                durationText += `${durationInYears} yr${durationInYears > 1 ? 's' : ''} `;
+      {timelineEntries && timelineEntries.length > 0 ? (
+        <div className="prose dark:prose-dark max-w-none px-4">
+          <ol className="border-border list-none space-y-4 border-l pl-10">
+            {timelineEntries.map((entry) => {
+              if (isExperience(entry)) {
+                return (
+                  <ExperienceEntry
+                    key={`exp-${entry.company.name}-${entry.role}-${entry.startDate}`}
+                    experience={entry}
+                  />
+                );
+              } else {
+                return (
+                  <EducationEntry
+                    key={`edu-${entry.institution}-${entry.degree}-${entry.startDate}`}
+                    education={entry}
+                  />
+                );
               }
-
-              if (durationInMonths > 0 || durationInYears === 0) {
-                durationText += `${durationInMonths} mo${durationInMonths > 1 ? 's' : ''}`;
-              }
-
-              return (
-                <li
-                  key={`${company.name}-${role}-${startDate}`}
-                  className="relative h-full"
-                >
-                  <div className="absolute bottom-0 -left-[60px] mt-0 h-full">
-                    <div className="sticky top-20 flex items-start">
-                      <Image
-                        src={company.logo}
-                        alt={company.name}
-                        width={40}
-                        height={40}
-                        className="ml-0 rounded-full"
-                      />
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-start gap-1 md:flex-row">
-                    <div className="flex flex-col space-y-1 leading-snug">
-                      <h2 className="font-cal my-0 text-lg">{role}</h2>
-                      <div className="text-muted-foreground flex items-center gap-1">
-                        <Link
-                          href={company.url}
-                          target="_blank"
-                          className="text-muted-foreground hover:text-foreground underline"
-                        >
-                          {company.name}
-                        </Link>
-                        <span>&middot;</span>
-                        <span>{company.jobType}</span>
-                      </div>
-                      <div className="text-muted-foreground flex gap-1">
-                        <div className="flex gap-1">
-                          <span>{format(start, 'MMM yyyy')}</span> -{' '}
-                          <span>
-                            {endDate ? format(endDate, 'MMM yyyy') : 'Present'}
-                          </span>
-                        </div>
-                        <span>&middot;</span>
-                        <span>{durationText}</span>
-                      </div>
-                      <div className="text-muted-foreground flex items-center gap-1">
-                        <span>{company.location}</span>
-                        <span>&middot;</span>
-                        <span>{company.workingArrangement}</span>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="my-4 flex flex-row flex-wrap gap-1">
-                    {stacks.map(({ name, icon }) => (
-                      <Tooltip key={name}>
-                        <TooltipTrigger asChild>
-                          <div className="bg-card rounded-lg p-1.5">{icon}</div>
-                        </TooltipTrigger>
-                        <TooltipContent>{name}</TooltipContent>
-                      </Tooltip>
-                    ))}
-                  </div>
-                  <ul className="pl-0">
-                    {accomplishments.map((accomplishment, index) => (
-                      <li key={index} className="my-1 leading-snug">
-                        <span className="text-muted-foreground">
-                          {accomplishment}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </li>
-              );
-            },
-          )}
-        </ol>
-        <div className="mt-12">
-          <p className="text-muted-foreground">
-            Last updated at{' '}
-            <time dateTime={lastUpdated} className="font-cal">
-              {lastUpdated}
-            </time>
+            })}
+          </ol>
+          <div className="mt-12">
+            <p className="text-muted-foreground">
+              Last updated at{' '}
+              <time dateTime={lastUpdated} className="font-cal">
+                {lastUpdated}
+              </time>
+            </p>
+          </div>
+        </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center">
+          <h1
+            className={cn(
+              'animate-glitch text-4xl font-semibold',
+              'before:animate-glitch-top before:absolute before:left-0 before:content-[attr(title)] before:[clip-path:polygon(0%_0%,100%_0%,100%_33%,0%_33%)]',
+              'after:animate-glitch-bottom after:absolute after:left-0 after:content-[attr(title)] after:[clip-path:polygon(0%_67%,100%_67%,100%_100%,0%_100%)]',
+            )}
+          >
+            No Timeline Entries Found
+          </h1>
+          <p className="text-foreground mt-4 text-center">
+            It seems there are no career experiences or education entries to
+            display at the moment...
+          </p>
+          <p className="text-foreground mt-2 text-center">
+            Maybe you can check back later?
           </p>
         </div>
-      </div>
+      )}
     </>
   );
 };

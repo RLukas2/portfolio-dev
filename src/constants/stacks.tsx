@@ -1,7 +1,9 @@
 import type { JSX } from 'react';
 
 import {
+  AWS,
   CPP,
+  CSharp,
   Docker,
   ExpressJS,
   FramerMotion,
@@ -13,16 +15,19 @@ import {
   MDX,
   MongoDB,
   NextJS,
+  NodeJS,
   PostgreSQL,
   Postman,
   Prisma,
   Python,
+  RabbitMQ,
   ReactJS,
   Redis,
   ShadcnUI,
   Supabase,
   TailwindCSS,
   TypeScript,
+  Unity,
   Vercel,
 } from '@/components/icons';
 
@@ -33,6 +38,7 @@ export const STACKS: { [key: string]: JSX.Element } = {
   Python: <Python className="size-5 fill-[#3776AB]" />,
   Go: <GoLang className="size-5 fill-[#00ADD8]" />,
   CPP: <CPP className="size-5 fill-[#00599C]" />,
+  CSharp: <CSharp className="size-5 fill-[#68217A]" />,
 
   // --- Frontend ---
   NextJS: <NextJS className="size-5 fill-black dark:fill-white" />,
@@ -49,14 +55,18 @@ export const STACKS: { [key: string]: JSX.Element } = {
   Redis: <Redis className="size-5 fill-[#FF4438]" />,
   Supabase: <Supabase className="size-5 fill-[#3FCF83]" />,
   Prisma: <Prisma className="size-5 fill-[#2D3748] dark:fill-white" />,
+  AWS: <AWS className="size-5 fill-[#FF9900]" />,
 
   // --- Tools & Platforms ---
+  NodeJS: <NodeJS className="size-5 fill-[#339933]" />,
   Docker: <Docker className="size-5 fill-[#2496ED]" />,
   Git: <Git className="size-5 fill-[#F05032]" />,
   Postman: <Postman className="size-5 fill-[#FF6C37]" />,
   Vercel: <Vercel className="size-5 fill-black dark:fill-white" />,
   Jest: <Jest className="size-5 fill-[#C21325]" />,
   MDX: <MDX className="size-5 fill-black dark:fill-white" />,
+  RabbitMQ: <RabbitMQ className="size-5 fill-[#FF6600]" />,
+  Unity: <Unity className="size-5 fill-[#000000]" />,
 };
 
 export const CORE_STACKS: {

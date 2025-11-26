@@ -38,7 +38,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     if (image && parsedImageMeta?.blurDataURL) {
       return {
         placeholder: 'blur',
-        blurDataURL: parsedImageMeta.blurDataURL,
+        blurDataURL: parsedImageMeta?.blurDataURL,
       } as {
         placeholder: 'blur' | 'empty';
         blurDataURL?: string;
@@ -46,7 +46,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
     }
 
     return {};
-  }, [image, parsedImageMeta.blurDataURL]);
+  }, [image, parsedImageMeta?.blurDataURL]);
 
   let projectUrl = url ?? `${ROUTES.projects}/${slug}`;
   if (playStoreUrl) projectUrl = playStoreUrl;

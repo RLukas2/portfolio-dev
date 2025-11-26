@@ -39,6 +39,7 @@ import {
   SiMongodb,
   SiMysql,
   SiNextdotjs,
+  SiNodedotjs,
   SiNuxtdotjs,
   SiPhp,
   SiPostgresql,
@@ -57,11 +58,12 @@ import {
   SiSupabase,
   SiTailwindcss,
   SiTypescript,
+  SiUnity,
   SiVercel,
   SiVuedotjs,
   SiWakatime,
 } from 'react-icons/si';
-import { TbBrandFramerMotion } from 'react-icons/tb';
+import { TbBrandCSharp, TbBrandFramerMotion } from 'react-icons/tb';
 
 /**
  * Core Icons
@@ -184,6 +186,10 @@ export const Ruby = (props: ComponentProps<IconType>) => <SiRuby {...props} />;
 
 export const PHP = (props: ComponentProps<IconType>) => <SiPhp {...props} />;
 
+export const CSharp = (props: ComponentProps<IconType>) => (
+  <TbBrandCSharp {...props} />
+);
+
 /**
  * Frontend Frameworks & Libraries
  */
@@ -265,6 +271,10 @@ export const ShadcnUI = ({ ...props }: ComponentProps<IconType>) => (
 /**
  * Development Tools & Services
  */
+export const NodeJS = ({ ...props }: ComponentProps<IconType>) => (
+  <SiNodedotjs {...props} />
+);
+
 export const Postman = ({ ...props }: ComponentProps<IconType>) => (
   <SiPostman {...props} />
 );
@@ -283,6 +293,10 @@ export const Jest = ({ ...props }: ComponentProps<IconType>) => (
 
 export const Prisma = ({ ...props }: ComponentProps<IconType>) => (
   <SiPrisma {...props} />
+);
+
+export const Unity = ({ ...props }: ComponentProps<IconType>) => (
+  <SiUnity {...props} />
 );
 
 /**
