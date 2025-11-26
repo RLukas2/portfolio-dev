@@ -21,8 +21,13 @@ import {
   SiAndroid,
   SiApple,
   SiBootstrap,
+  SiCplusplus,
+  SiDocker,
+  SiExpress,
+  SiGin,
   SiGit,
   SiGithub,
+  SiGoland,
   SiGoogle,
   SiJavascript,
   SiJest,
@@ -31,12 +36,15 @@ import {
   SiLaravel,
   SiLinkedin,
   SiMdx,
+  SiMongodb,
   SiMysql,
   SiNextdotjs,
   SiNuxtdotjs,
   SiPhp,
   SiPostgresql,
+  SiPostman,
   SiPrisma,
+  SiPython,
   SiRabbitmq,
   SiReact,
   SiRedis,
@@ -58,6 +66,7 @@ import { TbBrandFramerMotion } from 'react-icons/tb';
 /**
  * Core Icons
  */
+//#region Core Icons
 export const Command = (props: ComponentProps<IconType>) => (
   <LuCommand {...props} />
 );
@@ -85,11 +94,12 @@ export const Refresh = ({ ...props }: ComponentProps<IconType>) => (
 export const Expand = ({ ...props }: ComponentProps<IconType>) => (
   <LuExpand {...props} />
 );
+//#endregion // Core Icons
 
 /**
  * Navigation Icons
  */
-
+//#region // Navigation Icons
 export const Home = (props: ComponentProps<IconType>) => <FaHome {...props} />;
 
 export const AtSign = (props: ComponentProps<IconType>) => <FaAt {...props} />;
@@ -117,6 +127,7 @@ export const Medal = (props: ComponentProps<IconType>) => (
 export const Monitor = ({ ...props }: ComponentProps<IconType>) => (
   <LuMonitor {...props} />
 );
+//#endregion
 
 /**
  * Social Icons
@@ -143,10 +154,6 @@ export const Twitter = (props: ComponentProps<IconType>) => (
 );
 
 /**
- * Tech Stack Icons
- */
-
-/**
  * Programming Languages
  */
 export const TypeScript = ({ ...props }: ComponentProps<IconType>) => (
@@ -159,6 +166,18 @@ export const JavaScript = (props: ComponentProps<IconType>) => (
 
 export const Kotlin = (props: ComponentProps<IconType>) => (
   <SiKotlin {...props} />
+);
+
+export const Python = (props: ComponentProps<IconType>) => (
+  <SiPython {...props} />
+);
+
+export const CPP = (props: ComponentProps<IconType>) => (
+  <SiCplusplus {...props} />
+);
+
+export const GoLang = (props: ComponentProps<IconType>) => (
+  <SiGoland {...props} />
 );
 
 export const Ruby = (props: ComponentProps<IconType>) => <SiRuby {...props} />;
@@ -203,6 +222,12 @@ export const RubyOnRails = ({ ...props }: ComponentProps<IconType>) => (
   <SiRubyonrails {...props} />
 );
 
+export const Gin = (props: ComponentProps<IconType>) => <SiGin {...props} />;
+
+export const ExpressJS = (props: ComponentProps<IconType>) => (
+  <SiExpress {...props} />
+);
+
 /**
  * Databases & Data Storage
  */
@@ -216,6 +241,10 @@ export const PostgreSQL = (props: ComponentProps<IconType>) => (
 
 export const Redis = ({ ...props }: ComponentProps<IconType>) => (
   <SiRedis {...props} />
+);
+
+export const MongoDB = (props: ComponentProps<IconType>) => (
+  <SiMongodb {...props} />
 );
 
 /**
@@ -236,6 +265,14 @@ export const ShadcnUI = ({ ...props }: ComponentProps<IconType>) => (
 /**
  * Development Tools & Services
  */
+export const Postman = ({ ...props }: ComponentProps<IconType>) => (
+  <SiPostman {...props} />
+);
+
+export const Docker = ({ ...props }: ComponentProps<IconType>) => (
+  <SiDocker {...props} />
+);
+
 export const Git = ({ ...props }: ComponentProps<IconType>) => (
   <SiGit {...props} />
 );
