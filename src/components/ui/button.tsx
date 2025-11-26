@@ -5,27 +5,46 @@ import * as React from 'react';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 cursor-pointer',
+  cn(
+    'inline-flex items-center justify-center whitespace-nowrap rounded-md cursor-pointer',
+    'text-sm font-medium',
+    'transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2',
+    'disabled:pointer-events-none disabled:opacity-50',
+    'ring-offset-background',
+  ),
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground hover:bg-primary/90',
-        destructive:
-          'bg-destructive text-destructive-foreground hover:bg-destructive/90',
-        outline:
-          'border border-input bg-background hover:bg-accent hover:text-accent-foreground',
-        secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
-        shadow:
-          'border border-secondary-foreground bg-background shadow-[3px_3px_rgb(0_0_0_/_20%)] hover:bg-primary hover:text-primary-foreground dark:shadow-[3px_3px_rgb(255_255_255_/_40%)]',
+        default: cn(
+          'bg-primary text-primary-foreground',
+          'hover:bg-primary/90',
+        ),
+        destructive: cn(
+          'bg-destructive text-destructive-foreground',
+          'hover:bg-destructive/90',
+        ),
+        outline: cn(
+          'border border-input bg-background',
+          'hover:bg-accent hover:text-accent-foreground',
+        ),
+        secondary: cn(
+          'bg-secondary text-secondary-foreground',
+          'hover:bg-secondary/80',
+        ),
+        ghost: cn('hover:bg-accent hover:text-accent-foreground'),
+        link: cn('text-primary underline-offset-4', 'hover:underline'),
+        shadow: cn(
+          'border border-secondary-foreground bg-background',
+          'shadow-[3px_3px_rgb(0_0_0_/_20%)]',
+          'hover:bg-primary hover:text-primary-foreground',
+          'dark:shadow-[3px_3px_rgb(255_255_255_/_40%)]',
+        ),
       },
       size: {
-        default: 'h-10 px-4 py-2',
-        sm: 'h-9 rounded-md px-3',
-        lg: 'h-11 rounded-md px-8',
-        icon: 'size-10',
+        default: cn('h-10 px-4 py-2'),
+        sm: cn('h-9 rounded-md px-3'),
+        lg: cn('h-11 rounded-md px-8'),
+        icon: cn('size-10'),
       },
     },
     defaultVariants: {

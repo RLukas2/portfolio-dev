@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import type { JSX } from 'react';
 
-import { JavaScript, TypeScript } from '@/components/icons';
+import { JavaScript, NextJS, PostgreSQL, TypeScript } from '@/components/icons';
 import {
   Tooltip,
   TooltipContent,
@@ -32,6 +32,16 @@ const stacks: Stack[] = [
     title: 'JavaScript',
     className: 'hover:text-[#F7DF1E]',
     icon: <JavaScript />,
+  },
+  {
+    title: 'Next.js',
+    className: 'hover:text-black dark:hover:text-white',
+    icon: <NextJS />,
+  },
+  {
+    title: 'PostgreSQL',
+    className: 'hover:text-[#4169E1]',
+    icon: <PostgreSQL />,
   },
 ];
 

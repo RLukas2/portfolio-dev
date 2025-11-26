@@ -123,7 +123,7 @@ const CodingInsights = () => {
                     <li key={item.name}>
                       <Progress
                         data={item}
-                        className="to-primary bg-gradient-to-r from-pink-400 via-purple-400"
+                        className="to-primary bg-linear-to-r from-pink-400 via-purple-400"
                       />
                     </li>
                   ))}

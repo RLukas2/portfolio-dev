@@ -35,6 +35,7 @@ const HighlightedProjects = () => {
 
   return (
     <motion.div
+      id="highlighted-projects"
       initial="initial"
       animate={isInView ? 'animate' : 'initial'}
       variants={variants}

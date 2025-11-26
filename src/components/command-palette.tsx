@@ -77,6 +77,8 @@ export const CommandPalette = () => {
   const placeholders = [
     'Type a command or search',
     'Press Cmd + K anytime to access this command pallete',
+    'Use arrow keys to navigate',
+    'Press Enter to select an option',
   ];
 
   const placeholder = placeholders[placeholderIndex];
@@ -115,13 +117,15 @@ export const CommandPalette = () => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setPlaceholderIndex((prev) => (prev === 0 ? 1 : 0));
+      setPlaceholderIndex((prev) =>
+        ((next) => (next + 1) % placeholders.length)(prev),
+      );
     }, 3000);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [placeholderIndex]);
+  }, [placeholderIndex, placeholders.length]);
 
   const groups: Array<{ title: string; options: CommandMenuItem[] }> = [
     {

@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 import ProfileImage from './profile-image';
-import CurrentTechStacks from './techstacks';
+import CurrentTechStacks from './tech-stack';
 
 const Hero = () => {
   return (
@@ -30,17 +30,17 @@ const Hero = () => {
           viewport={{ once: true }}
         >
           {/* Text Content */}
-          <motion.h3
+          <motion.div
             className="mb-0 text-xl font-medium tracking-wide text-blue-600 dark:text-blue-400"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             Hello, I&apos;m
-          </motion.h3>
+          </motion.div>
 
           <motion.h1
-            className="text-4xl leading-tight font-bold tracking-tight md:text-5xl lg:text-6xl"
+            className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl lg:text-6xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
@@ -80,7 +80,7 @@ const Hero = () => {
             transition={{ delay: 0.6 }}
           >
             <Button asChild variant="shadow" className="group">
-              <Link href={'/#about'}>
+              <Link href={'/#highlighted-projects'}>
                 Learn How{' '}
                 <ChevronDownIcon className="transition-transform duration-200 group-hover:translate-x-1" />
               </Link>
