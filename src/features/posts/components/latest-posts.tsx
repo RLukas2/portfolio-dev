@@ -48,10 +48,10 @@ const LatestPosts = () => {
         transition={{ duration: 0.3 }}
         className="mb-4 flex flex-col"
       >
-        <h2 className="font-cal text-primary text-sm tracking-wide md:text-base">
+        <h2 className="font-cal text-primary m-0 text-4xl tracking-wide md:text-5xl">
           Writing
         </h2>
-        <p className="font-cal text-secondary-foreground md:text-xl">
+        <p className="font-cal text-secondary-foreground my-2 text-lg">
           Latest posts
         </p>
       </motion.div>

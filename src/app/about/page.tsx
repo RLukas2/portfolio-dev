@@ -36,9 +36,9 @@ const AboutPage = () => {
               className="rounded-full object-cover transition-all duration-300 hover:scale-105 xl:rounded-lg"
               quality={100}
             />
-            <div className="flex flex-col items-center py-2">
-              <h3 className="font-cal text-lg">{SITE.author.name}</h3>
-              <h4 className="text-muted-foreground">Software Engineer</h4>
+            <div className="m-0 flex flex-col items-center py-2">
+              <h3 className="font-cal m-0 text-lg">{SITE.author.name}</h3>
+              <h4 className="text-muted-foreground m-0">Software Engineer</h4>
             </div>
             <OpenForHire isOpenForHire={isAvailableForHire} />
           </div>
