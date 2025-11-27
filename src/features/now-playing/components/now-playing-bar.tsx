@@ -65,7 +65,7 @@ const NowPlayingBar = ({
                       className="flex gap-1 hover:cursor-pointer hover:underline"
                       onClick={() => onOpenSongUrl?.(track.songUrl)}
                     >
-                      <div className="inline-flex">
+                      <div className="inline-flex gap-1">
                         <span>{track.artist}</span> - <span>{track.title}</span>
                       </div>
                     </div>
