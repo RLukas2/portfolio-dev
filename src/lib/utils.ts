@@ -3,7 +3,6 @@ import { format, parseISO } from 'date-fns';
 import { toZonedTime } from 'date-fns-tz';
 import { twMerge } from 'tailwind-merge';
 
-
 /**
  * Combines class names conditionally and merges Tailwind CSS classes.
  *
@@ -11,7 +10,6 @@ import { twMerge } from 'tailwind-merge';
  * @returns {string}  The combined and merged class names.
  */
 export const cn = (...classes: ClassValue[]): string => twMerge(clsx(classes));
-
 
 /**
  * Formats a date string into a specified format (default is 'MMMM dd, yyyy').
@@ -25,7 +23,6 @@ export const formatDate = (
   dateFormat: string = 'MMMM dd, yyyy',
 ) => format(toZonedTime(parseISO(date), 'Asia/Jakarta'), dateFormat);
 
-
 /**
  * Trims a string to a specified maximum length and appends ellipsis if necessary.
  *
@@ -36,7 +33,6 @@ export const formatDate = (
 export const trim = (text?: string, maxLength: number = 20): string =>
   (text && text.slice(0, maxLength) + (text.length > maxLength ? '...' : '')) ??
   '';
-
 
 /**
  *  Generates the full path for a content image based on the provided path and image name.

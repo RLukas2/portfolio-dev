@@ -28,7 +28,10 @@ const sitemap = (): MetadataRoute.Sitemap => {
       priority: 0.6,
     }));
 
-  const routePriorities: Record<string, { priority: number; changeFrequency: 'weekly' | 'monthly' }> = {
+  const routePriorities: Record<
+    string,
+    { priority: number; changeFrequency: 'weekly' | 'monthly' }
+  > = {
     '': { priority: 1.0, changeFrequency: 'weekly' },
     [ROUTES.blog]: { priority: 0.9, changeFrequency: 'weekly' },
     [ROUTES.projects]: { priority: 0.9, changeFrequency: 'weekly' },

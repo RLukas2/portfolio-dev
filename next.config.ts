@@ -136,7 +136,7 @@ const millionConfig = {
 export default isDevelopment
   ? withContentCollections(MillionLint.next(millionConfig)(nextConfig))
   : withContentCollections(
-    MillionLint.next(millionConfig)(
-      withSentryConfig(nextConfig, SentryWebpackPluginOptions),
-    ),
-  );
+      MillionLint.next(millionConfig)(
+        withSentryConfig(nextConfig, SentryWebpackPluginOptions),
+      ),
+    );

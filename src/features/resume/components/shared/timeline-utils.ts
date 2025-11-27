@@ -6,7 +6,10 @@ export interface TimelineEntryProps {
   endDate: string | null;
 }
 
-export const calculateDuration = (startDate: string, endDate: string | null) => {
+export const calculateDuration = (
+  startDate: string,
+  endDate: string | null,
+) => {
   const start = new Date(startDate);
   const end = endDate ? new Date(endDate) : new Date();
 
@@ -28,7 +31,9 @@ export const calculateDuration = (startDate: string, endDate: string | null) => 
 
 export const formatDateRange = (start: Date, endDate: string | null) => {
   const startFormatted = format(start, 'MMM yyyy');
-  const endFormatted = endDate ? format(new Date(endDate), 'MMM yyyy') : 'Present';
+  const endFormatted = endDate
+    ? format(new Date(endDate), 'MMM yyyy')
+    : 'Present';
 
   return `${startFormatted} - ${endFormatted}`;
 };
