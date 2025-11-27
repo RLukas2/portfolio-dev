@@ -87,6 +87,7 @@ const CurrentTechStacks = () => {
                 className,
               )}
               variants={animation}
+              role="listitem"
             >
               {icon}
             </motion.div>

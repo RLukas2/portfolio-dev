@@ -48,7 +48,7 @@ const Hero = () => {
             Ngô Hoàng Tuấn
           </motion.h1>
 
-          <motion.h3
+          <motion.h2
             className={cn(
               'text-xl font-semibold tracking-tight md:text-2xl lg:text-3xl',
               'text-blue-600 dark:text-blue-400',
@@ -58,7 +58,7 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.5 }}
           >
             Aspiring Backend Developer
-          </motion.h3>
+          </motion.h2>
 
           <motion.p
             className="text-muted-foreground max-w-xl text-lg"

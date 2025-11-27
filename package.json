@@ -92,6 +92,7 @@
     "@typescript-eslint/parser": "^8.48.0",
     "beasties": "^0.3.5",
     "clsx": "^2.1.1",
+    "critters": "^0.0.25",
     "cross-env": "^10.1.0",
     "cssnano": "^7.1.2",
     "eslint": "^9.39.1",
