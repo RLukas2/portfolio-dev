@@ -1,0 +1,262 @@
+---
+title: 'To-do List for My Website'
+excerpt: 'A comprehensive to-do list outlining the features and improvements planned for my personal portfolio built with Next.js, Supabase, and Prisma.'
+date: 2025-11-28T10:00:00.000Z
+modifiedDate: 2025-11-28T10:00:00.000Z
+keywords:
+  [
+    to-do list,
+    website features,
+    improvements,
+    personal website,
+    portfolio,
+    Next.js,
+  ]
+tags: [to-do list, website, portfolio, development]
+pinned: true
+image: to-do-list/cover.png
+published: true
+---
+
+# Website To-Do List
+
+This is a living document tracking planned features and improvements for my personal portfolio.
+I'll update this as I progress through each item.
+
+## Get Started
+
+I have long wanted to create a personal website that serves as a central hub for my work, projects, and blog posts.
+My goal is to build a platform that is easy to navigate, visually appealing, and simple to maintain.
+I am using [Next.js](https://nextjs.org/), [Supabase](https://supabase.com/), and [Prisma](https://www.prisma.io/) to build this website, leveraging their powerful features to create a seamless user experience.
+
+## Initial Setup
+
+- [x] Set up Next.js project with TypeScript
+- [x] Integrate Tailwind CSS for styling
+- [x] Configure Supabase for backend services
+- [x] Set up Prisma for database management
+- [x] Implement authentication with Supabase Auth
+- [x] Design and implement the database schema
+- [x] Create initial pages: Home, About, Projects, Blog, Contact
+- [x] Deploy the website on Vercel
+
+One of the reasons I deploy on Vercel rather than Github Pages is the built-in support for serverless functions and API routes, which allows me to create a more dynamic and interactive experience for users.
+
+Another reason is managing static and dynamic content more efficiently, as Vercel optimizes the delivery of both types of content seamlessly; meanwhile, Github Pages is primarily designed for static content.
+
+## Why Improve?
+
+As I continue to develop my website, I want to ensure that it remains up-to-date with the latest web development trends and technologies.
+By continuously improving the website, I can provide a better user experience and showcase my skills as a developer.
+
+And some of the aesthetic elements feel a bit outdated, not fit, or just plain boring.
+That is why I want to keep pushing the boundaries and exploring new design trends to make my website more visually appealing.
+
+---
+
+## Priority Features
+
+This is a list of features and improvements I plan to implement on my website, categorized by priority.
+
+### General
+
+This is the most important section, as it affects the overall functionality and user experience of the website.
+Most of the priority features here are being worked on first before diving into specific pages.
+
+#### Architecture & Performance
+
+- [ ] **Audit current codebase** for optimization opportunities
+- [ ] **Reduce bundle size** - code splitting, lazy loading
+- [ ] **Image optimization** - WebP, responsive images, lazy loading
+- [ ] **SEO optimization**
+  - [ ] Update meta tags/OG images for each page
+  - [ ] Add JSON-LD schema markup (BlogPosting, Person, Project)
+  - [ ] Ensure proper heading hierarchy (H1 per page)
+- [ ] **Performance testing** - Lighthouse audit
+- [ ] **Accessibility audit** - WCAG compliance (a11y)
+  - [ ] Color contrast ratios
+  - [ ] Keyboard navigation
+  - [ ] Screen reader compatibility
+  - [ ] Alt text for images
+- [x] Ensure support for older browsers and devices.
+
+#### Component Refactoring
+
+- Improve the code structure and organization.
+  - [ ] **Refactor components** for better reusability.
+  - [ ] **Add comments and documentation** where necessary.
+- [ ] **Remove any unused dependencies or code** for cleaner codebase.
+- [ ] **Error boundaries** for better error handling.
+
+### Data & Content
+
+- [ ] **Migrate content** to new page structures
+- [ ] **Create content management** strategy if needed
+- [ ] **Backup existing content** before major restructure
+- [ ] **Update all internal links** after URL changes
+
+### Navigation Bar
+
+I think the navigation bar could use some improvements to enhance usability and aesthetics?
+But not sure what exactly yet.
+Well, for now, it is completely functional and fine enough as is.
+
+~~Until I figure out what to change or get some bug.~~
+
+- Should I add "More" dropdown for secondary items?
+- [ ] **Fix Command Palette** icon small on mobile.
+- [x] **Add active link highlighting** to indicate the current page.
+
+### Home Page
+
+This is the main landing page for visitors to my website.
+But it feels a bit bland and could use some sprucing up.
+
+- [ ] **Redesign the page** with updated graphics and text
+- [ ] **Add year-end retrospective section**
+  - [ ] Create `/retrospective` or `/recap` page
+  - [ ] Display stats: posts written, projects shipped, skills learned
+  - [ ] Add reflections on the year
+  - [ ] Include link to previous years' recaps if available
+- [ ] **Add endorsements showcase** (featured endorsements carousel/grid)
+  - [ ] Show top 3-5 endorsements with avatar + quote
+  - [ ] Link to full endorsements page
+- [ ] **Latest blog post preview** (single featured post, not list)
+- [ ] **Newsletter/contact CTA** section
+
+### About Page
+
+I don't know if the about page needs much improvement, but I think it could use some updates to make it more engaging and informative.
+Maybe reusing some of the components from the home page like the endorsements showcase.
+
+- [ ] **Redesign the page** layout for better readability and engagement.
+- **Update biography**:
+  - [ ] Introduction/Bio
+  - [ ] Experience/Background
+  - [ ] Skills/Technologies
+  - [ ] Interest/Hobbies
+  - [ ] Social Links
+- [ ] **Add 'What I'm up to now' section** with current projects and interests.
+- [ ] Maybe add the retrospective section here instead?
+
+### Blog Page & Individual Blog Posts
+
+One of the main sections of my website is the blog, where I share my thoughts and experiences on various topics related to web development, programming, and technology.
+
+But I feel like the blog section could use some improvements to make it more engaging and user-friendly.
+Since blogging is one of my main focuses, I want to ensure that this section of the website is top-notch.
+
+#### Blog List Page
+
+- [ ] **Add advanced filtering**
+  - [ ] Filter by category/tag
+  - [ ] Sort by date, popularity, reading time
+  - [ ] Search functionality (full-text search recommended)
+- [ ] **Improve blog card design**
+  - [ ] Show: title, excerpt, date, reading time, featured image
+  - [ ] Add category badges/tags
+  - [ ] Show author info if applicable
+- [ ] **Add pagination or infinite scroll** (recommend pagination for UX)
+- [ ] **Create category landing pages** (e.g., `/blog/category/nextjs`)
+- [ ] **Add "popular posts" section** on blog homepage
+- [ ] **Archive view** - group posts by year/month
+
+#### Individual Blog Post Page
+
+- [ ] **Add Table of Contents (ToC)**
+  - [ ] Auto-generate from H2/H3 headings
+  - [ ] Add sticky ToC sidebar (desktop) or collapsible (mobile)
+  - [ ] Implement smooth scroll anchors
+  - [ ] Highlight current section being read
+- [ ] **Redesign post layout**
+  - [ ] Better typography hierarchy
+  - [ ] Improved code block styling
+  - [ ] Better image presentation (lightbox modal?)
+  - [ ] Increase line-height for readability
+  - [ ] Fix the image captions styling
+- [ ] **Add "Related Posts" section** at bottom
+- [ ] **Add last updated date**
+- [ ] **Newsletter CTA** in post footer
+- [ ] **Comments section** (consider Giscus/Utterances if using GitHub)
+
+### Projects Page
+
+- **Redesign project cards**:
+  - [ ] Make it as a list for Desktop and grid for Mobile
+  - [ ] Show: title, description, tech stack, links (GitHub/demo), image
+  - [ ] Add **View Details** button to each card that direct to each project posts
+- [ ] **Highlight featured projects** at top (pin top 3)
+- [ ] Add individual project pages with more details (use the same technology as blog posts?)
+
+### Snippet Page
+
+This is a page that I am using to share small code snippets or utilities that I find useful.
+
+However, I want to make it bigger, via combining it into **Shorts**. That is, where I write small notes, tips, or what am I doing currently without having to write a full blog post.
+
+- [ ] **Rename "Snippets" to "Shorts"** in navigation
+- [ ] **Redesign Shorts page** to combine:
+  - [ ] Code snippets (reusable code)
+  - [ ] Quick notes/tips
+  - [ ] "What to do" guides (small tutorials)
+- [ ] **Add tagging system** (language, category, use-case)
+- [ ] **Search & filter functionality**
+  - [ ] Filter by tag
+  - [ ] Sort by date, name, and views.
+- [ ] **Shorts card design**
+  - [ ] Show title, description, code preview
+  - [ ] Tags
+  - [ ] Copy button
+  - [ ] View full short button
+- [ ] **Share/export options**
+
+### Dashboard
+
+Well, one of the page I see useful for myself is a dashboard where I can see some analytics about my website.
+But it can also be useful for visitors to see some stats about my work.
+
+Currently, it showing analytics about my website, WakaTime stats about my coding activity, and GitHub stats about my repositories.
+But I think it deserves some improvements.
+
+- [ ] **Analyze current dashboard purpose** - what's it showing now?
+- [ ] **Add page analytics/viewer stats**
+  - [ ] Show page views per section/page
+  - [ ] Show most viewed posts
+  - [ ] Show most viewed projects
+- [ ] **Personal analytics**
+  - [ ] Total blog posts written
+  - [ ] Total projects
+  - [ ] Total endorsements received
+  - [ ] Total shorts/snippets
+- [ ] **Activity timeline**
+  - [ ] Recent blog posts
+  - [ ] Recent projects
+  - [ ] Recent endorsements
+- [ ] **Traffic visualization** (charts, graphs)
+- [ ] **Real-time visitor counter** (optional)
+
+### New: Bucket List Page
+
+The bucket list page is a new addition to my website where I can share my personal and professional goals.
+I think it would be interesting to share my aspirations and dreams with my audience.
+
+- [ ] **Create `/bucket-list` route**
+- [ ] **Design bucket list display**
+  - [ ] Categorize by type (Travel, Learn, Build, Experience, etc.)
+  - [ ] Show status: Not Started, In Progress, Completed
+  - [ ] Add date completed if finished
+- [ ] **Card design with icons** for visual appeal
+- [ ] **Filter by category/status**
+- [ ] **Mobile responsive**
+
+---
+
+## 🔗 Related Links
+
+- **Website:** [https://rlukas2.vercel.app/](https://rlukas2.vercel.app/)
+- **GitHub:** [rlukas2](https://github.com/rlukas2)
+- **Tech Stack Documentation:**
+  - [Next.js Documentation](https://nextjs.org/docs)
+  - [Prisma Documentation](https://www.prisma.io/docs/)
+  - [Supabase Documentation](https://supabase.com/docs)
+  - [Tailwind CSS Documentation](https://tailwindcss.com/docs)

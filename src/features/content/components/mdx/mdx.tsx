@@ -64,7 +64,12 @@ const Mdx = ({ code, className }: { code: string; className?: string }) => {
   const MdxContent = useMDXComponent(code);
 
   return (
-    <div className={cn('prose dark:prose-invert w-full max-w-none', className)}>
+    <div
+      className={cn(
+        'prose dark:prose-invert w-full max-w-none text-lg',
+        className,
+      )}
+    >
       <MdxContent components={{ ...components }} />
     </div>
   );
