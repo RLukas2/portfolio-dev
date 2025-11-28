@@ -56,7 +56,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
         )}
       >
         {/* Image */}
-        <figure className="bg-card relative aspect-video overflow-hidden md:w-64 md:shrink-0 md:rounded-2xl">
+        <figure className="bg-card relative aspect-video overflow-hidden md:w-48 md:shrink-0 md:rounded-2xl">
           <Image
             src={image as string}
             alt={title}
