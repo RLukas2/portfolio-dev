@@ -61,7 +61,7 @@ const LatestPosts = () => {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="grid auto-cols-fr grid-cols-1 gap-4 md:grid-cols-2"
+            className="grid auto-cols-fr grid-cols-1 gap-8"
           >
             {posts.map((post) => (
               <PostCard key={post._id} post={post} />
