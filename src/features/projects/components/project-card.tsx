@@ -118,7 +118,7 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
 
         {/* CTA */}
         <div className="mt-auto flex flex-wrap items-center gap-2 px-4 pb-4">
-          <Button asChild variant="shadow" size="sm">
+          <Button asChild variant="shadow" size="default">
             <Link href={projectDetailUrl}>
               View Project <ChevronRightIcon />
             </Link>
