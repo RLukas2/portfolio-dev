@@ -1,4 +1,4 @@
-import { ReactJS, TypeScript } from '@/components/icons';
+import { ReactJS, TypeScript } from '@/components/common/icons';
 
 import type { Experience } from './types';
 

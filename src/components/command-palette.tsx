@@ -16,7 +16,7 @@ import { COMMAND_PAGES, COMMAND_SOCIAL_MEDIA } from '@/constants/links';
 import { cn } from '@/lib/utils';
 import type { CommandMenuItem } from '@/types/menu';
 
-import { Command as CommandIcon, Moon, Sun } from './icons';
+import { Command as CommandIcon, Moon, Sun } from './common/icons';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import {
@@ -67,7 +67,14 @@ export const CommandPaletteProvider = ({
   );
 };
 
-export const CommandPalette = () => {
+/**
+ * CommandPalette Component
+ * This component renders a command palette that allows users to navigate
+ * through pages, social media links, and switch appearance modes.
+ *
+ * @returns {React.ReactNode} The rendered CommandPalette component.
+ */
+export const CommandPalette = (): React.ReactNode => {
   const { isOpen, setIsOpen } = useCommandPaletteContext();
   const pathname = usePathname();
   const router = useRouter();

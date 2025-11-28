@@ -7,9 +7,9 @@ import {
 } from 'next/font/google';
 import localFont from 'next/font/local';
 
-import HomePageStars from '@/components/background';
 import Footer from '@/components/core/footer';
 import Header from '@/components/core/header';
+import StarBackground from '@/components/effects/background';
 import Analytics from '@/components/provider/analytics';
 import AppProvider from '@/components/provider/app-provider';
 import SpeedInsight from '@/components/provider/speed-insight';
@@ -71,7 +71,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
     >
       <AppProvider>
         <div id="__app" className={cn('flex min-h-screen flex-col')}>
-          <HomePageStars />
+          <StarBackground />
           <Header />
           <main>{children}</main>
           <Footer />

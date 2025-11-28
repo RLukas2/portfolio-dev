@@ -14,6 +14,14 @@ import {
   DialogTitle,
 } from './dialog';
 
+/**
+ * Command component to render a command palette using cmdk.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function Command({
   className,
   ...props
@@ -30,6 +38,20 @@ function Command({
   );
 }
 
+/**
+ * CommandDialog component to render a dialog containing the command palette.
+ * A dialog is a temporary window that prompts the user to make a decision or enter additional information.
+ *
+ * @param {React.ComponentProps<typeof Dialog> & {
+ *   title?: string;
+ *   description?: string;
+ * }} param0
+ * @param {*} [param0.title='Command Palette']
+ * @param {*} [param0.description='Search for a command to run...']
+ * @param {*} param0.children
+ * @param {*} param0....props
+ * @returns {*}
+ */
 function CommandDialog({
   title = 'Command Palette',
   description = 'Search for a command to run...',
@@ -72,6 +94,14 @@ function CommandDialog({
   );
 }
 
+/**
+ * CommandInput component to render the input field for the command palette.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive.Input>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function CommandInput({
   className,
   ...props
@@ -94,6 +124,14 @@ function CommandInput({
   );
 }
 
+/**
+ * CommandList component to render the list of command items.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive.List>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function CommandList({
   className,
   ...props
@@ -110,6 +148,13 @@ function CommandList({
   );
 }
 
+/**
+ * CommandEmpty component to render when there are no command results.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive.Empty>} param0
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function CommandEmpty({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Empty>) {
@@ -122,6 +167,15 @@ function CommandEmpty({
   );
 }
 
+/**
+ * CommandGroup component to render a group of command items.
+ * This is used to categorize commands within the command palette.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive.Group>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function CommandGroup({
   className,
   ...props
@@ -139,6 +193,14 @@ function CommandGroup({
   );
 }
 
+/**
+ * CommandSeparator component to render a separator between command items or groups.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive.Separator>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function CommandSeparator({
   className,
   ...props
@@ -152,6 +214,14 @@ function CommandSeparator({
   );
 }
 
+/**
+ * CommandItem component to render an individual command item.
+ *
+ * @param {React.ComponentProps<typeof CommandPrimitive.Item>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function CommandItem({
   className,
   ...props
@@ -168,6 +238,14 @@ function CommandItem({
   );
 }
 
+/**
+ * CommandShortcut component to render keyboard shortcuts for command items.
+ *
+ * @param {React.ComponentProps<'span'>} param0
+ * @param {React.ComponentProps<"span">} param0.className
+ * @param {React.ComponentProps<"span">} param0....props
+ * @returns {*}
+ */
 function CommandShortcut({
   className,
   ...props

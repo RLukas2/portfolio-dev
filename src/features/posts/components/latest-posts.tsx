@@ -6,7 +6,7 @@ import { ChevronRightIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
 
-import EmptyState from '@/components/empty-state';
+import EmptyState from '@/components/common/empty-state';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 

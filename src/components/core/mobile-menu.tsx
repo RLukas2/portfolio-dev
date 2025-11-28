@@ -1,21 +1,27 @@
 'use client';
 
-import { usePathname } from 'next/navigation';
-
-import { NAV_LINKS } from '@/constants/links';
-import { cn } from '@/lib/utils';
-
-import { MenuKebab } from './icons';
-import Link from './link';
-import { Button } from './ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from './ui/dropdown-menu';
+} from '@radix-ui/react-dropdown-menu';
+import { usePathname } from 'next/navigation';
 
-const MobileMenu = () => {
+import { MenuKebab } from '@/components/common/icons';
+import Link from '@/components/common/link';
+import { Button } from '@/components/ui/button';
+import { NAV_LINKS } from '@/constants/links';
+import { cn } from '@/lib/utils';
+
+/**
+ * Mobile Menu Component
+ * This component renders a mobile dropdown menu for navigation links.
+ * Currently not in use, being replaced by the Command Palette.
+ *
+ * @returns {React.ReactNode} The rendered Mobile Menu component.
+ */
+const MobileMenu = (): React.ReactNode => {
   const pathname = usePathname();
 
   return (

@@ -11,7 +11,7 @@ import {
   PostgreSQL,
   Python,
   TypeScript,
-} from '@/components/icons';
+} from '@/components/common/icons';
 import {
   Tooltip,
   TooltipContent,

@@ -3,7 +3,7 @@
 import { SearchIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
-import EmptyState from '@/components/empty-state';
+import EmptyState from '@/components/common/empty-state';
 import { Input } from '@/components/ui/input';
 
 import PostCard from './post-card';

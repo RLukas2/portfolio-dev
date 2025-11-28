@@ -4,7 +4,7 @@ import './shiki.css';
 import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
 
-import BlurImage from '@/components/blur-image';
+import BlurImage from '@/components/effects/blur-image';
 import { cn } from '@/lib/utils';
 
 import Anchor from './anchor';

@@ -6,10 +6,16 @@ import { FOOTER_ICON_LINKS, FOOTER_LINKS } from '@/constants/links';
 import { SITE } from '@/constants/site';
 import { cn } from '@/lib/utils';
 
-import Container from '../container';
-import Link from '../link';
+import Link from '../common/link';
+import Container from './container';
 
-const Footer = () => {
+/**
+ * Footer Component
+ * This component renders the footer section of the website, including links and social icons.
+ *
+ * @returns {React.ReactNode} The rendered Footer component.
+ */
+const Footer = (): React.ReactNode => {
   return (
     <footer className={cn('bg-grid mb-10 pt-16 text-sm')}>
       {/* Horizontal Line*/}

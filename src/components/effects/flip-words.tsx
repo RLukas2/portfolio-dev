@@ -5,6 +5,20 @@ import { useCallback, useEffect, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
+/**
+ * FlipWords Component
+ * This component displays a series of words that flip with an animation effect.
+ *
+ * @param {{
+ *   words: string[];
+ *   duration?: number;
+ *   className?: string;
+ * }} param0
+ * @param {{}} param0.words
+ * @param {number} [param0.duration=1000] - Duration between word flips in milliseconds.
+ * @param {string} param0.className - Additional class names to apply to the component.
+ * @returns {React.ReactNode} The rendered FlipWords component.
+ */
 const FlipWords = ({
   words,
   duration = 1000,
@@ -13,7 +27,7 @@ const FlipWords = ({
   words: string[];
   duration?: number;
   className?: string;
-}) => {
+}): React.ReactNode => {
   if (words.length === 0) {
     words = [''];
   }

@@ -17,7 +17,7 @@ import {
   TailwindCSS,
   TypeScript,
   VueJS,
-} from '@/components/icons';
+} from '@/components/common/icons';
 import {
   Tooltip,
   TooltipContent,

@@ -1,7 +1,7 @@
 import { FileTextIcon } from 'lucide-react';
 
-import { Email, GitHub, LinkedIn } from '@/components/icons';
-import Link from '@/components/link';
+import { Email, GitHub, LinkedIn } from '@/components/common/icons';
+import Link from '@/components/common/link';
 import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { SITE } from '@/constants/site';

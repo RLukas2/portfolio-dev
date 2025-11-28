@@ -4,6 +4,18 @@ import { motion } from 'framer-motion';
 
 import { cn } from '@/lib/utils';
 
+/**
+ * Progress Component
+ * This component displays a progress bar with a name and percentage.
+ *
+ * @param {{
+ *   data: { name: string; percent?: number };
+ *   className?: string;
+ * }} param0
+ * @param {{ name: string; percent?: number; }} param0.data - The data for the progress bar.
+ * @param {string} param0.className - Additional class names to apply to the progress bar.
+ * @returns {*}
+ */
 const Progress = ({
   data,
   className,

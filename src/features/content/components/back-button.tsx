@@ -4,7 +4,7 @@ import { ArrowLeftCircleIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import Container from '@/components/container';
+import Container from '@/components/core/container';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

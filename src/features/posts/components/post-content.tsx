@@ -1,6 +1,6 @@
 'use client';
 
-import Container from '@/components/container';
+import Container from '@/components/core/container';
 import ContentEngagements from '@/features/content/components/content-engagements';
 import Mdx from '@/features/content/components/mdx/mdx';
 

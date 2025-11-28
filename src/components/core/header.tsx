@@ -7,12 +7,18 @@ import useScroll from '@/hooks/use-scroll';
 import { cn } from '@/lib/utils';
 
 import { CommandPalette } from '../command-palette';
-import Container from '../container';
-import Link from '../link';
+import Link from '../common/link';
 import ThemeSwitch from '../theme-switch';
 import { Separator } from '../ui/separator';
+import Container from './container';
 
-const Header = () => {
+/**
+ * Header Component
+ * This component renders the header section of the website, including the logo, navigation links, and utility items.
+ *
+ * @returns {React.ReactNode} - The rendered Header component.
+ */
+const Header = (): React.ReactNode => {
   const isScrolled = useScroll();
   const pathname = usePathname();
 
@@ -26,6 +32,7 @@ const Header = () => {
       <Container>
         <div className={cn('flex h-full flex-1 items-center justify-between')}>
           <div className={cn('flex items-center gap-4')}>
+            {/* Logo */}
             <Link
               href="/"
               className={cn('flex items-center justify-center gap-2')}
@@ -36,6 +43,8 @@ const Header = () => {
                 xbrk
               </span>
             </Link>
+
+            {/* Navigation Links */}
             <nav className={cn('hidden', 'md:flex')}>
               <ul className={cn('flex', 'md:gap-x-0.5')}>
                 {NAV_LINKS.filter(
@@ -63,6 +72,8 @@ const Header = () => {
               </ul>
             </nav>
           </div>
+
+          {/* Right Side Items */}
           <div className={cn('flex items-center gap-1')}>
             <Separator orientation="vertical" className={cn('h-6')} />
             <ThemeSwitch />

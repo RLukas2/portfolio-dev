@@ -7,7 +7,13 @@ import useMounted from '@/hooks/use-mounted';
 
 import { Button } from './ui/button';
 
-const ThemeSwitch = () => {
+/**
+ * ThemeSwitch Component
+ * A button component that allows users to toggle between light and dark themes.
+ *
+ * @returns {React.ReactNode} The rendered ThemeSwitch component.
+ */
+const ThemeSwitch = (): React.ReactNode => {
   const { resolvedTheme: theme, setTheme } = useTheme();
   const mounted = useMounted();
 

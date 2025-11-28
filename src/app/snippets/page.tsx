@@ -1,9 +1,9 @@
 import { compareDesc } from 'date-fns';
 import type { Metadata } from 'next';
 
-import Container from '@/components/container';
-import EmptyState from '@/components/empty-state';
-import PageHeader from '@/components/page-header';
+import EmptyState from '@/components/common/empty-state';
+import PageHeader from '@/components/common/page-header';
+import Container from '@/components/core/container';
 import { ROUTES } from '@/constants/routes';
 import SnippetCard from '@/features/snippets/components/snippet-card';
 import { seo } from '@/lib/meta';

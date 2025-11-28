@@ -1,5 +1,20 @@
 import { BASE_URL, SITE } from '@/constants/site';
 
+/**
+ * OGImage Component
+ * This component generates an Open Graph image with the provided title, caption, and date.
+ * Used for social media sharing and link previews.
+ *
+ * @param {{
+ *   title: string;
+ *   caption: string | null;
+ *   date: string | null;
+ * }} param0
+ * @param {string} param0.title - The title to be displayed on the OG image.
+ * @param {string} param0.caption - The caption to be displayed below the title.
+ * @param {string} param0.date - The date to be displayed at the bottom of the image.
+ * @returns {React.ReactNode} The rendered OGImage component.
+ */
 const OGImage = ({
   title,
   caption,
@@ -8,7 +23,7 @@ const OGImage = ({
   title: string;
   caption: string | null;
   date: string | null;
-}) => {
+}): React.ReactNode => {
   const getTitleFontSize = (): string =>
     title.length > 50 ? 'text-5xl' : 'text-6xl';
 

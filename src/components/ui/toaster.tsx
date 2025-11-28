@@ -10,6 +10,12 @@ import {
 } from '@/components/ui/toast';
 import { useToast } from '@/hooks/use-toast';
 
+/**
+ * Toaster component to render toast notifications.
+ *
+ * @export
+ * @returns {*}
+ */
 export function Toaster() {
   const { toasts } = useToast();
 
