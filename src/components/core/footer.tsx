@@ -64,7 +64,7 @@ const Footer = () => {
         <div className={cn('flex items-center justify-between gap-4')}>
           <div className={cn('font-medium')}>
             &copy; {new Date().getFullYear()}{' '}
-            <Link href="/">{SITE.author.name}</Link> ——{' '}
+            <Link href="/">{SITE.author.name}</Link> —{' '}
             <em className={cn('text-muted-foreground')}>
               <Link href="https://www.google.com/maps/place/Ho+Chi+Minh+City,+Vietnam">
                 Ho Chi Minh, Vietnam

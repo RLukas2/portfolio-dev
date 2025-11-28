@@ -11,6 +11,7 @@ interface Author {
     url: string;
   };
   twitter?: string;
+  facebook?: string;
 }
 
 interface Site {
@@ -41,6 +42,7 @@ export const SITE: Site = {
       url: 'https://github.com/RLukas2',
     },
     twitter: 'https://twitter.com/XBoRickie',
+    facebook: 'https://facebook.com/RickieLukas',
   },
   keywords: [
     'rlukas2',

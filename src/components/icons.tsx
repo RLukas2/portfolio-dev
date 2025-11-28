@@ -1,5 +1,12 @@
 import type { ComponentProps } from 'react';
-import { FaAt, FaBars, FaFile, FaHome, FaTwitter } from 'react-icons/fa';
+import {
+  FaAt,
+  FaBars,
+  FaFacebook,
+  FaFile,
+  FaHome,
+  FaTwitter,
+} from 'react-icons/fa';
 import type { IconType } from 'react-icons/lib';
 import {
   LuCoffee,
@@ -153,6 +160,10 @@ export const LinkedIn = (props: ComponentProps<IconType>) => (
 
 export const Twitter = (props: ComponentProps<IconType>) => (
   <FaTwitter {...props} />
+);
+
+export const Facebook = (props: ComponentProps<IconType>) => (
+  <FaFacebook {...props} />
 );
 
 /**

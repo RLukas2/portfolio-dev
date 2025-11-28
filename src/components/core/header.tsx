@@ -31,10 +31,7 @@ const Header = () => {
               className={cn('flex items-center justify-center gap-2')}
             >
               <span
-                className={cn(
-                  'hidden text-xl font-extrabold tracking-tight',
-                  'md:flex',
-                )}
+                className={cn('flex text-xl font-extrabold tracking-tight')}
               >
                 xbrk
               </span>
