@@ -68,13 +68,12 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
       )}
     >
       {/* Image */}
-      <div className="bg-card relative aspect-video md:aspect-square md:w-64 md:shrink-0 md:rounded-2xl">
-        <div className="absolute size-full" />
+      <div className="bg-card relative aspect-video overflow-hidden md:aspect-square md:w-64 md:shrink-0 md:rounded-2xl">
         <Image
           src={image as string}
           alt={title}
           fill
-          className="group-hover:scale-105s rounded-t-lg object-cover transition-transform md:rounded-2xl"
+          className="rounded-t-lg object-cover object-center transition-transform group-hover:scale-105 md:rounded-2xl"
           priority
           {...extraImageProps}
         />

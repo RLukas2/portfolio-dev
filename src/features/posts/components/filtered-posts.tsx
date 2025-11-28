@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 
 import EmptyState from '@/components/common/empty-state';
 import { Input } from '@/components/ui/input';
+import { Separator } from '@/components/ui/separator';
 
 import PostCard from './post-card';
 import type { Post } from '.content-collections/generated';
@@ -38,6 +39,7 @@ const FilteredPosts = ({ posts }: { posts: Post[] }) => {
 
   return (
     <div className="space-y-8">
+      {/* Search Input */}
       <div className="relative flex-1">
         <Input
           aria-label="Search posts"
@@ -49,8 +51,12 @@ const FilteredPosts = ({ posts }: { posts: Post[] }) => {
         />
         <SearchIcon className="absolute top-1/2 left-2 size-5 -translate-y-1/2" />
       </div>
+      {/* Horizontal Divider */}
+      <Separator />
+
+      {/* Posts Grid or Empty State */}
       {filteredPosts.length ? (
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        <div className="grid auto-cols-fr grid-cols-1 gap-8">
           {filteredPosts.map((post) => (
             <PostCard key={post._id} post={post} />
           ))}
