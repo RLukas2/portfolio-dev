@@ -20,20 +20,20 @@ const PostThumbnail = () => {
   } = JSON.parse(imageMeta);
 
   return (
-    <figure
-      className="pointer-events-none absolute top-0 -right-[calc(100vw-100%)] -left-[calc(100vw-100%)] -z-1 max-w-screen overflow-hidden opacity-70 blur saturate-125 transition dark:opacity-65"
-      style={{ height: '85vh', maxHeight: 380 }}
-    >
+    <div className="relative h-64 w-full overflow-hidden">
       <Image
         src={image as string}
         alt={title}
         priority
-        className="size-full object-cover"
-        {...parsedImageMeta}
-        width={1200}
-        height={630}
+        fill
+        className="object-cover"
+        {...(parsedImageMeta?.blurDataURL && {
+          placeholder: 'blur',
+          blurDataURL: parsedImageMeta.blurDataURL,
+        })}
       />
-    </figure>
+      <div className="from-background absolute inset-0 bg-linear-to-t to-transparent" />
+    </div>
   );
 };
 

@@ -10,10 +10,12 @@ const ProjectContent = () => {
   const { slug, code } = useProjectContext();
 
   return (
-    <Container>
-      <Mdx code={code} className="mt-8" />
-      <ContentEngagements slug={slug} />
-    </Container>
+    <section>
+      <Container>
+        <Mdx code={code} className="mt-8" />
+        <ContentEngagements slug={slug} />
+      </Container>
+    </section>
   );
 };
 
