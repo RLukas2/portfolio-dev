@@ -39,14 +39,13 @@ const ProjectsPage = () => {
       />
       <Container>
         {projects.length ? (
-          <div
-            className={cn(
-              'grid w-full auto-cols-fr grid-cols-1 gap-4',
-              'md:grid-cols-2',
-            )}
-          >
-            {projects.map((project) => (
-              <ProjectCard key={project._id} project={project} />
+          <div className={cn('grid w-full auto-cols-fr grid-cols-1 gap-8')}>
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={project._id}
+                project={project}
+                className={index % 2 === 0 ? 'flex-row-reverse' : ''}
+              />
             ))}
           </div>
         ) : (
