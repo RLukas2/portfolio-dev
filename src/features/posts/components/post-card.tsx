@@ -1,5 +1,6 @@
 'use client';
 
+import { ClockIcon, EyeIcon } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMemo } from 'react';
@@ -56,11 +57,15 @@ const PostCard = ({ post }: { post: Post }) => {
       <div className="text-muted-foreground flex items-center justify-between gap-2 p-4 text-sm">
         <time dateTime={publishedAt}>{publishedAt}</time>
         <div className="flex gap-2">
-          <div title="Estimated read time">{readingTime}</div>
+          <div className="flex items-center gap-1">
+            <ClockIcon className="text-primary size-5" />
+            <span title="Estimated read time">{readingTime}</span>
+          </div>
           <span>&middot;</span>
-          <div className="inline-flex gap-1">
+          <div className="flex items-center gap-1" title="Number of view(s)">
+            <EyeIcon className="text-primary size-5" />
             {isLoadViews ? (
-              <Skeleton className="w-16" />
+              <Skeleton className="h-5 w-16" />
             ) : (
               <>
                 <IncrementCounter to={views} /> views
