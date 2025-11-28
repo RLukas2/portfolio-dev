@@ -20,7 +20,15 @@ export const rehypePlugins: PluggableList = [
       behavior: 'append',
       properties: {
         className: ['heading-anchor'],
-        ariaHidden: 'true',
+        ariaLabel: 'Link to section',
+      },
+      content: {
+        type: 'element',
+        tagName: 'span',
+        properties: {
+          className: ['heading-anchor-icon'],
+        },
+        children: [{ type: 'text', value: '#' }],
       },
     },
   ],
