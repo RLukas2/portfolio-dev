@@ -29,7 +29,7 @@ import {
   TypeScript,
   Unity,
   Vercel,
-} from '@/components/icons';
+} from '@/components/common/icons';
 
 export const STACKS: { [key: string]: JSX.Element } = {
   // --- Languages ---

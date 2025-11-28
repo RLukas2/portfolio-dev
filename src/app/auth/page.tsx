@@ -3,8 +3,8 @@ import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
 import { getProviders } from 'next-auth/react';
 
-import Container from '@/components/container';
-import PageHeader from '@/components/page-header';
+import PageHeader from '@/components/common/page-header';
+import Container from '@/components/core/container';
 import { SITE } from '@/constants/site';
 import AuthCard from '@/features/auth/components/auth-card';
 import { authOptions } from '@/lib/auth';

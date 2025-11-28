@@ -10,6 +10,21 @@ interface MarqueeProps {
   loopSize?: number;
 }
 
+/**
+ * Marquee Component
+ * This component creates a scrolling marquee effect for its children.
+ * marquee effect is the continuous scrolling of content either horizontally or vertically.
+ *
+ * @param {MarqueeProps} param0
+ * @param {React.ReactNode} param0.children
+ * @param {("left" | "up")} [param0.direction='left'] - The direction of the marquee scroll.
+ * @param {boolean} [param0.pauseOnHover=false] - Whether to pause the marquee on hover.
+ * @param {boolean} [param0.reverse=false] - Whether to reverse the scroll direction.
+ * @param {boolean} [param0.fade=false] - Whether to apply a fade effect at the edges.
+ * @param {string} param0.className - Additional class names to apply to the marquee container.
+ * @param {number} [param0.loopSize=2] - The number of times to loop the children for continuous effect.
+ * @returns {React.ReactNode}
+ */
 const Marquee = ({
   children,
   direction = 'left',
@@ -18,7 +33,7 @@ const Marquee = ({
   fade = false,
   className,
   loopSize = 2,
-}: MarqueeProps) => {
+}: MarqueeProps): React.ReactNode => {
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
 

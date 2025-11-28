@@ -38,7 +38,13 @@ const roundToPrecision = (num: number, precision: number = 2) => {
   return Math.round(num * Math.pow(10, precision)) / Math.pow(10, precision);
 };
 
-export default function HomePageStars() {
+/**
+ * StarBackground Component
+ * This component renders a dynamic starry background with accent stars and nebula effects.
+ *
+ * @returns {React.ReactNode} The rendered StarBackground component.
+ */
+export default function StarBackground() {
   const id = useId();
   const numberOfAccentStars = 10;
   const numberOfBackgroundStars = 200;

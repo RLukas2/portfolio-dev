@@ -43,6 +43,16 @@ export const ScrollViewport = React.forwardRef<
 
 ScrollViewport.displayName = ScrollAreaPrimitive.Viewport.displayName;
 
+/**
+ * ScrollBar component to render the scrollbar for the scroll area.
+ * Primarily used for code blocks and other scrollable content.
+ *
+ * @param {React.ComponentProps<typeof ScrollAreaPrimitive.ScrollAreaScrollbar>} param0
+ * @param {React.ComponentProps<any>} param0.className
+ * @param {React.ComponentProps<any>} [param0.orientation='vertical']
+ * @param {React.ComponentProps<any>} param0....props
+ * @returns {*}
+ */
 function ScrollBar({
   className,
   orientation = 'vertical',

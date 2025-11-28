@@ -4,7 +4,7 @@ import { MonitorSpeakerIcon, SpeakerIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { Spotify } from '@/components/icons';
+import { Spotify } from '@/components/common/icons';
 import {
   Popover,
   PopoverContent,

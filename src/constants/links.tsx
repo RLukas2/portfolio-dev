@@ -15,7 +15,7 @@ import {
   Pencil,
   RSS,
   Twitter,
-} from '@/components/icons';
+} from '@/components/common/icons';
 import type { CommandMenuItem, NavLink } from '@/types/menu';
 
 import { ROUTES } from './routes';

@@ -10,6 +10,22 @@ interface BlurImageProps extends React.ComponentPropsWithoutRef<typeof Image> {
   lazy?: boolean;
 }
 
+/**
+ * BlurImage Component
+ * This component renders an image with a blur effect while loading.
+ *
+ * @type {React.ForwardRefExoticComponent<BlurImageProps & React.RefAttributes<HTMLImageElement>>}
+ * @param {BlurImageProps} param0
+ * @param {string} param0.src - The source URL of the image.
+ * @param {string} param0.alt - The alt text for the image.
+ * @param {string} [param0.className] - Additional class names to apply to the container div.
+ * @param {string} [param0.imageClassName] - Additional class names to apply to the image.
+ * @param {boolean} [param0.lazy=true] - Whether to lazy load the image.
+ * @param {number} [param0.width=1920] - The width of the image.
+ * @param {number} [param0.height=1024] - The height of the image.
+ * @param {React.Ref<HTMLImageElement>} ref - The ref to be forwarded to the image element.
+ * @returns {React.ReactNode} The rendered BlurImage component.
+ */
 const BlurImage = forwardRef<HTMLImageElement, BlurImageProps>(
   (
     {
@@ -23,7 +39,7 @@ const BlurImage = forwardRef<HTMLImageElement, BlurImageProps>(
       ...props
     },
     ref,
-  ) => {
+  ): React.ReactNode => {
     const [isLoading, setIsLoading] = useState(true);
 
     return (

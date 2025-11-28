@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronDownIcon } from 'lucide-react';
 import Link from 'next/link';
 
-import Container from '@/components/container';
+import Container from '@/components/core/container';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 

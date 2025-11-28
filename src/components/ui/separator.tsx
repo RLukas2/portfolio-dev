@@ -5,8 +5,13 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
+/**
+ * Separator component to render a horizontal or vertical separator line.
+ *
+ * @type {*}
+ */
 const Separator = React.forwardRef<
-  React.ElementRef<typeof SeparatorPrimitive.Root>,
+  React.ComponentRef<typeof SeparatorPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof SeparatorPrimitive.Root>
 >(
   (
@@ -19,7 +24,7 @@ const Separator = React.forwardRef<
       orientation={orientation}
       className={cn(
         'bg-border shrink-0',
-        orientation === 'horizontal' ? 'h-[1px] w-full' : 'h-full w-[1px]',
+        orientation === 'horizontal' ? 'h-px w-full' : 'h-full w-px',
         className,
       )}
       {...props}

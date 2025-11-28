@@ -5,7 +5,7 @@ import { forwardRef } from 'react';
 
 import { cn } from '@/lib/utils';
 
-import Container from './container';
+import Container from '../core/container';
 
 interface PageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
@@ -13,6 +13,19 @@ interface PageHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
   centered?: boolean;
 }
 
+/**
+ * Page Header Component
+ * This component renders a page header with a title and an optional description.
+ *
+ * @type {React.ForwardRefExoticComponent<PageHeaderProps & React.RefAttributes<HTMLDivElement>>}
+ * @param {PageHeaderProps} param0
+ * @param {string} param0.title - The title of the page header.
+ * @param {string} [param0.description] - The optional description of the page header.
+ * @param {boolean} [param0.centered=false] - Whether the text should be centered.
+ * @param {string} [param0.className] - Additional class names to apply to the header.
+ * @param {React.Ref<HTMLDivElement>} ref - The ref to be forwarded to the div element.
+ * @returns {React.ReactNode} The rendered PageHeader component.
+ */
 const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
   ({ title, description, centered = false, className, ...props }, ref) => {
     const animation = {

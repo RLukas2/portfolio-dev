@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
-import Container from '@/components/container';
-import PageHeader from '@/components/page-header';
+import PageHeader from '@/components/common/page-header';
+import Container from '@/components/core/container';
 import { ROUTES } from '@/constants/routes';
 import Mdx from '@/features/content/components/mdx/mdx';
 import { seo } from '@/lib/meta';

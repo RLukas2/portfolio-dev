@@ -1,6 +1,6 @@
 'use client';
 
-import Container from '@/components/container';
+import Container from '@/components/core/container';
 import { formatDate } from '@/lib/utils';
 
 import { usePostContext } from './post-provider';

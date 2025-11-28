@@ -60,8 +60,25 @@ export interface ButtonProps
   asChild?: boolean;
 }
 
+/**
+ * Button component with variant and size options.
+ *
+ * @type {React.ForwardRefExoticComponent<ButtonProps>} - The Button component.
+ *
+ * @param {ButtonProps} param0 - The props for the Button component.
+ * @param {string} [param0.className] - Additional class names for the button.
+ * @param {string} [param0.variant] - The variant of the button (default, destructive, outline, secondary, ghost, link, shadow).
+ * @param {string} [param0.size] - The size of the button (default, sm, lg, icon).
+ * @param {boolean} [param0.asChild=false] - Whether to render the button as a child component.
+ * @param {React.ButtonHTMLAttributes<HTMLButtonElement>} param0.props - Other button attributes.
+ *
+ * @returns {React.ReactNode} The rendered Button component.
+ */
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, asChild = false, ...props }, ref) => {
+  (
+    { className, variant, size, asChild = false, ...props },
+    ref,
+  ): React.ReactNode => {
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp

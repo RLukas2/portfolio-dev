@@ -31,6 +31,18 @@ const badgeVariants = cva(
   },
 );
 
+/**
+ * Badge component to display a badge with different variants.
+ * This used for indicating status or highlighting information.
+ *
+ * @param {(React.ComponentProps<'span'> &
+ *   VariantProps<typeof badgeVariants> & { asChild?: boolean })} param0
+ * @param {*} param0.className - Additional class names to apply to the badge.
+ * @param {*} param0.variant - Variant of the badge (default, secondary, destructive, outline).
+ * @param {*} [param0.asChild=false] - Whether to render the badge as a child component.
+ * @param {*} param0....props - Additional props to pass to the badge component.
+ * @returns {React.ReactNode} The rendered Badge component.
+ */
 function Badge({
   className,
   variant,
@@ -48,5 +60,7 @@ function Badge({
     />
   );
 }
+
+Badge.displayName = 'Badge';
 
 export { Badge, badgeVariants };

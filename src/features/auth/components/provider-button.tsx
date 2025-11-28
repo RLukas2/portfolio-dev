@@ -1,7 +1,7 @@
 import { type ClientSafeProvider, signIn } from 'next-auth/react';
 import type { JSX } from 'react';
 
-import { GitHub, Google } from '@/components/icons';
+import { GitHub, Google } from '@/components/common/icons';
 import { Button } from '@/components/ui/button';
 
 const providerLogo: { [key: string]: JSX.Element } = {

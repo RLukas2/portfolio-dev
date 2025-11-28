@@ -1,8 +1,8 @@
 import { compareDesc } from 'date-fns';
 import type { Metadata } from 'next';
 
-import Container from '@/components/container';
-import PageHeader from '@/components/page-header';
+import PageHeader from '@/components/common/page-header';
+import Container from '@/components/core/container';
 import { ROUTES } from '@/constants/routes';
 import FilteredPosts from '@/features/posts/components/filtered-posts';
 import { seo } from '@/lib/meta';

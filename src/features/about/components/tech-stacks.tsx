@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 
-import Marquee from '@/components/marquee';
+import Marquee from '@/components/effects/marquee';
 import { STACKS } from '@/constants/stacks';
 
 const TechStacks = () => {

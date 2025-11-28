@@ -1,6 +1,13 @@
 import { cn } from '@/lib/utils';
 
-const Spinner = ({ className }: { className?: string }) => (
+/**
+ * Spinner component to indicate loading state.
+ *
+ * @param {{ className?: string }} param0
+ * @param {string} param0.className
+ * @returns {React.ReactNode} The rendered Spinner component.
+ */
+const Spinner = ({ className }: { className?: string }): React.ReactNode => (
   <div>
     <svg
       aria-hidden="true"

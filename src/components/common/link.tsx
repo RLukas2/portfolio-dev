@@ -20,6 +20,20 @@ interface LinkProps
   extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof linkVariants> {}
 
+/**
+ * Link Component
+ * This component handles internal and external links with appropriate attributes.
+ *
+ *
+ * @type {React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<HTMLAnchorElement>>}
+ * @param {LinkProps} param0
+ * @param {string} param0.href - The URL the link points to.
+ * @param {string} [param0.className] - Additional class names to apply to the link.
+ * @param {React.ReactNode} param0.children - The content of the link.
+ * @param {string} [param0.variant] - The variant style of the link.
+ * @param {React.Ref<HTMLAnchorElement>} ref - The ref to be forwarded to the anchor element.
+ * @returns {React.ReactNode} The rendered Link component.
+ */
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   ({ href, className, children, variant, ...props }, ref) => {
     if (!href) {

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import Container from '@/components/container';
-import PageHeader from '@/components/page-header';
+import PageHeader from '@/components/common/page-header';
+import Container from '@/components/core/container';
 import { ROUTES } from '@/constants/routes';
 import Endorsements from '@/features/endorsements/components/endorsements';
 import { seo } from '@/lib/meta';

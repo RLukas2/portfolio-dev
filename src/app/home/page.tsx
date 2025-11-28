@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 
 import Loading from '@/app/loading';
-import Container from '@/components/container';
+import Container from '@/components/core/container';
 import Hero from '@/features/home/components/hero';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';

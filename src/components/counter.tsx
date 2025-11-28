@@ -5,13 +5,25 @@ import { useEffect } from 'react';
 
 import { cn } from '@/lib/utils';
 
+/**
+ * Counter Component
+ * This component displays a counter with an animation effect when the count changes.
+ *
+ * @param {{
+ *   count: number;
+ *   className?: string;
+ * }} param0
+ * @param {number} param0.count - The current count to display.
+ * @param {string} param0.className - Additional class names to apply to the counter.
+ * @returns {React.ReactNode} - The rendered Counter component.
+ */
 const Counter = ({
   count,
   className,
 }: {
   count: number;
   className?: string;
-}) => {
+}): React.ReactNode => {
   const controls = useAnimationControls();
 
   useEffect(() => {
