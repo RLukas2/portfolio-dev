@@ -83,7 +83,7 @@ const CodingInsights = () => {
       isLoading={isLoading}
       appendix={
         <Link
-          href="https://wakatime.com/@bonabrian"
+          href="https://wakatime.com/@xbrk"
           className="text-muted-foreground hover:text-foreground text-sm transition-all duration-200 hover:underline"
         >
           Last modified{' '}

@@ -7,11 +7,11 @@ export const pairDevices: Record<
   Computer: {
     icon: <LaptopIcon className="size-5" />,
     model: 'Macbook Air',
-    id: 'bonabrian-macbook-air',
+    id: 'rlukas-macbook-air',
   },
   Smartphone: {
     icon: <SmartphoneIcon className="size-5" />,
-    model: 'iPhone 11',
-    id: 'bonabrian-iphone',
+    model: 'iPhone 12 Pro Max',
+    id: 'rlukas-iphone',
   },
 };
