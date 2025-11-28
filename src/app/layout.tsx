@@ -7,11 +7,12 @@ import {
 } from 'next/font/google';
 import localFont from 'next/font/local';
 
-import Analytics from '@/components/analytics';
-import AppProvider from '@/components/app-provider';
 import HomePageStars from '@/components/background';
 import Footer from '@/components/core/footer';
 import Header from '@/components/core/header';
+import Analytics from '@/components/provider/analytics';
+import AppProvider from '@/components/provider/app-provider';
+import SpeedInsight from '@/components/provider/speed-insight';
 import { Toaster } from '@/components/ui/toaster';
 import GuestbookWidget from '@/features/guestbook/components/guestbook-widget';
 import NowPlaying from '@/features/now-playing/components/now-playing';
@@ -78,6 +79,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
           <NowPlaying />
         </div>
         <Analytics />
+        <SpeedInsight />
         <Toaster />
       </AppProvider>
     </body>

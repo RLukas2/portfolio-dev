@@ -5,8 +5,8 @@ import { ThemeProvider } from 'next-themes';
 
 import useMounted from '@/hooks/use-mounted';
 
-import { CommandPaletteProvider } from './command-palette';
-import { TooltipProvider } from './ui/tooltip';
+import { CommandPaletteProvider } from '../command-palette';
+import { TooltipProvider } from '../ui/tooltip';
 
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
   const isMounted = useMounted();
@@ -21,7 +21,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
     >
       <SessionProvider>
         <CommandPaletteProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
         </CommandPaletteProvider>
       </SessionProvider>
     </ThemeProvider>
