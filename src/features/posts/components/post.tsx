@@ -2,15 +2,24 @@ import PostContent from './post-content';
 import PostFooter from './post-footer';
 import PostHeader from './post-header';
 import PostThumbnail from './post-thumbnail';
+import RelatedPosts from './related-posts';
 
 const Post = () => {
   return (
-    <div className="relative">
-      <PostHeader />
+    <>
+      {/* Hero Image */}
       <PostThumbnail />
+
+      {/* Post Details */}
+      <PostHeader />
+
+      {/* Reading Section */}
       <PostContent />
       <PostFooter />
-    </div>
+
+      {/* Related Posts */}
+      <RelatedPosts />
+    </>
   );
 };
 

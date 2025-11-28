@@ -4,11 +4,16 @@ import ProjectThumbnail from './project-thumbnail';
 
 const Project = () => {
   return (
-    <div className="relative">
-      <ProjectHeader />
+    <>
+      {/* Hero Image */}
       <ProjectThumbnail />
+
+      {/* Project Details */}
+      <ProjectHeader />
+
+      {/* Reading Section */}
       <ProjectContent />
-    </div>
+    </>
   );
 };
 
