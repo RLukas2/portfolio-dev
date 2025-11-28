@@ -15,7 +15,7 @@ const SnippetCard = ({ snippet }: { snippet: Snippet }) => {
     >
       <div className="flex flex-col gap-0.5">
         <div className="flex items-center gap-3">
-          <p className="font-cal line-clamp-2 text-pretty group-hover/snippet:underline">
+          <p className="font-cal m-0 line-clamp-2 text-pretty group-hover/snippet:underline">
             {title}
           </p>
           <div className="flex gap-2">
@@ -29,7 +29,7 @@ const SnippetCard = ({ snippet }: { snippet: Snippet }) => {
             ))}
           </div>
         </div>
-        <p className="text-muted-foreground line-clamp-2 text-sm text-pretty">
+        <p className="text-muted-foreground m-0 line-clamp-2 text-sm text-pretty">
           {description}
         </p>
       </div>

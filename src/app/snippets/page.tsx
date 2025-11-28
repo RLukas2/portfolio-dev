@@ -39,7 +39,7 @@ const SnippetsPage = () => {
       />
       <Container>
         {snippets.length ? (
-          <div className={cn('grid')}>
+          <div className={cn('grid gap-4')}>
             {snippets.map((snippet) => (
               <SnippetCard key={snippet._id} snippet={snippet} />
             ))}
