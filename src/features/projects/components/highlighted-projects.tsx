@@ -49,8 +49,8 @@ const HighlightedProjects = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <h2 className="font-cal text-primary m-0 text-4xl tracking-wide md:text-5xl">
-          Highlighted projects
+        <h2 className="font-cal text-foreground m-0 text-4xl tracking-wide md:text-5xl">
+          Highlighted Projects
         </h2>
         <p className="font-cal text-secondary-foreground my-2 text-lg">
           A selection of projects that I've worked on.
@@ -63,10 +63,14 @@ const HighlightedProjects = () => {
             initial={{ y: 40, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.3 }}
-            className="grid auto-cols-fr grid-cols-1 gap-4 md:grid-cols-2"
+            className="grid auto-cols-fr grid-cols-1 gap-4"
           >
-            {projects.map((project) => (
-              <ProjectCard key={project._id} project={project} />
+            {projects.map((project, index) => (
+              <ProjectCard
+                key={project._id}
+                project={project}
+                className={index % 2 === 0 ? 'flex-row-reverse' : ''}
+              />
             ))}
           </motion.div>
           <div className="my-8 flex items-center justify-center">
