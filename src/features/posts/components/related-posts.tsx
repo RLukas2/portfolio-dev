@@ -24,7 +24,7 @@ const RelatedPosts = () => {
         <h2 className="font-cal text-2xl md:text-3xl">
           Other posts you might like
         </h2>
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-6">
           {otherPosts.map((post) => (
             <PostCard key={post.slug} post={post} />
           ))}
