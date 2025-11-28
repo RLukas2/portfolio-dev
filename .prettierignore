@@ -3,6 +3,9 @@
 dist
 node_modules
 
+# Ignore next-env.d.ts file (since it is auto-generated)
+next-env.d.ts
+
 # Ignore static assets
 public
 
