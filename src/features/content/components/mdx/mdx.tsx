@@ -1,8 +1,11 @@
 /* eslint-disable react-hooks/static-components */
+'use client';
+
 import './shiki.css';
 
 import { useMDXComponent } from '@content-collections/mdx/react';
 import type { MDXComponents } from 'mdx/types';
+import { useEffect, useRef } from 'react';
 
 import BlurImage from '@/components/effects/blur-image';
 import { cn } from '@/lib/utils';
@@ -62,9 +65,27 @@ const components: MDXComponents = {
 
 const Mdx = ({ code, className }: { code: string; className?: string }) => {
   const MdxContent = useMDXComponent(code);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Scroll to hash after MDX content is mounted
+  useEffect(() => {
+    const hash = window.location.hash;
+    if (!hash) return;
+
+    // Small delay to ensure content is fully rendered
+    const timeoutId = setTimeout(() => {
+      const element = document.querySelector(hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         'prose dark:prose-invert w-full max-w-none text-lg',
         className,
