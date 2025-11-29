@@ -15,7 +15,7 @@ const Hero = () => {
   return (
     <Container
       className={cn(
-        'layout min-h-screen py-8 text-center md:mt-18 md:py-24 lg:py-32',
+        'layout min-h-screen py-8 text-center md:mt-16 md:py-16 lg:py-32',
       )}
       id="hero"
       aria-label="Hero section"
