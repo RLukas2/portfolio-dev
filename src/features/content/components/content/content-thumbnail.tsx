@@ -2,11 +2,13 @@
 
 import Image from 'next/image';
 
-import { useProjectContext } from './project-provider';
+import type { ContentThumbnailProps } from '../../types/content';
 
-const ProjectThumbnail = () => {
-  const { image, title, imageMeta } = useProjectContext();
-
+const ContentThumbnail = ({
+  image,
+  title,
+  imageMeta,
+}: ContentThumbnailProps) => {
   // If there's no image or image metadata, return null
   if (!image || !imageMeta) {
     return null;
@@ -37,4 +39,4 @@ const ProjectThumbnail = () => {
   );
 };
 
-export default ProjectThumbnail;
+export default ContentThumbnail;
