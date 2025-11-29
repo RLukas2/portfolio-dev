@@ -49,7 +49,7 @@ const HighlightedProjects = () => {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.3 }}
       >
-        <h2 className="font-cal text-foreground m-0 text-4xl tracking-wide md:text-5xl">
+        <h2 className="font-cal text-primary m-0 text-4xl tracking-wide md:text-5xl">
           Highlighted Projects
         </h2>
         <p className="font-cal text-secondary-foreground my-2 text-lg">
