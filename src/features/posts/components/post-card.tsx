@@ -9,6 +9,7 @@ import IncrementCounter from '@/components/increment-counter';
 import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import { useViews } from '@/features/content/hooks/use-views';
+import { MAX_TAG_PER_POSTS } from '@/features/posts/constants';
 import { cn } from '@/lib/utils';
 import { formatDate } from '@/lib/utils';
 
@@ -19,6 +20,14 @@ type PostCardProps = {
   className?: string;
 };
 
+/**
+ * PostCard component that displays a summary of a blog post.
+ *
+ * @param {PostCardProps} param0
+ * @param {Post} param0.post
+ * @param {string} param0.className
+ * @returns {React.ReactNode} - The rendered PostCard component
+ */
 const PostCard = ({ post, className }: PostCardProps) => {
   const { title, slug, date, excerpt, readingTime, image, imageMeta, tags } =
     post;
@@ -107,8 +116,8 @@ const PostCard = ({ post, className }: PostCardProps) => {
               </div>
             </div>
             {tags && tags.length > 0 && (
-              <div className="flex flex-wrap gap-1">
-                {tags.slice(0, 3).map((tag) => (
+              <div className="flex flex-wrap gap-2">
+                {tags.slice(0, MAX_TAG_PER_POSTS).map((tag) => (
                   <span
                     key={tag}
                     className="bg-secondary text-muted-foreground rounded-lg px-2 py-1 text-xs"

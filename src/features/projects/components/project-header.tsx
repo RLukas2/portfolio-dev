@@ -1,8 +1,10 @@
 'use client';
 
 import { ClockIcon, ExternalLink, EyeIcon } from 'lucide-react';
+import { useRef } from 'react';
 
 import { GitHub } from '@/components/common/icons';
+import PageHeader from '@/components/common/page-header';
 import Container from '@/components/core/container';
 import IncrementCounter from '@/components/increment-counter';
 import { Button } from '@/components/ui/button';
@@ -10,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
 import BackButton from '@/features/content/components/back-button';
 import { useViews } from '@/features/content/hooks/use-views';
+import StickyTitle from '@/features/posts/components/sticky-title';
 import { formatDate } from '@/lib/utils';
 
 import { useProjectContext } from './project-provider';
@@ -27,6 +30,7 @@ const ProjectHeader = () => {
     stacks,
   } = useProjectContext();
   const { views, isLoading: isLoadViews } = useViews({ slug, trackView: true });
+  const projectHeaderRef = useRef<HTMLDivElement>(null);
 
   const publishedDate = formatDate(date);
   const liveSiteUrl = url ?? playStoreUrl;
@@ -34,6 +38,14 @@ const ProjectHeader = () => {
   return (
     <Container className="pt-4">
       <BackButton href={ROUTES.projects} />
+
+      {/* Sticky Title on Header */}
+      <PageHeader
+        title={title}
+        description={description}
+        ref={projectHeaderRef}
+      />
+      <StickyTitle title={title} elementRef={projectHeaderRef} />
 
       <div className="mt-6">
         {stacks && stacks.length > 0 && (
