@@ -36,7 +36,7 @@ const ProjectHeader = () => {
   const liveSiteUrl = url ?? playStoreUrl;
 
   return (
-    <Container className="pt-4">
+    <Container className="py-4">
       <BackButton href={ROUTES.projects} />
 
       {/* Sticky Title on Header */}
