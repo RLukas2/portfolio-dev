@@ -53,8 +53,8 @@ export const NAV_LINKS: NavLink[] = [
     onlyShowOnDropdownMenu: false,
   },
   {
-    path: ROUTES.snippets,
-    label: 'Snippets',
+    path: ROUTES.shorts,
+    label: 'Shorts',
     icon: <FileCode />,
     onlyShowOnDropdownMenu: false,
   },
@@ -120,11 +120,11 @@ export const COMMAND_PAGES: CommandMenuItem[] = [
     closeOnSelect: true,
   },
   {
-    label: 'Snippets',
-    href: ROUTES.snippets,
+    label: 'Shorts',
+    href: ROUTES.shorts,
     icon: <FileCode />,
     isExternal: false,
-    eventName: 'Pages: Snippets',
+    eventName: 'Pages: Shorts',
     type: 'PAGE',
     closeOnSelect: true,
   },
@@ -250,8 +250,8 @@ export const FOOTER_LINKS = [
         path: ROUTES.blog,
       },
       {
-        title: 'Snippets',
-        path: ROUTES.snippets,
+        title: 'Shorts',
+        path: ROUTES.shorts,
       },
       {
         title: 'Uses',
