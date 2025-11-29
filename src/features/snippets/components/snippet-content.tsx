@@ -10,25 +10,40 @@ import { useSnippetContext } from './snippet-provider';
 const SnippetContent = () => {
   const { slug, code, headings } = useSnippetContext();
 
-  return (
-    <Container wide>
-      <div className="flex flex-col gap-8 lg:flex-row">
-        {/* Main Content */}
-        <div className="order-2 min-w-0 flex-1 lg:order-1">
-          <Mdx code={code} />
-          <ContentEngagements slug={slug} />
-        </div>
+  // If there is no headings, just return the main content
+  if (!headings || headings === '[]') {
+    return (
+      <Container>
+        <Mdx code={code} />
+        <ContentEngagements slug={slug} />
+      </Container>
+    );
+  }
 
-        {/* Table of Contents Sidebar */}
-        {headings && (
-          <aside className="order-1 lg:order-2 lg:w-64 lg:shrink-0">
-            <div className="sticky top-24 rounded-2xl border border-dashed p-6">
-              <TableOfContents headings={headings} />
-            </div>
-          </aside>
-        )}
-      </div>
-    </Container>
+  return (
+    <>
+      <Container wide>
+        <div className="flex flex-col gap-8 lg:flex-row">
+          {/* Main Content */}
+          <div className="min-w-0 flex-1">
+            <Mdx code={code} />
+            <ContentEngagements slug={slug} />
+          </div>
+
+          {/* Table of Contents Sidebar - Desktop only */}
+          {headings && (
+            <aside className="hidden lg:block lg:w-64 lg:shrink-0">
+              <div className="sticky top-24 rounded-2xl border border-dashed p-6">
+                <TableOfContents headings={headings} />
+              </div>
+            </aside>
+          )}
+        </div>
+      </Container>
+
+      {/* Mobile ToC floating button */}
+      {headings && <TableOfContents headings={headings} />}
+    </>
   );
 };
 
