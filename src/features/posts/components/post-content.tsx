@@ -27,14 +27,14 @@ const PostContent = () => {
       <Container wide>
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Main Content */}
-          <div className="order-2 min-w-0 flex-1 lg:order-1">
+          <div className="min-w-0 flex-1">
             <Mdx code={code} className="mt-8" />
             <ContentEngagements slug={slug} />
           </div>
 
-          {/* Table of Contents Sidebar */}
+          {/* Table of Contents Sidebar - Desktop only, mobile uses floating button */}
           {headings && (
-            <aside className="order-1 lg:order-2 lg:w-64 lg:shrink-0">
+            <aside className="hidden lg:block lg:w-64 lg:shrink-0">
               <div className="sticky top-24 rounded-2xl border border-dashed p-6">
                 <TableOfContents headings={headings} />
               </div>
@@ -42,6 +42,9 @@ const PostContent = () => {
           )}
         </div>
       </Container>
+
+      {/* Mobile ToC floating button - rendered outside container */}
+      {headings && <TableOfContents headings={headings} />}
     </section>
   );
 };
