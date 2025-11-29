@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import { useId, useMemo } from 'react';
 
+import useMediaQuery from '@/hooks/use-media-query';
+
 // Seeded Random Number Generator for consistent star placement
 class SeededRandom {
   private seed: number;
@@ -46,8 +48,13 @@ const roundToPrecision = (num: number, precision: number = 2) => {
  */
 export default function StarBackground() {
   const id = useId();
-  const numberOfAccentStars = 10;
-  const numberOfBackgroundStars = 200;
+
+  // Detect mobile devices and reduced motion preference for performance optimization
+  const isMobile = useMediaQuery('(max-width: 768px)', false);
+
+  // Reduce star count significantly on mobile to prevent performance issues
+  const numberOfAccentStars = isMobile ? 3 : 10;
+  const numberOfBackgroundStars = isMobile ? 50 : 200;
 
   // Generate accent stars with animation
   const accentStars = useMemo(
@@ -62,21 +69,21 @@ export default function StarBackground() {
           delay: seededRandom(seed + 3) * 5,
         };
       }),
-    [id],
+    [id, numberOfAccentStars],
   );
 
   // Generate background stars distributed across full page height
   const backgroundStars = useMemo(() => {
-    const seededRandom = new SeededRandom(id.length);
+    const rng = new SeededRandom(id.length);
 
     return Array.from({ length: numberOfBackgroundStars }, () => ({
-      x: seededRandom.next() * 99,
-      y: seededRandom.next() * 100,
-      size: seededRandom.next() < 0.5 ? 1 : 2,
-      opacity: 0.2 + seededRandom.next() * 0.5,
-      duration: 2 + seededRandom.next() * 3,
+      x: rng.next() * 99,
+      y: rng.next() * 100,
+      size: rng.next() < 0.5 ? 1 : 2,
+      opacity: 0.2 + rng.next() * 0.5,
+      duration: 2 + rng.next() * 3,
     }));
-  }, [id]);
+  }, [id, numberOfBackgroundStars]);
 
   return (
     <div className="from-bg-primary via-bg-secondary to-bg-secondary pointer-events-none fixed inset-0 z-0 bg-linear-to-b">

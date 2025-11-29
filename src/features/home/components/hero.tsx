@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 import { ChevronDownIcon } from 'lucide-react';
 import Link from 'next/link';
 
-import Container from '@/components/core/container';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
@@ -13,7 +12,7 @@ import CurrentTechStacks from './tech-stack';
 
 const Hero = () => {
   return (
-    <Container
+    <motion.div
       className={cn(
         'layout min-h-screen py-8 text-center md:mt-16 md:py-16 lg:py-32',
       )}
@@ -94,7 +93,7 @@ const Hero = () => {
 
         <ProfileImage />
       </div>
-    </Container>
+    </motion.div>
   );
 };
 
