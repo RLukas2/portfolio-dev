@@ -1,7 +1,7 @@
 export const ROUTES = {
   blog: '/blog',
   projects: '/projects',
-  snippets: '/snippets',
+  shorts: '/shorts',
   tags: '/tags',
   endorsements: '/endorsements',
   guestbook: '/guestbook',

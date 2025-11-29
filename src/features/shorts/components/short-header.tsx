@@ -11,16 +11,16 @@ import BackButton from '@/features/content/components/back-button';
 import { useViews } from '@/features/content/hooks/use-views';
 import { formatDate } from '@/lib/utils';
 
-import { useSnippetContext } from './snippet-provider';
+import { useShortContext } from './short-provider';
 
-const SnippetHeader = () => {
-  const { slug, title, description, date, readingTime } = useSnippetContext();
+const ShortHeader = () => {
+  const { slug, title, description, date, readingTime } = useShortContext();
   const { views, isLoading: isLoadViews } = useViews({ slug, trackView: true });
   const publishedDate = formatDate(date);
 
   return (
     <>
-      <BackButton href={ROUTES.snippets} />
+      <BackButton href={ROUTES.shorts} />
       <PageHeader title={title} description={description} />
       <Container>
         <div className="mt-4 flex flex-col justify-between gap-2 text-sm sm:flex-row">
@@ -52,4 +52,4 @@ const SnippetHeader = () => {
   );
 };
 
-export default SnippetHeader;
+export default ShortHeader;

@@ -6,7 +6,7 @@ import { BASE_URL } from '@/constants/site';
 import {
   allPosts,
   allProjects,
-  allSnippets,
+  allShorts,
 } from '.content-collections/generated';
 
 const sitemap = (): MetadataRoute.Sitemap => {
@@ -19,11 +19,11 @@ const sitemap = (): MetadataRoute.Sitemap => {
       priority: 0.7,
     }));
 
-  const snippets = allSnippets
-    .filter((snippet) => snippet.published)
-    .map((snippet) => ({
-      url: `${BASE_URL}${ROUTES.snippets}/${snippet.slug}`,
-      lastModified: snippet.date.split('T')[0],
+  const shorts = allShorts
+    .filter((short) => short.published)
+    .map((short) => ({
+      url: `${BASE_URL}${ROUTES.shorts}/${short.slug}`,
+      lastModified: short.date.split('T')[0],
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     }));
@@ -35,7 +35,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     '': { priority: 1.0, changeFrequency: 'weekly' },
     [ROUTES.blog]: { priority: 0.9, changeFrequency: 'weekly' },
     [ROUTES.projects]: { priority: 0.9, changeFrequency: 'weekly' },
-    [ROUTES.snippets]: { priority: 0.8, changeFrequency: 'weekly' },
+    [ROUTES.shorts]: { priority: 0.8, changeFrequency: 'weekly' },
     [ROUTES.tags]: { priority: 0.7, changeFrequency: 'monthly' },
     [ROUTES.endorsements]: { priority: 0.6, changeFrequency: 'monthly' },
     [ROUTES.guestbook]: { priority: 0.6, changeFrequency: 'monthly' },
@@ -57,7 +57,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     '',
     ROUTES.blog,
     ROUTES.projects,
-    ROUTES.snippets,
+    ROUTES.shorts,
     ROUTES.tags,
     ROUTES.endorsements,
     ROUTES.guestbook,
@@ -71,7 +71,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     priority: routePriorities[route]?.priority ?? 0.5,
   }));
 
-  return [...routes, ...posts, ...snippets, ...projects];
+  return [...routes, ...posts, ...shorts, ...projects];
 };
 
 export default sitemap;

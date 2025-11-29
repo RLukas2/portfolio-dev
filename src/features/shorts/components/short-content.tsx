@@ -5,10 +5,10 @@ import ContentEngagements from '@/features/content/components/content-engagement
 import Mdx from '@/features/content/components/mdx/mdx';
 import TableOfContents from '@/features/content/components/table-of-contents';
 
-import { useSnippetContext } from './snippet-provider';
+import { useShortContext } from './short-provider';
 
-const SnippetContent = () => {
-  const { slug, code, headings } = useSnippetContext();
+const ShortContent = () => {
+  const { slug, code, headings } = useShortContext();
 
   // If there is no headings, just return the main content
   if (!headings || headings === '[]') {
@@ -47,4 +47,4 @@ const SnippetContent = () => {
   );
 };
 
-export default SnippetContent;
+export default ShortContent;

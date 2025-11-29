@@ -5,51 +5,51 @@ import EmptyState from '@/components/common/empty-state';
 import PageHeader from '@/components/common/page-header';
 import Container from '@/components/core/container';
 import { ROUTES } from '@/constants/routes';
-import SnippetCard from '@/features/snippets/components/snippet-card';
+import ShortCard from '@/features/shorts/components/short-card';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
 
-import { allSnippets } from '.content-collections/generated';
+import { allShorts } from '.content-collections/generated';
 
 export const metadata: Metadata = seo({
-  title: 'Snippets',
-  description:
-    'A curated collection of snippets I frequently use in my projects.',
+  title: 'Shorts',
+  description: 'My personal notes that is not long enough to be a blog post.',
   keywords: [
-    'snippets',
+    'shorts',
+    'short',
     'code',
     'collection',
     'tricks',
     'shorthand',
     'scripts',
   ],
-  url: ROUTES.snippets,
+  url: ROUTES.shorts,
 });
 
-const SnippetsPage = () => {
-  const snippets = allSnippets
-    .filter((snippet) => snippet.published)
+const ShortsPage = () => {
+  const shorts = allShorts
+    .filter((short) => short.published)
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)));
 
   return (
     <>
       <PageHeader
-        title="Snippets"
-        description="A curated collection of snippets I frequently use in my projects."
+        title="Short Notes"
+        description="My personal notes that is not long enough to be a blog post."
       />
       <Container>
-        {snippets.length ? (
+        {shorts.length ? (
           <div className={cn('grid gap-4')}>
-            {snippets.map((snippet) => (
-              <SnippetCard key={snippet._id} snippet={snippet} />
+            {shorts.map((short) => (
+              <ShortCard key={short._id} short={short} />
             ))}
           </div>
         ) : (
-          <EmptyState message="The snippets are probably off having a party somewhere without us!" />
+          <EmptyState message="The shorts are probably off having a party somewhere without us!" />
         )}
       </Container>
     </>
   );
 };
 
-export default SnippetsPage;
+export default ShortsPage;

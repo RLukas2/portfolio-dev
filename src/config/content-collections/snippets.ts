@@ -6,9 +6,9 @@ import { z } from 'zod';
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
 import { extractHeadings, serializeHeadings } from './extract-headings';
 
-const snippets = defineCollection({
-  name: 'Snippet',
-  directory: 'content/snippets',
+const shorts = defineCollection({
+  name: 'Short',
+  directory: 'content/shorts',
   include: '**/*.mdx',
   schema: z.object({
     title: z.string(),
@@ -21,7 +21,7 @@ const snippets = defineCollection({
   transform: (doc, context) => {
     return context.cache(
       {
-        type: 'snippets',
+        type: 'shorts',
         doc,
       },
       async () => {
@@ -53,4 +53,4 @@ const snippets = defineCollection({
   },
 });
 
-export default snippets;
+export default shorts;
