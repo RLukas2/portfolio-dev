@@ -37,7 +37,7 @@ const ProjectsPage = () => {
         title="Projects"
         description="A collection of finest projects that I have built. ❤️️"
       />
-      <Container wide={true}>
+      <Container>
         {projects.length ? (
           <div className={cn('grid w-full auto-cols-fr grid-cols-1 gap-8')}>
             {projects.map((project, index) => (

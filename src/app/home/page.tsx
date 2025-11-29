@@ -36,7 +36,7 @@ const GetInTouch = dynamic(
 const HomePage = () => {
   return (
     <div className={cn('flex flex-col')}>
-      <Container wide={true} className={cn('gap-8')}>
+      <Container className={cn('gap-8')}>
         <Hero />
         <HighlightedProjects />
         <LatestPosts />

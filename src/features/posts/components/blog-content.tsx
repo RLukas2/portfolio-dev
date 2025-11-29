@@ -63,7 +63,7 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
       <Separator />
 
       {/* Main Content */}
-      <Container wide={true} className="py-8">
+      <Container className="py-8">
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Posts Section */}
           <div className="order-2 flex-1 space-y-6 lg:order-1">
