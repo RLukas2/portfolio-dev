@@ -1,6 +1,7 @@
 import '@/styles/global.css';
 
 import type { Metadata, Viewport } from 'next';
+import dynamic from 'next/dynamic';
 import {
   Fira_Code as FiraCode,
   Plus_Jakarta_Sans as PlusJakartaSans,
@@ -9,16 +10,29 @@ import localFont from 'next/font/local';
 
 import Footer from '@/components/core/footer';
 import Header from '@/components/core/header';
-import StarBackground from '@/components/effects/background';
 import ConsoleMessage from '@/components/effects/console-message';
 import Analytics from '@/components/provider/analytics';
 import AppProvider from '@/components/provider/app-provider';
 import SpeedInsight from '@/components/provider/speed-insight';
 import { Toaster } from '@/components/ui/toaster';
-import GuestbookWidget from '@/features/guestbook/components/guestbook-widget';
-import NowPlaying from '@/features/now-playing/components/now-playing';
 import { DEFAULT_METADATA, seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
+
+// Lazy load heavy client components to reduce initial bundle size
+const StarBackground = dynamic(
+  () => import('@/components/effects/background'),
+  { ssr: true },
+);
+
+const GuestbookWidget = dynamic(
+  () => import('@/features/guestbook/components/guestbook-widget'),
+  { ssr: true },
+);
+
+const NowPlaying = dynamic(
+  () => import('@/features/now-playing/components/now-playing'),
+  { ssr: true },
+);
 
 export const metadata: Metadata = seo({
   ...DEFAULT_METADATA,
