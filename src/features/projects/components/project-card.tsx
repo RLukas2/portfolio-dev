@@ -63,7 +63,7 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
   return (
     <div
       className={cn(
-        'group md:rounded-0 gap-0 rounded-2xl md:gap-8 lg:flex',
+        'group md:rounded-0 gap-0 rounded-2xl md:flex md:gap-8',
         className,
       )}
     >
