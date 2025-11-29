@@ -5,6 +5,7 @@ import z from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
 import { getBlurData } from '../mdx-plugins/remark/blur';
+import { extractHeadings, serializeHeadings } from './extract-headings';
 import { getContentImagePath } from './utils';
 
 const projects = defineCollection({
@@ -59,6 +60,7 @@ const projects = defineCollection({
           code,
           image,
           imageMeta: JSON.stringify(imageMeta),
+          headings: serializeHeadings(extractHeadings(doc.content)),
         };
       },
     );

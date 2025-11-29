@@ -4,6 +4,7 @@ import readingTime from 'reading-time';
 import { z } from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
+import { extractHeadings, serializeHeadings } from './extract-headings';
 
 const snippets = defineCollection({
   name: 'Snippet',
@@ -45,6 +46,7 @@ const snippets = defineCollection({
           slug: doc._meta.path,
           code,
           readingTime: parsedReadingTime,
+          headings: serializeHeadings(extractHeadings(doc.content)),
         };
       },
     );
