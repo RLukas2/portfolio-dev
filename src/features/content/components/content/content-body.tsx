@@ -1,15 +1,13 @@
 'use client';
 
 import Container from '@/components/core/container';
-import ContentEngagements from '@/features/content/components/content-engagements';
 import Mdx from '@/features/content/components/mdx/mdx';
 import TableOfContents from '@/features/content/components/table-of-contents';
 
-import { useProjectContext } from './project-provider';
+import type { ContentBodyProps } from '../../types/content';
+import ContentEngagements from '../content-engagements';
 
-const ProjectContent = () => {
-  const { slug, code, headings } = useProjectContext();
-
+const ContentBody = ({ slug, code, headings }: ContentBodyProps) => {
   // If there is no headings, just return the main content
   if (!headings || headings === '[]') {
     return (
@@ -31,11 +29,10 @@ const ProjectContent = () => {
             <Mdx code={code} className="mt-8" />
             <ContentEngagements slug={slug} />
           </div>
-
           {/* Table of Contents Sidebar - Desktop only */}
           {headings && (
             <aside className="hidden lg:block lg:w-64 lg:shrink-0">
-              <div className="sticky top-24 rounded-2xl border border-dashed p-6">
+              <div className="sticky top-24 max-h-[calc(100vh-12rem)] overflow-y-auto rounded-2xl border border-dashed p-6">
                 <TableOfContents headings={headings} />
               </div>
             </aside>
@@ -43,10 +40,14 @@ const ProjectContent = () => {
         </div>
       </Container>
 
-      {/* Mobile ToC floating button */}
-      {headings && <TableOfContents headings={headings} />}
+      {/* Mobile ToC floating button - hidden on desktop */}
+      {headings && (
+        <div className="lg:hidden">
+          <TableOfContents headings={headings} />
+        </div>
+      )}
     </section>
   );
 };
 
-export default ProjectContent;
+export default ContentBody;
