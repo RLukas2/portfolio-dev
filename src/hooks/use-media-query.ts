@@ -7,6 +7,13 @@ const getMatch = (query: string): MediaQueryList => window.matchMedia(query);
 const parseQueryString = (query: string): string =>
   query.replaceAll('@media only screen and', '').trim();
 
+/**
+ * Custom hook to evaluate and respond to media query changes.
+ *
+ * @param {string} query - The media query string to evaluate.
+ * @param {boolean} [defaultState=false] - The default state before the media query is evaluated.
+ * @returns {*} - True if the media query matches, false otherwise.
+ */
 const useMediaQuery = (query: string, defaultState: boolean = false) => {
   const [state, setState] = useState(defaultState);
   const parseAndMatch = (q: string) => getMatch(parseQueryString(q));
