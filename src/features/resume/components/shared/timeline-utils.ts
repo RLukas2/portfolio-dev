@@ -6,6 +6,14 @@ export interface TimelineEntryProps {
   endDate: string | null;
 }
 
+/**
+ * Calculates the duration between two dates and returns the start date, end date,
+ * and a formatted duration string.
+ *
+ * @param {string} startDate - The start date in string format.
+ * @param {(string | null)} endDate - The end date in string format or null for ongoing.
+ * @returns {{ start: any; end: any; durationText: string; }} - An object containing the start date, end date, and duration text.
+ */
 export const calculateDuration = (
   startDate: string,
   endDate: string | null,

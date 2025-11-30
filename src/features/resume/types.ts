@@ -9,13 +9,20 @@ export interface Company {
   jobType: 'Full-time' | 'Freelance';
 }
 
+export interface Institution {
+  name: string;
+  logo?: string; // Optional - falls back to book icon
+  url?: string; // Optional - link to institution website
+  location: string;
+}
+
 export interface Education {
-  institution: string;
+  institution: Institution;
   degree: string;
   fieldOfStudy: string;
   startDate: string;
   endDate: string | null;
-  location: string;
+  accomplishments?: string[]; // Optional - coursework, achievements, projects, etc.
 }
 
 export interface Stack {

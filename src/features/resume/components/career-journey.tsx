@@ -1,4 +1,4 @@
-import { FileTextIcon } from 'lucide-react';
+import { DownloadIcon } from 'lucide-react';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
@@ -15,7 +15,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 86400; // 24 hours
 
 const CareerJourney = () => {
-  const lastUpdated = formatDate('2025-11-16');
+  /**
+   * Last updated date formatted as a string
+   * Update this date whenever you make changes to your resume
+   */
+  const lastUpdated = formatDate('2025-11-30');
 
   // Helper function to check if an entry is an experience
   const isExperience = (entry: any): entry is Experience => {
@@ -31,52 +35,57 @@ const CareerJourney = () => {
   );
 
   return (
-    <>
-      <div className="mb-8 flex items-center justify-end">
-        <Button asChild variant="shadow">
+    <div className="space-y-8">
+      {/* Header with download button */}
+      <div className="flex items-center justify-between">
+        <div>
+          <p className="text-muted-foreground text-sm">
+            Last updated:{' '}
+            <time dateTime={lastUpdated} className="font-medium">
+              {lastUpdated}
+            </time>
+          </p>
+        </div>
+        <Button asChild variant="shadow" size="default">
           <Link
             href={`${ROUTES.resume}/download`}
             target="_blank"
-            className="gap-x-1"
+            className="gap-x-2"
           >
-            <FileTextIcon />
-            Download resume
+            <DownloadIcon className="size-4" />
+            Download PDF
           </Link>
         </Button>
       </div>
 
       {timelineEntries && timelineEntries.length > 0 ? (
-        <div className="prose dark:prose-dark max-w-none px-4">
-          <ol className="border-border list-none space-y-4 border-l pl-10">
-            {timelineEntries.map((entry) => {
+        <div className="relative">
+          {/* Timeline entries */}
+          <ol className="m-0 list-none space-y-6 p-0">
+            {timelineEntries.map((entry, index) => {
+              const isLast = index === timelineEntries.length - 1;
               if (isExperience(entry)) {
                 return (
                   <ExperienceEntry
                     key={`exp-${entry.company.name}-${entry.role}-${entry.startDate}`}
                     experience={entry}
+                    isLast={isLast}
                   />
                 );
               } else {
                 return (
                   <EducationEntry
-                    key={`edu-${entry.institution}-${entry.degree}-${entry.startDate}`}
+                    key={`edu-${entry.institution.name}-${entry.degree}-${entry.startDate}`}
                     education={entry}
+                    isLast={isLast}
                   />
                 );
               }
             })}
           </ol>
-          <div className="mt-12">
-            <p className="text-muted-foreground">
-              Last updated at{' '}
-              <time dateTime={lastUpdated} className="font-cal">
-                {lastUpdated}
-              </time>
-            </p>
-          </div>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center">
+        <div className="flex flex-col items-center justify-center py-16">
           <h1
             className={cn(
               'animate-glitch text-4xl font-semibold',
@@ -86,16 +95,13 @@ const CareerJourney = () => {
           >
             No Timeline Entries Found
           </h1>
-          <p className="text-foreground mt-4 text-center">
+          <p className="text-muted-foreground mt-4 text-center">
             It seems there are no career experiences or education entries to
             display at the moment...
           </p>
-          <p className="text-foreground mt-2 text-center">
-            Maybe you can check back later?
-          </p>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
