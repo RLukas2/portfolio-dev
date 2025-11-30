@@ -24,11 +24,6 @@ const StarBackground = dynamic(
   { ssr: true },
 );
 
-const GuestbookWidget = dynamic(
-  () => import('@/features/guestbook/components/guestbook-widget'),
-  { ssr: true },
-);
-
 const NowPlaying = dynamic(
   () => import('@/features/now-playing/components/now-playing'),
   { ssr: true },
@@ -125,7 +120,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
           <Header />
           <main>{children}</main>
           <Footer />
-          <GuestbookWidget />
           <NowPlaying />
         </div>
         <Analytics />

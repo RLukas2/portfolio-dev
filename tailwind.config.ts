@@ -74,6 +74,11 @@ const config = {
             img: {
               margin: '0 auto',
             },
+            figcaption: {
+              color: 'var(--muted-foreground)',
+              fontSize: '0.875rem',
+              textAlign: 'center',
+            },
             'code, pre code': {
               fontFamily: 'var(--font-mono)',
             },

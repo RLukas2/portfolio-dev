@@ -36,8 +36,8 @@ const Post = () => {
   const relatedPosts = useMemo(
     () =>
       allPosts
-        .filter((post) => post.published && post.slug !== slug)
-        .slice(0, 3),
+        ?.filter((post) => post.published && post.slug !== slug)
+        .slice(0, 3) ?? [],
     [slug],
   );
 

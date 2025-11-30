@@ -15,6 +15,7 @@ import AppsGrid from './apps-grid';
 import { CodeBlock, Pre } from './code-block';
 import CoreStack from './core-stack';
 import Heading from './heading';
+import ImageAlbum from './image-album';
 import ImageComparison from './image-comparison';
 import ImageZoom from './image-zoom';
 import Workstation from './workstation';
@@ -61,6 +62,7 @@ const components: MDXComponents = {
   Workstation,
   CoreStack,
   ImageComparison,
+  ImageAlbum,
 };
 
 const Mdx = ({ code, className }: { code: string; className?: string }) => {
