@@ -17,7 +17,8 @@ const linkVariants = cva(
 );
 
 interface AnchorProps
-  extends React.AnchorHTMLAttributes<HTMLAnchorElement>,
+  extends
+    React.AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof linkVariants> {}
 
 const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
