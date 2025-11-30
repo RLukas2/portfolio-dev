@@ -1,16 +1,28 @@
-name: 'Issue Autolink'
+name: Issue Autolink
+
 on:
   pull_request:
     types: [opened]
 
+# Restrict permissions to minimum required
+permissions:
+  pull-requests: write
+  issues: write # Required for auto-assign feature if added later
+
 jobs:
   issue-links:
     runs-on: ubuntu-latest
-    permissions:
-      pull-requests: write
+
     steps:
-      - uses: tkt-actions/add-issue-links@v1.8.1
+      - name: Add Issue Links
+        uses: tkt-actions/add-issue-links@v1.9.1
         with:
-          repo-token: '${{ secrets.GITHUB_TOKEN }}'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
           branch-prefix: 'i'
-          resolve: 'true'
+          resolve: true
+          # Optional: Customize the section header
+          # header: 'Related Issue'
+          # Optional: Place the links section at the top instead of bottom
+          # position: 'bottom'
+          # Optional: Use custom resolution prefix (e.g., "Closes" instead of "Resolve")
+          # resolve-word: 'Closes'
