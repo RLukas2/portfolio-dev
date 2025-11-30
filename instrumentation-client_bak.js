@@ -1,3 +1,7 @@
+// Currently disabled due to issues with older browser compability
+// Will revisit in the future
+// TODO: Try to re-enable Sentry instrumentation
+
 import * as Sentry from '@sentry/nextjs';
 
 const SENTRY_DSN = process.env.SENTRY_DSN || process.env.NEXT_PUBLIC_SENTRY_DSN;
@@ -7,14 +11,14 @@ Sentry.init({
 
   // Adds request headers and IP for users, for more info visit:
   // https://docs.sentry.io/platforms/javascript/guides/nextjs/configuration/options/#sendDefaultPii
-  sendDefaultPii: true,
+  sendDefaultPii: false,
 
   // Set tracesSampleRate to 1.0 to capture 100%
   // of transactions for tracing.
   // We recommend adjusting this value in production
   // Learn more at
   // https://docs.sentry.io/platforms/javascript/configuration/options/#traces-sample-rate
-  tracesSampleRate: 1.0,
+  tracesSampleRate: 0.2,
 
   // Enable logs to be sent to Sentry
   enableLogs: true,
