@@ -1,12 +1,23 @@
 name: Create Branch from Issue
 
 on:
+  # The issue.opened event is for "immediate" mode
+  # The issue.assigned event is for default "auto" mode
   issues:
-    types: [assigned]
+    types: [opened, assigned]
+  # Optional: Enable ChatOps mode (comment /cib)
+  # issue_comment:
+  #   types: [created]
+
+# Required permissions
+permissions:
+  contents: write
+  issues: read
 
 jobs:
   create_issue_branch_job:
     runs-on: ubuntu-latest
+
     steps:
       - name: Create Issue Branch
         uses: robvanderleek/create-issue-branch@main
