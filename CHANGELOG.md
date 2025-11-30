@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.1.0](https://github.com/RLukas2/portfolio-dev/compare/v1.0.0...v1.1.0) (2025-11-30)
+
+
+### Features
+
+* add cache control headers for static assets and images ([42fe16b](https://github.com/RLukas2/portfolio-dev/commit/42fe16b76d0c23e827f6c734934226d1309cfd4e))
+* add caching for pnpm store in GitHub Actions workflow ([934c969](https://github.com/RLukas2/portfolio-dev/commit/934c96944f6cb597ba9d3c1faf23286bb7dd367a))
+* add remark plugin to extract headings from MDX ([379ea4f](https://github.com/RLukas2/portfolio-dev/commit/379ea4f3d618f3867de2eeb3b2a3a2a44abd60e9))
+* implement content filtering and sorting hooks for posts and shorts ([7e14457](https://github.com/RLukas2/portfolio-dev/commit/7e144578c24c435aa4167e565d502880045559cc))
+* improve resume components ([836095a](https://github.com/RLukas2/portfolio-dev/commit/836095a38bebcef8dae70eddb9106abd7ed5197e))
+* optimize font loading and reduce delay and duration in Hero ([8566f4e](https://github.com/RLukas2/portfolio-dev/commit/8566f4e8e9bbe949a1464911e779dfc18b6af699))
+* update blog post visibility and enhance layout styling ([5353395](https://github.com/RLukas2/portfolio-dev/commit/5353395ce7fb8d553b5889bff2dafbcb01ff0d02))
+
+
+### Bug Fixes
+
+* replace toSorted to support older browser ([daf0cd3](https://github.com/RLukas2/portfolio-dev/commit/daf0cd35872bfd8c2c95dd57b02cde9ec7eb6e5e))
+* timer memory leaks in flip-words ([25b3b7f](https://github.com/RLukas2/portfolio-dev/commit/25b3b7fced343b506f436d61bca38a3aea82bffa))
+* update lastmod dates and correct loc paths in sitemap ([4fd03bd](https://github.com/RLukas2/portfolio-dev/commit/4fd03bda8d91f2f492ed07af52c972382e32f35c))
+
 ## 1.0.0 (2025-11-30)
 
 ### Features
