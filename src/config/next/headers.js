@@ -42,6 +42,22 @@ const securityHeaders = [
   },
 ];
 
+// Cache control headers for static assets
+const staticCacheHeaders = [
+  {
+    key: 'Cache-Control',
+    value: 'public, max-age=31536000, immutable',
+  },
+];
+
+// Cache control for images
+const imageCacheHeaders = [
+  {
+    key: 'Cache-Control',
+    value: 'public, max-age=86400, stale-while-revalidate=31536000',
+  },
+];
+
 module.exports = [
   {
     source: '/(.*)',
@@ -55,5 +71,28 @@ module.exports = [
         value: 'application/rss+xml;charset=utf-8',
       },
     ],
+  },
+  // Cache static assets (fonts, js, css) for 1 year
+  {
+    source: '/fonts/:path*',
+    headers: staticCacheHeaders,
+  },
+  {
+    source: '/_next/static/:path*',
+    headers: staticCacheHeaders,
+  },
+  // Cache images for 1 day with stale-while-revalidate
+  {
+    source: '/media/:path*',
+    headers: imageCacheHeaders,
+  },
+  {
+    source: '/_next/image/:path*',
+    headers: imageCacheHeaders,
+  },
+  // Cache emojis and other static public assets
+  {
+    source: '/emojis/:path*',
+    headers: staticCacheHeaders,
   },
 ];
