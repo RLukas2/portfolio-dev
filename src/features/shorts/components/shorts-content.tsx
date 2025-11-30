@@ -8,8 +8,11 @@ import Container from '@/components/core/container';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { ActiveFilters, FilterSidebar } from '@/features/content/components';
+import {
+  SHORTS_SORT_OPTIONS,
+  useContentFilters,
+} from '@/features/content/hooks/use-content-filters';
 
-import { SORT_OPTIONS, useShortFilters } from '../hooks/use-short-filters';
 import ShortCard from './short-card';
 import type { Short } from '.content-collections/generated';
 
@@ -35,8 +38,12 @@ const ShortsContent = ({ shorts }: ShortsContentProps): React.ReactNode => {
     clearFilters,
     hasActiveFilters,
     allTags,
-    filteredShorts,
-  } = useShortFilters(shorts);
+    filteredItems: filteredShorts,
+  } = useContentFilters(shorts, {
+    getSearchableText: (short) =>
+      short.title + short.description + (short.tags?.join(' ') ?? ''),
+    defaultSortOption: 'title-asc',
+  });
 
   return (
     <>
@@ -76,7 +83,7 @@ const ShortsContent = ({ shorts }: ShortsContentProps): React.ReactNode => {
                 selectedTags={selectedTags}
                 toggleTag={toggleTag}
                 clearFilters={clearFilters}
-                sortOptions={SORT_OPTIONS}
+                sortOptions={SHORTS_SORT_OPTIONS}
               />
             )}
             {/* Shorts Grid or Empty State */}
@@ -105,7 +112,7 @@ const ShortsContent = ({ shorts }: ShortsContentProps): React.ReactNode => {
             allTags={allTags}
             hasActiveFilters={hasActiveFilters}
             clearFilters={clearFilters}
-            sortOptions={SORT_OPTIONS}
+            sortOptions={SHORTS_SORT_OPTIONS}
           />
         </div>
       </Container>

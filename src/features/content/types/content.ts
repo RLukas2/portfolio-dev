@@ -46,7 +46,13 @@ export interface ContentMetaProps {
 }
 
 // Shared filter types
-export type SortOption = 'date-desc' | 'date-asc' | 'views-desc' | 'views-asc';
+export type SortOption =
+  | 'date-desc'
+  | 'date-asc'
+  | 'views-desc'
+  | 'views-asc'
+  | 'title-asc'
+  | 'title-desc';
 
 export interface SortOptionItem {
   value: SortOption;

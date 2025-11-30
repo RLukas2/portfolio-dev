@@ -8,8 +8,11 @@ import Container from '@/components/core/container';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { ActiveFilters, FilterSidebar } from '@/features/content/components';
+import {
+  BLOG_SORT_OPTIONS,
+  useContentFilters,
+} from '@/features/content/hooks/use-content-filters';
 
-import { SORT_OPTIONS, usePostFilters } from '../hooks/use-post-filters';
 import PostCard from './post-card';
 import type { Post } from '.content-collections/generated';
 
@@ -35,8 +38,12 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
     clearFilters,
     hasActiveFilters,
     allTags,
-    filteredPosts,
-  } = usePostFilters(posts);
+    filteredItems: filteredPosts,
+  } = useContentFilters(posts, {
+    getSearchableText: (post) =>
+      post.title + (post.excerpt ?? '') + (post.tags?.join(' ') ?? ''),
+    defaultSortOption: 'date-desc',
+  });
 
   return (
     <>
@@ -66,7 +73,7 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
         <div className="flex flex-col gap-8 lg:flex-row">
           {/* Posts Section */}
           <div className="order-2 flex-1 space-y-6 lg:order-1">
-            {/* Active Filters Display */}
+            {/* Active Filters Display */}{' '}
             {hasActiveFilters && (
               <ActiveFilters
                 query={query}
@@ -75,10 +82,9 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
                 selectedTags={selectedTags}
                 toggleTag={toggleTag}
                 clearFilters={clearFilters}
-                sortOptions={SORT_OPTIONS}
+                sortOptions={BLOG_SORT_OPTIONS}
               />
             )}
-
             {/* Posts Grid or Empty State */}
             {filteredPosts.length ? (
               <div className="grid auto-cols-fr grid-cols-1 gap-8">
@@ -95,8 +101,7 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
                 }
               />
             )}
-          </div>
-
+          </div>{' '}
           {/* Filter Sidebar */}
           <FilterSidebar
             sortOption={sortOption}
@@ -106,7 +111,7 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
             allTags={allTags}
             hasActiveFilters={hasActiveFilters}
             clearFilters={clearFilters}
-            sortOptions={SORT_OPTIONS}
+            sortOptions={BLOG_SORT_OPTIONS}
           />
         </div>
       </Container>
