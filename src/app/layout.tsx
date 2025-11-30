@@ -55,16 +55,19 @@ export const viewport: Viewport = {
 const fontCal = localFont({
   src: '../assets/fonts/CalSans-SemiBold.woff2',
   variable: '--font-cal',
+  display: 'swap',
 });
 
 const fontSans = PlusJakartaSans({
   subsets: ['latin'],
   variable: '--font-sans',
+  display: 'swap',
 });
 
 const fontMono = FiraCode({
   subsets: ['latin'],
   variable: '--font-mono',
+  display: 'swap',
 });
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
