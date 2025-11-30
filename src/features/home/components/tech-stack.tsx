@@ -30,6 +30,12 @@ const animation = {
   show: { x: 0, opacity: 1, transition: { staggerChildren: 0.1 } },
 };
 
+const slideInAnimation = {
+  initial: { y: 8, opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+  transition: { delay: 0.3 },
+};
+
 const stacks: Stack[] = [
   {
     title: 'TypeScript',
@@ -68,12 +74,10 @@ const stacks: Stack[] = [
   },
 ];
 
-const CurrentTechStacks = () => {
+const CurrentTechStacks = (): React.ReactNode => {
   return (
     <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 0.5, duration: 0.5 }}
+      variants={slideInAnimation}
       className="mb-8 flex flex-wrap justify-center gap-2 md:gap-3 lg:justify-start"
       role="list"
       aria-label="Technologies I work with"

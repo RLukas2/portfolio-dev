@@ -24,6 +24,7 @@ export interface ContentBodyProps {
   slug: string;
   code: string;
   headings?: string;
+  engagements?: boolean;
 }
 
 export interface ContentHeaderProps {

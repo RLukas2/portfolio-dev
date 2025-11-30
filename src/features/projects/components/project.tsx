@@ -23,7 +23,7 @@ const Project = () => {
     url,
     repositoryUrl,
     playStoreUrl,
-    stacks,
+    // stacks,
     image,
     imageMeta,
     code,
@@ -68,7 +68,7 @@ const Project = () => {
       {/* Project Details */}
       <ContentHeader leftSection={<BackButton href={ROUTES.projects} />}>
         {/* Stacks/Tags */}
-        {stacks && stacks.length > 0 && (
+        {/* {stacks && stacks.length > 0 && (
           <div className="flex flex-wrap gap-x-2 gap-y-1">
             {stacks.map((stack) => (
               <span
@@ -79,7 +79,7 @@ const Project = () => {
               </span>
             ))}
           </div>
-        )}
+        )} */}
 
         {/* Title & Description */}
         <h1 className="font-cal m-0 mt-6 text-4xl md:text-5xl">{title}</h1>
@@ -94,7 +94,12 @@ const Project = () => {
       </ContentHeader>
 
       {/* Reading Section */}
-      <ContentBody slug={slug} code={code} headings={headings} />
+      <ContentBody
+        slug={slug}
+        code={code}
+        headings={headings}
+        engagements={false}
+      />
     </>
   );
 };

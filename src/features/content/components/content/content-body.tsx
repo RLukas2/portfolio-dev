@@ -7,14 +7,19 @@ import TableOfContents from '@/features/content/components/table-of-contents';
 import type { ContentBodyProps } from '../../types/content';
 import ContentEngagements from '../content-engagements';
 
-const ContentBody = ({ slug, code, headings }: ContentBodyProps) => {
+const ContentBody = ({
+  slug,
+  code,
+  headings,
+  engagements = true,
+}: ContentBodyProps) => {
   // If there is no headings, just return the main content
   if (!headings || headings === '[]') {
     return (
       <section>
         <Container wide>
           <Mdx code={code} className="mt-8" />
-          <ContentEngagements slug={slug} />
+          {engagements && <ContentEngagements slug={slug} />}
         </Container>
       </section>
     );
@@ -27,7 +32,7 @@ const ContentBody = ({ slug, code, headings }: ContentBodyProps) => {
           {/* Main Content */}
           <div className="min-w-0 flex-1">
             <Mdx code={code} />
-            <ContentEngagements slug={slug} />
+            {engagements && <ContentEngagements slug={slug} />}
           </div>
           {/* Table of Contents Sidebar - Desktop only */}
           {headings && (

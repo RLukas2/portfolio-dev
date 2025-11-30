@@ -63,6 +63,7 @@ const NowPlayingCard = ({
             variant="ghost"
             className="bg-transparent text-white"
             onClick={() => setExpanded((prev) => !prev)}
+            aria-label="Collapse now playing card"
           >
             <ChevronDownIcon />
           </Button>
@@ -73,6 +74,7 @@ const NowPlayingCard = ({
           onClick={() => setExpanded((prev) => !prev)}
           size="icon"
           variant="ghost"
+          aria-label="Expand now playing card"
         >
           <Spotify className="size-5 animate-pulse" />
         </Button>
