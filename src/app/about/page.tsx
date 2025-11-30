@@ -1,8 +1,11 @@
+import { FileTextIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
+import Link from '@/components/common/link';
 import PageHeader from '@/components/common/page-header';
 import Container from '@/components/core/container';
+import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { SITE } from '@/constants/site';
 import Biography from '@/features/about/components/biography';
@@ -37,13 +40,19 @@ const AboutPage = () => {
               quality={100}
             />
             <div className="m-0 flex flex-col items-center py-2">
-              <h3 className="font-cal m-0 text-lg">{SITE.author.name}</h3>
+              <h3 className="font-cal m-0 text-xl">{SITE.author.name}</h3>
               <h4 className="text-muted-foreground m-0">Software Engineer</h4>
             </div>
             <OpenForHire isOpenForHire={isAvailableForHire} />
+
+            <Link href={ROUTES.resume} className="my-4 text-inherit">
+              <Button variant="shadow" className="gap-x-1">
+                <FileTextIcon /> My Resume
+              </Button>
+            </Link>
           </div>
 
-          <div className="prose dark:prose-dark max-w-none xl:col-span-3">
+          <div className="prose dark:prose-invert max-w-none xl:col-span-3">
             <Biography />
           </div>
         </div>

@@ -1,9 +1,5 @@
-import { FileTextIcon } from 'lucide-react';
-
 import { Email, GitHub, LinkedIn } from '@/components/common/icons';
 import Link from '@/components/common/link';
-import { Button } from '@/components/ui/button';
-import { ROUTES } from '@/constants/routes';
 import { SITE } from '@/constants/site';
 
 import TechStacks from './tech-stacks';
@@ -92,11 +88,6 @@ const Biography = () => {
         Want to dig deeper into what I've worked on? Check out my resume to see
         the full picture.{' '}
       </p>
-      <Link href={ROUTES.resume} className="text-inherit">
-        <Button variant="shadow" className="gap-x-1">
-          <FileTextIcon /> My Resume
-        </Button>
-      </Link>
 
       <h2 className="font-cal">Tech Stack</h2>
       <TechStacks />
