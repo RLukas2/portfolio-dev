@@ -36,7 +36,7 @@ const ContentBody = ({
           </div>
           {/* Table of Contents Sidebar - Desktop only */}
           {headings && (
-            <aside className="hidden lg:block lg:w-64 lg:shrink-0">
+            <aside className="hidden lg:block lg:w-64 lg:shrink-0 print:hidden">
               <div className="sticky top-24 max-h-[calc(100vh-12rem)] overflow-y-auto rounded-2xl border border-dashed p-6">
                 <TableOfContents headings={headings} />
               </div>
@@ -47,7 +47,7 @@ const ContentBody = ({
 
       {/* Mobile ToC floating button - hidden on desktop */}
       {headings && (
-        <div className="lg:hidden">
+        <div className="lg:hidden print:hidden">
           <TableOfContents headings={headings} />
         </div>
       )}

@@ -47,7 +47,6 @@ const Post = () => {
     <>
       {/* Hero Image */}
       <ContentThumbnail image={image} title={title} imageMeta={imageMeta} />
-
       {/* Post Details */}
       <ContentHeader leftSection={<BackButton href={ROUTES.blog} />}>
         {/* Tags */}
@@ -69,10 +68,8 @@ const Post = () => {
         {/* Meta (date, reading time, views) */}
         <ContentMeta date={date} readingTime={readingTime} slug={slug} />
       </ContentHeader>
-
       {/* Reading Section */}
       <ContentBody slug={slug} code={code} headings={headings} />
-
       {/* Footer */}
       <Container>
         <div className="my-8 flex items-center justify-between">
@@ -80,11 +77,10 @@ const Post = () => {
             Last updated: {formattedModifiedDate}
           </div>
         </div>
-      </Container>
-
+      </Container>{' '}
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
-        <div className="mt-16 border-t pt-12">
+        <div className="mt-16 border-t pt-12 print:hidden">
           <Container>
             <h2 className="font-cal text-2xl md:text-3xl">
               Other posts you might like

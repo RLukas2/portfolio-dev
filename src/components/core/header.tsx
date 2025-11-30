@@ -25,7 +25,7 @@ const Header = (): React.ReactNode => {
   return (
     <header
       className={cn(
-        'bg-background sticky top-0 z-50 flex h-16 transition-colors duration-200',
+        'bg-background sticky top-0 z-50 flex h-16 transition-colors duration-200 print:hidden',
         isScrolled ? 'shadow-sm' : 'saturate-110',
       )}
     >

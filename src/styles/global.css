@@ -832,3 +832,212 @@
 ::view-transition-new(page) {
   animation: slide-in 0.3s ease-in-out;
 }
+
+/* -------------------------------------------------------------------------- */
+/* Print Styles                                                               */
+/* -------------------------------------------------------------------------- */
+@media print {
+  /* Reset colors for print */
+  :root {
+    --background: hsl(0 0% 100%);
+    --foreground: hsl(0 0% 0%);
+    --muted-foreground: hsl(0 0% 30%);
+  }
+
+  /* Basic print settings */
+  * {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+
+  html,
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  /* Hide non-essential elements */
+  header,
+  footer,
+  nav,
+  aside,
+  .no-print,
+  [data-star-background],
+  [data-now-playing],
+  [data-reactions],
+  [data-share-button],
+  [data-toc-mobile],
+  [data-toc-sidebar] {
+    display: none !important;
+  }
+
+  /* Hide specific UI elements */
+  .lg\:w-64, /* ToC sidebar */
+  .lg\:hidden, /* Mobile ToC */
+  button,
+  .fixed,
+  .sticky {
+    display: none !important;
+  }
+
+  /* Show main content full width */
+  main {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Container adjustments */
+  .container,
+  [class*='container'] {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Article and content body */
+  article,
+  .prose {
+    max-width: 100% !important;
+    font-size: 12pt !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Typography */
+  h1 {
+    font-size: 24pt !important;
+    page-break-after: avoid;
+  }
+
+  h2 {
+    font-size: 18pt !important;
+    page-break-after: avoid;
+  }
+
+  h3 {
+    font-size: 14pt !important;
+    page-break-after: avoid;
+  }
+
+  h4,
+  h5,
+  h6 {
+    font-size: 12pt !important;
+    page-break-after: avoid;
+  }
+
+  p {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* Links - show URL after link text */
+  a[href]::after {
+    content: ' (' attr(href) ')';
+    font-size: 9pt;
+    color: #666 !important;
+  }
+
+  /* Don't show URL for internal anchor links and button-styled links */
+  a[href^='#']::after,
+  a[href^='javascript:']::after,
+  a.no-print-url::after,
+  a[role='button']::after {
+    content: '' !important;
+  }
+
+  /* Images */
+  img {
+    max-width: 100% !important;
+    page-break-inside: avoid;
+  }
+
+  /* Code blocks */
+  pre,
+  code {
+    border: 1px solid #ddd !important;
+    background: #f5f5f5 !important;
+    font-size: 10pt !important;
+    page-break-inside: avoid;
+    white-space: pre-wrap !important;
+    word-wrap: break-word !important;
+  }
+
+  pre {
+    padding: 0.5rem !important;
+    overflow-x: visible !important;
+  }
+
+  /* Tables */
+  table {
+    border-collapse: collapse !important;
+  }
+
+  table,
+  th,
+  td {
+    border: 1px solid #ddd !important;
+  }
+
+  th,
+  td {
+    padding: 0.5rem !important;
+  }
+
+  /* Blockquotes */
+  blockquote {
+    border-left: 3px solid #000 !important;
+    margin-left: 0 !important;
+    padding-left: 1rem !important;
+    font-style: italic;
+  }
+
+  /* Page breaks */
+  .page-break-before {
+    page-break-before: always;
+  }
+
+  .page-break-after {
+    page-break-after: always;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+
+  /* Hide related posts section */
+  .mt-16.border-t {
+    display: none !important;
+  }
+
+  /* Post metadata should be visible */
+  .text-muted-foreground {
+    color: #666 !important;
+  }
+
+  /* Ensure tags are readable */
+  .bg-secondary {
+    background: #f0f0f0 !important;
+    border: 1px solid #ddd !important;
+  }
+
+  /* Hide engagement section */
+  [class*='engagement'],
+  [class*='reaction'] {
+    display: none !important;
+  }
+
+  /* Add print header/footer info (optional) */
+  @page {
+    margin: 2cm;
+    size: A4;
+  }
+
+  /* First page - less top margin for title */
+  @page :first {
+    margin-top: 1cm;
+  }
+}

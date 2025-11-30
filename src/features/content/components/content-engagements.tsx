@@ -13,7 +13,7 @@ const ContentEngagements = ({
   return (
     <div
       className={cn(
-        'mx-auto mt-16 flex w-full max-w-sm sm:max-w-md',
+        'mx-auto mt-16 flex w-full max-w-sm sm:max-w-md print:hidden',
         className,
       )}
     >

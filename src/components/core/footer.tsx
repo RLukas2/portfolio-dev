@@ -17,7 +17,7 @@ import Container from './container';
  */
 const Footer = (): React.ReactNode => {
   return (
-    <footer className={cn('bg-grid mb-10 pt-16 text-sm')}>
+    <footer className={cn('bg-grid mb-10 pt-16 text-sm print:hidden')}>
       {/* Horizontal Line*/}
       <div className={cn('border-muted-background col-span-1 border-b')} />
 

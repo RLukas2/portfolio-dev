@@ -15,7 +15,7 @@ const BackButton = ({ href }: { href?: string }) => {
     'flex gap-2 w-max hover:gap-3 items-center transition-all duration-200 font-medium cursor-pointer';
 
   return (
-    <Container className="py-4 md:py-8">
+    <Container className="py-4 md:py-8 print:hidden">
       <div className="w-fit">
         {href ? (
           <Link href={href} className={className}>
