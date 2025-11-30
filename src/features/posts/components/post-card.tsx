@@ -33,12 +33,13 @@ const PostCard = ({ post, className }: PostCardProps) => {
     post;
 
   const { views, isLoading: isLoadViews } = useViews({ slug });
+
   const parsedImageMeta: {
     width: number;
     height: number;
     placeholder?: 'blur' | 'empty';
     blurDataURL?: string;
-  } = JSON.parse(imageMeta);
+  } = useMemo(() => JSON.parse(imageMeta), [imageMeta]);
 
   const extraImageProps = useMemo(() => {
     if (parsedImageMeta?.blurDataURL) {

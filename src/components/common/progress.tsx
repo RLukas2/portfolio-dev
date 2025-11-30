@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useMemo } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -25,13 +26,16 @@ const Progress = ({
 }) => {
   const { name, percent = 0 } = data;
 
-  const variants = {
-    initial: { width: 0 },
-    animate: {
-      width: `${percent}%`,
-      transition: { delay: 0.8 },
-    },
-  };
+  const variants = useMemo(
+    () => ({
+      initial: { width: 0 },
+      animate: {
+        width: `${percent}%`,
+        transition: { delay: 0.8 },
+      },
+    }),
+    [percent],
+  );
 
   return (
     <div className="flex items-center justify-between gap-3">

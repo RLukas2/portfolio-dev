@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import useRequest from '@/hooks/use-request';
 import type { APIErrorResponse, APIListResponse } from '@/types/api';
 
@@ -11,25 +13,28 @@ export const useEndorsements = () => {
 
   const endorsements = data?.data ?? [];
 
-  const addEndorsement = async (skillId: string) => {
-    try {
-      const response = await fetch('/api/endorsements', {
-        method: 'POST',
-        body: JSON.stringify({ skillId }),
-      });
+  const addEndorsement = useCallback(
+    async (skillId: string) => {
+      try {
+        const response = await fetch('/api/endorsements', {
+          method: 'POST',
+          body: JSON.stringify({ skillId }),
+        });
 
-      if (!response.ok) {
-        const json = await response.json();
-        const message =
-          json.message ?? 'There was a problem endorsing this skill.';
-        throw new Error(message);
+        if (!response.ok) {
+          const json = await response.json();
+          const message =
+            json.message ?? 'There was a problem endorsing this skill.';
+          throw new Error(message);
+        }
+      } catch (error) {
+        throw error;
+      } finally {
+        mutate();
       }
-    } catch (error) {
-      throw error;
-    } finally {
-      mutate();
-    }
-  };
+    },
+    [mutate],
+  );
 
   return { endorsements, isLoading, error, mutate, addEndorsement };
 };

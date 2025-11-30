@@ -1,3 +1,5 @@
+import { useCallback } from 'react';
+
 import useRequest from '@/hooks/use-request';
 import type { APIErrorResponse, APIListResponse } from '@/types/api';
 
@@ -11,44 +13,50 @@ export const useGuestbook = () => {
 
   const entries = data?.data ?? [];
 
-  const addEntry = async (message: string) => {
-    try {
-      const response = await fetch('/api/guestbook', {
-        method: 'POST',
-        body: JSON.stringify({ message }),
-      });
+  const addEntry = useCallback(
+    async (message: string) => {
+      try {
+        const response = await fetch('/api/guestbook', {
+          method: 'POST',
+          body: JSON.stringify({ message }),
+        });
 
-      if (!response.ok) {
-        const json = await response.json();
-        const message =
-          json.message ?? 'There was a problem to add your message.';
-        throw new Error(message);
+        if (!response.ok) {
+          const json = await response.json();
+          const message =
+            json.message ?? 'There was a problem to add your message.';
+          throw new Error(message);
+        }
+      } catch (error) {
+        throw error;
+      } finally {
+        mutate();
       }
-    } catch (error) {
-      throw error;
-    } finally {
-      mutate();
-    }
-  };
+    },
+    [mutate],
+  );
 
-  const deleteEntry = async (id: string) => {
-    try {
-      const response = await fetch(`/api/guestbook/${id}`, {
-        method: 'DELETE',
-      });
+  const deleteEntry = useCallback(
+    async (id: string) => {
+      try {
+        const response = await fetch(`/api/guestbook/${id}`, {
+          method: 'DELETE',
+        });
 
-      if (!response.ok) {
-        const json = await response.json();
-        const message =
-          json.message ?? 'There was a problem to delete your message.';
-        throw new Error(message);
+        if (!response.ok) {
+          const json = await response.json();
+          const message =
+            json.message ?? 'There was a problem to delete your message.';
+          throw new Error(message);
+        }
+      } catch (error) {
+        throw error;
+      } finally {
+        mutate();
       }
-    } catch (error) {
-      throw error;
-    } finally {
-      mutate();
-    }
-  };
+    },
+    [mutate],
+  );
 
   return { entries, isLoading, error, addEntry, deleteEntry };
 };

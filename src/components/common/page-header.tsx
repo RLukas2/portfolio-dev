@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { forwardRef } from 'react';
+import { forwardRef, useMemo } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -32,10 +32,13 @@ const PageHeader = forwardRef<HTMLDivElement, PageHeaderProps>(
     { title, description, centered = false, children, className, ...props },
     ref,
   ) => {
-    const animation = {
-      hide: centered ? { y: 32, opacity: 0 } : { x: -32, opacity: 0 },
-      show: centered ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 },
-    };
+    const animation = useMemo(
+      () => ({
+        hide: centered ? { y: 32, opacity: 0 } : { x: -32, opacity: 0 },
+        show: centered ? { y: 0, opacity: 1 } : { x: 0, opacity: 1 },
+      }),
+      [centered],
+    );
 
     return (
       <div

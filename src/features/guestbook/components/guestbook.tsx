@@ -1,6 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
+import { useCallback } from 'react';
 
 import { useGuestbook } from '../hooks/use-guestbook';
 import GuestbookAuth from './guestbook-auth';
@@ -12,21 +13,27 @@ const Guestbook = ({ isWidget }: { isWidget?: boolean }) => {
   const { data: session } = useSession();
   const { entries, isLoading, addEntry, deleteEntry } = useGuestbook();
 
-  const onSendMessage = async (message: string) => {
-    try {
-      await addEntry(message);
-    } catch (error) {
-      throw error;
-    }
-  };
+  const onSendMessage = useCallback(
+    async (message: string) => {
+      try {
+        await addEntry(message);
+      } catch (error) {
+        throw error;
+      }
+    },
+    [addEntry],
+  );
 
-  const onDeleteMessage = async (id: string) => {
-    try {
-      await deleteEntry(id);
-    } catch (error) {
-      throw error;
-    }
-  };
+  const onDeleteMessage = useCallback(
+    async (id: string) => {
+      try {
+        await deleteEntry(id);
+      } catch (error) {
+        throw error;
+      }
+    },
+    [deleteEntry],
+  );
 
   return isLoading ? (
     <GuestbookSkeleton />

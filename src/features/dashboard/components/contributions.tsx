@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { cn } from '@/lib/utils';
 
@@ -16,26 +16,40 @@ const Contributions = ({ data }: { data?: ContributionCalendar }) => {
     date: null,
   });
 
-  const weeks = data?.weeks ?? [];
-  const months =
-    data?.months.map((month) => {
-      const filterContributionDay = weeks
-        .filter((week) => week.firstDay.startsWith(month.firstDay.slice(0, 7)))
-        .map((week) => week.contributionDays)
-        .flat(1);
+  const weeks = useMemo(() => data?.weeks ?? [], [data?.weeks]);
 
-      const getContributionsByMonth = filterContributionDay.reduce(
-        (prev, curr) => prev + curr.contributionCount,
-        0,
-      );
+  const months = useMemo(
+    () =>
+      data?.months.map((month) => {
+        const filterContributionDay = weeks
+          .filter((week) =>
+            week.firstDay.startsWith(month.firstDay.slice(0, 7)),
+          )
+          .map((week) => week.contributionDays)
+          .flat(1);
 
-      return {
-        ...month,
-        contributionsCount: getContributionsByMonth,
-      };
-    }) ?? [];
+        const getContributionsByMonth = filterContributionDay.reduce(
+          (prev, curr) => prev + curr.contributionCount,
+          0,
+        );
+
+        return {
+          ...month,
+          contributionsCount: getContributionsByMonth,
+        };
+      }) ?? [],
+    [data?.months, weeks],
+  );
 
   const contributionColors = data?.colors ?? [];
+
+  const handleMouseEnter = useCallback((count: number, date: string) => {
+    setSelectedContribution({ count, date });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    setSelectedContribution({ count: null, date: null });
+  }, []);
 
   return (
     <div className="bg-card rounded-lg p-3">
@@ -78,14 +92,12 @@ const Contributions = ({ data }: { data?: ContributionCalendar }) => {
                       className="bg-muted my-0.5 block size-[14.85px] rounded-sm"
                       style={backgroundColor ? { backgroundColor } : undefined}
                       onMouseEnter={() =>
-                        setSelectedContribution({
-                          count: contribution.contributionCount,
-                          date: contribution.date,
-                        })
+                        handleMouseEnter(
+                          contribution.contributionCount,
+                          contribution.date,
+                        )
                       }
-                      onMouseLeave={() =>
-                        setSelectedContribution({ count: null, date: null })
-                      }
+                      onMouseLeave={handleMouseLeave}
                     />
                   );
                 })}

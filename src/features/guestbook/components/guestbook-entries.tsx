@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import { GUESTBOOK_HEIGHT_GAP, GUESTBOOK_WIDGET_HEIGHT } from '../constants';
 import type { Guestbook } from '../types';
@@ -21,24 +21,26 @@ const GuestbookEntries = ({
     GUESTBOOK_WIDGET_HEIGHT - GUESTBOOK_HEIGHT_GAP,
   );
 
+  const handleScroll = useCallback(() => {
+    if (entriesRef.current) {
+      const isScrolledToBottom =
+        entriesRef.current.scrollHeight - entriesRef.current.clientHeight <=
+        entriesRef.current.scrollTop;
+
+      setHasScrolledUp(!isScrolledToBottom);
+    }
+  }, []);
+
   useEffect(() => {
-    const handleScroll = () => {
-      if (entriesRef.current) {
-        const isScrolledToBottom =
-          entriesRef.current.scrollHeight - entriesRef.current.clientHeight <=
-          entriesRef.current.scrollTop;
-
-        setHasScrolledUp(!isScrolledToBottom);
-      }
-    };
-
     const currentEntriesRef = entriesRef.current;
-    currentEntriesRef?.addEventListener('scroll', handleScroll);
+    currentEntriesRef?.addEventListener('scroll', handleScroll, {
+      passive: true,
+    });
 
     return () => {
       currentEntriesRef?.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [handleScroll]);
 
   useEffect(() => {
     if (entriesRef.current && !hasScrolledUp) {
@@ -57,7 +59,7 @@ const GuestbookEntries = ({
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('resize', handleResize);

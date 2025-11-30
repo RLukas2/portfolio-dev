@@ -41,7 +41,7 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
     height: number;
     placeholder?: 'blur' | 'empty';
     blurDataURL?: string;
-  } = JSON.parse(imageMeta);
+  } = useMemo(() => JSON.parse(imageMeta), [imageMeta]);
 
   const extraImageProps = useMemo(() => {
     if (image && parsedImageMeta?.blurDataURL) {

@@ -1,5 +1,7 @@
 'use client';
 
+import { useCallback } from 'react';
+
 import useMediaQuery from '@/hooks/use-media-query';
 import { max } from '@/lib/breakpoints';
 
@@ -13,10 +15,12 @@ const NowPlaying = () => {
   const { track, isLoading: isNowPlayingLoading } = useNowPlaying();
   const { devices, isLoading: isDevicesLoading } = useDevices();
 
-  if (isNowPlayingLoading || isDevicesLoading) return null;
+  const onOpenSongUrl = useCallback(
+    (url?: string) => url && window.open(url, '_blank', 'noopener,noreferrer'),
+    [],
+  );
 
-  const onOpenSongUrl = (url?: string) =>
-    url && window.open(url, '_blank', 'noopener,noreferrer');
+  if (isNowPlayingLoading || isDevicesLoading) return null;
 
   return isMaxMd ? (
     <NowPlayingCard track={track} onOpenSongUrl={onOpenSongUrl} />

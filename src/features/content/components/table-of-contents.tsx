@@ -1,7 +1,7 @@
 'use client';
 
 import { ListIcon } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -57,23 +57,29 @@ const TableOfContents = ({
 
   const activeId = useActiveHeading(headingIds);
 
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      e.preventDefault();
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+        window.history.pushState(null, '', `#${id}`);
+      }
+      // Close dialog on mobile after clicking
+      setIsOpen(false);
+    },
+    [],
+  );
+
+  // Find active heading text for mobile button
+  const activeHeading = useMemo(
+    () => headings.find((h) => h.id === activeId),
+    [headings, activeId],
+  );
+
   if (!headings || headings.length === 0) {
     return null;
   }
-
-  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
-    e.preventDefault();
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      window.history.pushState(null, '', `#${id}`);
-    }
-    // Close dialog on mobile after clicking
-    setIsOpen(false);
-  };
-
-  // Find active heading text for mobile button
-  const activeHeading = headings.find((h) => h.id === activeId);
 
   return (
     <>

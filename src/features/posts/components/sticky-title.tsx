@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { useLayoutEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 
 import { CommandPalette } from '@/components/command-palette';
 import Container from '@/components/core/container';
@@ -17,6 +17,8 @@ interface StickyTitleProps {
   gap?: number;
 }
 
+const transition = { duration: 0.3, ease: [0.42, 0, 0.58, 1] as const };
+
 const StickyTitle = ({ title, elementRef, gap = -64 }: StickyTitleProps) => {
   const [threshold, setThreshold] = useState(0);
 
@@ -29,7 +31,7 @@ const StickyTitle = ({ title, elementRef, gap = -64 }: StickyTitleProps) => {
 
     handleResize();
 
-    window.addEventListener('resize', handleResize);
+    window.addEventListener('resize', handleResize, { passive: true });
 
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -38,15 +40,17 @@ const StickyTitle = ({ title, elementRef, gap = -64 }: StickyTitleProps) => {
 
   const isScrolled = useScroll(threshold + gap);
 
-  const transition = { duration: 0.3, ease: [0.42, 0, 0.58, 1] as const }; // cubic-bezier easing
-  const variants = {
-    initial: { opacity: isScrolled ? 0 : 1, y: isScrolled ? gap : 0 },
-    animate: { opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : gap },
-  };
+  const variants = useMemo(
+    () => ({
+      initial: { opacity: isScrolled ? 0 : 1, y: isScrolled ? gap : 0 },
+      animate: { opacity: isScrolled ? 1 : 0, y: isScrolled ? 0 : gap },
+    }),
+    [isScrolled, gap],
+  );
 
   const isMinMd = useMediaQuery(min('md'));
 
-  const scrollToTop = () => {
+  const scrollToTop = useCallback(() => {
     try {
       window.scroll({
         top: 0,
@@ -56,7 +60,7 @@ const StickyTitle = ({ title, elementRef, gap = -64 }: StickyTitleProps) => {
     } catch {
       window.scrollTo(0, 0);
     }
-  };
+  }, []);
 
   if (isMinMd) {
     return (

@@ -6,6 +6,7 @@ import type { Dispatch, SetStateAction } from 'react';
 import {
   createContext,
   Fragment,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -81,31 +82,40 @@ export const CommandPalette = (): React.ReactNode => {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const { resolvedTheme: theme, setTheme } = useTheme();
 
-  const placeholders = [
-    'Type a command or search',
-    'Press Cmd + K anytime to access this command pallete',
-    'Use arrow keys to navigate',
-    'Press Enter to select an option',
-  ];
+  const placeholders = useMemo(
+    () => [
+      'Type a command or search',
+      'Press Cmd + K anytime to access this command pallete',
+      'Use arrow keys to navigate',
+      'Press Enter to select an option',
+    ],
+    [],
+  );
 
   const placeholder = placeholders[placeholderIndex];
 
-  const isActiveRoute = (path: string) => pathname === path;
+  const isActiveRoute = useCallback(
+    (path: string) => pathname === path,
+    [pathname],
+  );
 
-  const handleOnSelect = (action: CommandMenuItem) => {
-    if (action.closeOnSelect) setIsOpen(false);
+  const handleOnSelect = useCallback(
+    (action: CommandMenuItem) => {
+      if (action.closeOnSelect) setIsOpen(false);
 
-    if (action.onClick) {
-      action.onClick();
-      return;
-    }
+      if (action.onClick) {
+        action.onClick();
+        return;
+      }
 
-    if (action.isExternal) {
-      window.open(action.href, '_blank');
-    } else {
-      router.push(action.href);
-    }
-  };
+      if (action.isExternal) {
+        window.open(action.href, '_blank');
+      } else {
+        router.push(action.href);
+      }
+    },
+    [router, setIsOpen],
+  );
 
   useEffect(() => {
     const onKeydown = (event: KeyboardEvent) => {
@@ -124,9 +134,7 @@ export const CommandPalette = (): React.ReactNode => {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setPlaceholderIndex((prev) =>
-        ((next) => (next + 1) % placeholders.length)(prev),
-      );
+      setPlaceholderIndex((prev) => (prev + 1) % placeholders.length);
     }, 3000);
 
     return () => {
@@ -134,30 +142,33 @@ export const CommandPalette = (): React.ReactNode => {
     };
   }, [placeholderIndex, placeholders.length]);
 
-  const groups: Array<{ title: string; options: CommandMenuItem[] }> = [
-    {
-      title: 'Pages',
-      options: COMMAND_PAGES,
-    },
-    {
-      title: 'Social',
-      options: COMMAND_SOCIAL_MEDIA,
-    },
-    {
-      title: 'Appearance',
-      options: [
-        {
-          label: `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`,
-          href: '#',
-          icon: theme === 'dark' ? <Moon /> : <Sun />,
-          isExternal: false,
-          eventName: `Appearance: Switch ${theme === 'dark' ? 'Light' : 'Dark'}`,
-          type: 'APPEARANCE',
-          onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
-        },
-      ],
-    },
-  ];
+  const groups: Array<{ title: string; options: CommandMenuItem[] }> = useMemo(
+    () => [
+      {
+        title: 'Pages',
+        options: COMMAND_PAGES,
+      },
+      {
+        title: 'Social',
+        options: COMMAND_SOCIAL_MEDIA,
+      },
+      {
+        title: 'Appearance',
+        options: [
+          {
+            label: `Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`,
+            href: '#',
+            icon: theme === 'dark' ? <Moon /> : <Sun />,
+            isExternal: false,
+            eventName: `Appearance: Switch ${theme === 'dark' ? 'Light' : 'Dark'}`,
+            type: 'APPEARANCE',
+            onClick: () => setTheme(theme === 'dark' ? 'light' : 'dark'),
+          },
+        ],
+      },
+    ],
+    [theme, setTheme],
+  );
 
   return (
     <>
