@@ -2,7 +2,7 @@
 title: 'To-do List for My Website'
 excerpt: 'A comprehensive to-do list outlining the features and improvements planned for my personal portfolio built with Next.js, Supabase, and Prisma.'
 date: 2025-11-28T10:00:00.000Z
-modifiedDate: 2025-11-29T10:00:00.000Z
+modifiedDate: 2025-11-30T10:00:00.000Z
 keywords:
   [
     to-do list,
@@ -123,6 +123,9 @@ But it feels a bit bland and could use some sprucing up.
   - [ ] Link to full endorsements page
 - [x] **Latest blog post preview** (single featured post, not list)
 - [ ] **Newsletter/contact CTA** section
+- [ ] **Animated hero section** with typing effect or subtle parallax
+- [ ] **Quick stats bar** (X posts, Y projects, Z endorsements)
+- [ ] **"Currently working on"** widget showing active project/learning
 
 ### About Page
 
@@ -138,6 +141,10 @@ Maybe reusing some of the components from the home page like the endorsements sh
   - [x] Social Links
 - [ ] **Add 'What I'm up to now' section** with current projects and interests.
 - [ ] Maybe add the retrospective section here instead?
+- [ ] **Timeline visualization** of career/education journey
+- [ ] **Fun facts section** with interactive reveals
+- [ ] **Downloadable resume** quick access button (already exists, verify visibility)
+- [ ] **Availability status** indicator (open for work/busy) - more prominent
 
 ### Blog Page & Individual Blog Posts
 
@@ -211,6 +218,49 @@ However, I want to make it bigger, via combining it into **Shorts**. That is, wh
   - [ ] View full short button
 - [ ] **Share/export options**
 - [ ] **Add Folders/Categories** for better organization?
+- [ ] **Quick add** shortcut for logged-in admin (floating + button)
+- [ ] **Syntax highlighting theme** options (match site theme)
+- [ ] **Code playground** integration (run code in browser for simple snippets)
+
+### Endorsements Page
+
+The endorsements page allows users to endorse my skills and capabilities.
+
+- [ ] **Add skill categories** with icons (Frontend, Backend, Tools, Soft Skills)
+- [ ] **Endorsement count badges** per skill
+- [ ] **Top endorsers showcase** (users who endorsed the most)
+- [ ] **Animated progress bars** for skill endorsement counts
+- [ ] **Filter endorsements** by skill category
+- [ ] **Social proof indicators** (X people endorsed this skill)
+- [ ] **Request endorsement** - shareable link to send to colleagues
+- [ ] **Thank you animation** after endorsing
+
+### Guestbook Page
+
+The guestbook allows visitors to leave messages and feedback.
+
+- [ ] **Add emoji reactions** to guestbook entries
+- [ ] **Pin important messages** (admin feature)
+- [ ] **Message character limit indicator** with countdown
+- [ ] **Rich text support** (bold, italic, links)
+- [ ] **Spam prevention** - rate limiting indicator
+- [ ] **Reply to messages** (threaded conversations)
+- [ ] **Sort options** (newest, oldest, most reactions)
+- [ ] **Highlight admin replies** with special styling
+- [ ] **Export guestbook** as PDF/image for memories
+
+### Uses Page
+
+The uses page lists tools, apps, and hardware I use regularly.
+
+- [ ] **Add icons/logos** for each tool/app
+- [ ] **Categorize with tabs** (Hardware, Software, Development, Productivity)
+- [ ] **Add affiliate/referral links** where applicable
+- [ ] **"Why I use this"** expandable sections
+- [ ] **Last updated indicator** per category
+- [ ] **Comparison tables** for similar tools
+- [ ] **Cost indicator** (Free, Paid, Subscription)
+- [ ] **Link to alternatives** I've tried
 
 ### Dashboard
 
@@ -250,6 +300,89 @@ I think it would be interesting to share my aspirations and dreams with my audie
 - [ ] **Card design with icons** for visual appeal
 - [ ] **Filter by category/status**
 - [ ] **Mobile responsive**
+
+### Resume Page
+
+The resume page displays my professional experience and education in a timeline format.
+
+- [x] **Create `Institution` interface** similar to `Company` for education entries
+- [x] **Add optional accomplishments** field to education entries
+- [x] **Create reusable `TimelineCard` component** for consistent styling
+- [x] **Make timeline mobile-friendly** with inline icons
+- [ ] **Add skills section** with visual progress bars or tag cloud
+- [ ] **Add certifications section** if applicable
+- [ ] **Print stylesheet** for resume page (clean print layout)
+- [ ] **Export options** - Download as PDF, share link
+- [ ] **Add "Currently learning" section** to show growth mindset
+
+### Error & 404 Pages
+
+The error pages are important for a good user experience when things go wrong.
+
+- [ ] **Add search functionality** on 404 page to help users find content
+- [ ] **Suggest similar pages** based on the URL they tried to access
+- [ ] **Add recent/popular posts** as navigation options
+- [ ] **Interactive 404 animation** (mini-game, animation, or Easter egg)
+- [ ] **Report broken link** button to notify admin
+- [ ] **Error page illustrations** - custom artwork or animated SVGs
+- [ ] **Maintain consistent branding** on error pages
+- [ ] **Add humor/personality** while being helpful
+
+---
+
+## UX & Aesthetic Improvements
+
+These are general improvements that can enhance the overall user experience and visual appeal of the website.
+
+### Navigation & Accessibility
+
+- [ ] **Add breadcrumbs** for better navigation hierarchy (especially for nested pages like blog posts)
+- [ ] **Back to top button** (floating button that appears on scroll)
+- [ ] **Keyboard shortcuts modal** (show available shortcuts like `/` for search)
+- [ ] **Skip to content link** for accessibility
+- [ ] **Improve focus indicators** for keyboard navigation
+
+### Loading & Feedback States
+
+- [ ] **Add skeleton loaders** for async content (cards, lists)
+  - [ ] Blog post cards skeleton
+  - [ ] Project cards skeleton
+  - [ ] Dashboard widgets skeleton
+- [ ] **Improve empty states** with illustrations and CTAs
+  - [ ] Add action buttons (e.g., "Write your first post")
+  - [ ] Add helpful messages and illustrations
+- [ ] **Toast notifications** for user actions (copy, share, submit)
+- [ ] **Optimistic UI updates** for interactions
+
+### Visual Enhancements
+
+- [ ] **Reading progress indicator** for blog posts (horizontal bar at top)
+- [ ] **Smooth page transitions** with Framer Motion
+- [ ] **Micro-interactions** on buttons and cards (subtle animations)
+- [ ] **Consistent card hover effects** across all pages
+- [ ] **Glass morphism effects** for cards/modals (subtle blur backgrounds)
+- [ ] **Dark mode toggle animation** (sun/moon transition)
+- [ ] **Gradient text effects** for headings where appropriate
+- [ ] **Better image placeholders** with blur-up effect
+
+### Content Presentation
+
+- [ ] **Estimated reading time** on blog cards (already on post page?)
+- [ ] **Share buttons** for blog posts and projects (Twitter, LinkedIn, copy link)
+- [ ] **Print-friendly styles** for blog posts
+- [ ] **Code block enhancements**
+  - [ ] Line highlighting
+  - [ ] File name display
+  - [ ] Diff view support
+- [ ] **Image lightbox** for blog post images (click to expand)
+
+### Engagement Features
+
+- [ ] **Reactions/likes** on blog posts (emoji reactions like GitHub)
+- [ ] **View count** displayed on posts/projects
+- [ ] **"Was this helpful?"** feedback at end of posts
+- [ ] **Related content suggestions** based on tags/categories
+- [ ] **Recently viewed** section (localStorage-based)
 
 ---
 

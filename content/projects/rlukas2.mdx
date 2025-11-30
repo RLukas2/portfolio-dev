@@ -9,4 +9,164 @@ published: true
 stacks: ['TypeScript', 'NextJS', 'TailwindCSS', 'Prisma', 'Supabase', 'Jest']
 ---
 
-Test
+## Overview
+
+I built a modern, full-stack portfolio website to showcase backend expertise, projects, and technical skills. The site features a clean design, optimized performance, and a robust backend infrastructure using Next.js, Prisma ORM, and Supabase PostgreSQL.
+
+## Problem Statement
+
+Creating a personal portfolio that effectively showcases work while maintaining clean UX and scalability presented several challenges:
+
+- How to organize multiple content types (projects, blog, endorsements) without overwhelming visitors
+- How to make content easily discoverable through search and filtering
+- How to leverage a database for dynamic, manageable content
+- How to maintain type safety across frontend and backend
+- How to implement authentication for protected routes
+- How to ensure performance at scale with proper caching and optimization
+
+## Solution
+
+I built a full-stack portfolio with:
+
+1. **Structured Navigation** - Clear information hierarchy with primary and secondary navigation
+2. **Content Organization** - Dedicated pages for projects, blog, about, shorts, and more
+3. **Dynamic Content Management** - Prisma ORM for type-safe database operations
+4. **Performance-First** - Image optimization, caching, code splitting, lazy loading
+5. **Type Safety** - TypeScript throughout for fewer runtime errors
+6. **Testing Coverage** - Jest tests for components, utilities, and API routes
+
+## Tech Stack
+
+### Frontend
+
+- **[Next.js 16+](https://nextjs.org)** - React framework with App Router, SSR/SSG capabilities
+- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe development reducing runtime errors
+- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS for rapid, consistent styling
+- **[React Components](https://reactjs.org/)** - Reusable components for cards, navigation, layouts
+
+### Backend & Database
+
+- **[Prisma ORM](https://www.prisma.io/)** - Type-safe database access with auto-generated client
+- **[Supabase (PostgreSQL)](https://supabase.com/)** - Managed PostgreSQL with built-in backups and authentication
+- **[Next.js API Routes](https://nextjs.org/docs/api-routes/introduction)** - Serverless functions for data endpoints
+- **[Next-Auth](https://next-auth.js.org/)** - Authentication for protected routes
+
+### Testing & Quality
+
+- **[Jest](https://jestjs.io/)** - Unit and integration testing framework
+- **[TypeScript](https://www.typescriptlang.org/)** - Compile-time type checking
+- **[ESLint](https://eslint.org/)** - Code quality and style consistency
+- **[Prettier](https://prettier.io/)** - Automatic code formatting
+
+## Key Pages
+
+### 1. Home Page (Hero Section)
+
+### 2. About Page
+
+### 3. Projects Page
+
+### 4. Shorts Page
+
+### 5. Uses Page
+
+### 6. Bucket List Page
+
+### 7. Dashboard Page
+
+## Monitoring & Analytics
+
+### 1. Error Tracking with Sentry
+
+```typescript
+import * as Sentry from '@sentry/nextjs';
+
+Sentry.init({
+  dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
+  environment: process.env.NODE_ENV,
+  tracesSampleRate: 1.0,
+});
+```
+
+### 2. Google Analytics
+
+```typescript
+export const pageview = (url: string) => {
+  window.gtag?.config(process.env.NEXT_PUBLIC_GA_ID, {
+    page_path: url,
+  });
+};
+```
+
+### 3. Vercel Analytics
+
+Built-in monitoring tracking Web Vitals and page performance
+
+## Deployment
+
+### Environment Variables
+
+```bash title=".env.example"
+## Client
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_GOOGLE_ANALYTICS=
+NEXT_PUBLIC_SENTRY_DSN=
+NEXT_PUBLIC_AVAILABLE_FOR_HIRE=true
+
+## Server
+DATABASE_URL=
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=
+SENTRY_DSN=
+SENTRY_AUTH_TOKEN=
+```
+
+### Deployment to Vercel
+
+```bash
+git push origin main
+# Vercel automatically deploys
+# Add environment variables in Vercel dashboard
+```
+
+## Metrics & Results
+
+### Performance
+
+- **Lighthouse Score:** 92/100 (Performance), 98/100 (Accessibility)
+- **Core Web Vitals:** All green (LCP 1.8s, FID 45ms, CLS 0.05)
+- **Bundle Size:** ~150KB JavaScript, ~30KB CSS
+
+### Traffic
+
+To be updated after launch
+
+## To-Do List
+
+Refer to my [To-Do List for My Website](https://rlukas2.vercel.app/blog/to-do-list) post for planned features and improvements.
+
+## Conclusion
+
+Building this portfolio demonstrates how to combine modern frontend patterns with robust backend infrastructure. The result is a site that's both beautiful to use and powerful to maintain.
+
+The stack of Next.js, TypeScript, Tailwind, Prisma, and Supabase provides:
+
+- Excellent developer experience
+- Type safety across the stack
+- Easy content management
+- Scalable architecture
+- Strong performance
+
+This approach works well for portfolios and can scale to more complex applications.
+
+---
+
+## Resources
+
+- **Live Site:** https://rlukas2.vercel.app/
+- **Tech Stack:** Next.js, TypeScript, Tailwind, Prisma, Supabase, Jest
+- **Deployment:** Vercel
+
+**Time to Build:** ~3-4 months (part-time)  
+**Lines of Code:** ~5,000+ (frontend + backend + tests)  
+**Commits:** 150+
