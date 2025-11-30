@@ -3,7 +3,6 @@
 import { ExternalLink } from 'lucide-react';
 
 import { GitHub } from '@/components/common/icons';
-import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import {
   BackButton,
@@ -20,7 +19,6 @@ const Project = () => {
     slug,
     title,
     description,
-    date,
     readingTime,
     url,
     repositoryUrl,
@@ -38,20 +36,26 @@ const Project = () => {
   const actionButtons = (
     <>
       {repositoryUrl && (
-        <Button asChild variant="outline" size="sm">
-          <a href={repositoryUrl} target="_blank" rel="noopener noreferrer">
-            <GitHub className="mr-2 size-4" />
-            Repository
-          </a>
-        </Button>
+        <a
+          href={repositoryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
+        >
+          <GitHub className="size-4" />
+          Repository
+        </a>
       )}
       {liveSiteUrl && (
-        <Button asChild variant="default" size="sm">
-          <a href={liveSiteUrl} target="_blank" rel="noopener noreferrer">
-            <ExternalLink className="mr-2 size-4" />
-            Live Site
-          </a>
-        </Button>
+        <a
+          href={liveSiteUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1 text-sm transition-colors"
+        >
+          <ExternalLink className="size-4" />
+          Open Live Site
+        </a>
       )}
     </>
   );
@@ -83,7 +87,6 @@ const Project = () => {
 
         {/* Meta (date, reading time, views) with action buttons */}
         <ContentMeta
-          date={date}
           readingTime={readingTime}
           slug={slug}
           actions={actionButtons}

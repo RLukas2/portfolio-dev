@@ -16,17 +16,20 @@ const ContentMeta = ({
   actions,
 }: ContentMetaProps) => {
   const { views, isLoading: isLoadViews } = useViews({ slug, trackView: true });
-  const publishedDate = formatDate(date);
+  const publishedDate = date ? formatDate(date) : '';
+
   return (
     <div className="mt-6 flex flex-col justify-between gap-4 border-y py-4 text-sm sm:flex-row sm:items-center">
       {/* Left section: Published date + stats (when actions exist) or just date (when no actions) */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:gap-4">
-        <span>
-          Published on{' '}
-          <time dateTime={publishedDate} className="font-medium">
-            {publishedDate}
-          </time>
-        </span>
+        {publishedDate && (
+          <span>
+            Published on{' '}
+            <time dateTime={publishedDate} className="font-medium">
+              {publishedDate}
+            </time>
+          </span>
+        )}
         {actions && (
           <div className="flex items-center gap-4">
             <div className="flex items-center gap-1">

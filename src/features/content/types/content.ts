@@ -38,7 +38,7 @@ export interface ContentHeaderProps {
 }
 
 export interface ContentMetaProps {
-  date: string;
+  date?: string;
   readingTime: string;
   slug: string;
   /** Additional content to render after the default meta (e.g., action buttons) */
