@@ -18,8 +18,11 @@ Sentry.init({
 
   // Enable logs to be sent to Sentry
   enableLogs: true,
-
   // Note: if you want to override the automatic release value, do not set a
   // `release` value here - use the environment variable `SENTRY_RELEASE`, so
   // that it will also get attached to your source maps
 });
+
+// This export will instrument router navigations, and is only relevant if you enable tracing.
+// `captureRouterTransitionStart` is available from SDK version 9.12.0 onwards
+export const onRouterTransitionStart = Sentry.captureRouterTransitionStart;

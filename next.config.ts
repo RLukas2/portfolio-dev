@@ -1,12 +1,9 @@
 import { withContentCollections } from '@content-collections/next';
-import MillionLint from '@million/lint';
 import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 import appHeaders from './src/config/next/headers';
 import redirects from './src/config/next/redirects';
-
-const SentryWebpackPluginOptions = { silent: true };
 
 const isDevelopment = process.env.NODE_ENV === 'development';
 
@@ -50,11 +47,13 @@ const nextConfig: NextConfig = {
       { hostname: 'lh3.googleusercontent.com' },
       // GitHub avatars
       { hostname: 'avatars.githubusercontent.com', protocol: 'https' },
+
       { hostname: 'i.scdn.co' },
       { hostname: 'spotify.com' },
       { hostname: 'res.cloudinary.com' },
       { hostname: 'ui-avatars.com' },
     ],
+
     // Add caching headers for images
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
@@ -68,7 +67,6 @@ const nextConfig: NextConfig = {
   },
 
   experimental: {
-    optimizeCss: true,
     optimizePackageImports: ['lucide-react', 'framer-motion', 'react-icons'],
   },
 
@@ -98,16 +96,20 @@ const nextConfig: NextConfig = {
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core', 'zod'],
 };
 
-const millionConfig = {
-  mute: true,
-  // auto: { rsc: true },
-  rsc: true,
+const SentryWebpackPluginOptions = {
+  org: 'rickie-lukas',
+  project: 'portfolio-dev',
+
+  // Only print logs for uploading source maps in CI
+  // Set to `true` to suppress logs
+  silent: !process.env.CI,
+
+  // Automatically tree-shake Sentry logger statements to reduce bundle size
+  disableLogger: true,
 };
 
 export default isDevelopment
-  ? withContentCollections(MillionLint.next(millionConfig)(nextConfig))
+  ? withContentCollections(nextConfig)
   : withContentCollections(
-      MillionLint.next(millionConfig)(
-        withSentryConfig(nextConfig, SentryWebpackPluginOptions),
-      ),
+      withSentryConfig(nextConfig, SentryWebpackPluginOptions),
     );
