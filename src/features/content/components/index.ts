@@ -3,6 +3,8 @@ export { default as ContentBody } from './content/content-body';
 export { default as ContentHeader } from './content/content-header';
 export { default as ContentMeta } from './content/content-meta';
 export { default as ContentThumbnail } from './content/content-thumbnail';
+export { default as ActiveFilters } from './filters/active-filters';
+export { default as FilterSidebar } from './filters/filter-sidebar';
 
 // Existing components
 export { default as BackButton } from './back-button';

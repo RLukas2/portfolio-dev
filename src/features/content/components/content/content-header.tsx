@@ -28,9 +28,10 @@ const ContentHeader = ({
   leftSection,
   children,
   className,
+  containerProps,
 }: ContentHeaderProps) => {
   return (
-    <Container className={cn('py-4', className)}>
+    <Container {...containerProps} className={cn('py-4', className)} wide>
       {/* Left Section (e.g., Back Button) */}
       {leftSection}
 

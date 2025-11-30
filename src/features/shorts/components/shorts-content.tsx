@@ -9,22 +9,22 @@ import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { ActiveFilters, FilterSidebar } from '@/features/content/components';
 
-import { SORT_OPTIONS, usePostFilters } from '../hooks/use-post-filters';
-import PostCard from './post-card';
-import type { Post } from '.content-collections/generated';
+import { SORT_OPTIONS, useShortFilters } from '../hooks/use-short-filters';
+import ShortCard from './short-card';
+import type { Short } from '.content-collections/generated';
 
-interface BlogContentProps {
-  posts: Post[];
+interface ShortsContentProps {
+  shorts: Short[];
 }
 
 /**
- * BlogContent component that displays a list of blog posts with filtering and sorting options.
+ * ShortsContent component that displays a list of shorts with filtering and sorting options.
  *
- * @param {BlogContentProps} props - The component props
- * @param {Post[]} props.posts - Array of blog posts to display
- * @returns {React.ReactNode} The rendered blog content
+ * @param {ShortsContentProps} props - The component props
+ * @param {Short[]} props.shorts - Array of shorts to display
+ * @returns {React.ReactNode} The rendered shorts content
  */
-const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
+const ShortsContent = ({ shorts }: ShortsContentProps): React.ReactNode => {
   const {
     query,
     setQuery,
@@ -35,23 +35,23 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
     clearFilters,
     hasActiveFilters,
     allTags,
-    filteredPosts,
-  } = usePostFilters(posts);
+    filteredShorts,
+  } = useShortFilters(shorts);
 
   return (
     <>
       {/* Page Header with Search */}
       <PageHeader
-        title="Blog"
-        description="The place where I share my thoughts, ideas and experiences about software development."
+        title="Short Notes"
+        description="My personal notes that is not long enough to be a blog post."
       >
         <div className="relative w-full">
           <Input
-            aria-label="Search posts"
+            aria-label="Search shorts"
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search posts..."
+            placeholder="Search shorts..."
             className="ring-offset-background focus-visible:ring-input pl-10 transition-all duration-200 focus-visible:ring-1 focus-visible:outline-none"
           />
           <SearchIcon className="text-muted-foreground absolute top-1/2 left-3 size-5 -translate-y-1/2" />
@@ -64,8 +64,9 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
       {/* Main Content */}
       <Container className="py-8">
         <div className="flex flex-col gap-8 lg:flex-row">
-          {/* Posts Section */}
+          {/* Shorts Section */}
           <div className="order-2 flex-1 space-y-6 lg:order-1">
+            {' '}
             {/* Active Filters Display */}
             {hasActiveFilters && (
               <ActiveFilters
@@ -78,25 +79,23 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
                 sortOptions={SORT_OPTIONS}
               />
             )}
-
-            {/* Posts Grid or Empty State */}
-            {filteredPosts.length ? (
-              <div className="grid auto-cols-fr grid-cols-1 gap-8">
-                {filteredPosts.map((post) => (
-                  <PostCard key={post._id} post={post} />
+            {/* Shorts Grid or Empty State */}
+            {filteredShorts.length ? (
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+                {filteredShorts.map((short) => (
+                  <ShortCard key={short._id} short={short} />
                 ))}
               </div>
             ) : (
               <EmptyState
                 message={
                   query || selectedTags.length > 0
-                    ? 'No posts found. Try adjusting your filters.'
-                    : "The posts are playing hide and seek – we just can't find them!"
+                    ? 'No shorts found. Try adjusting your filters.'
+                    : 'The shorts are probably off having a party somewhere without us!'
                 }
               />
             )}
-          </div>
-
+          </div>{' '}
           {/* Filter Sidebar */}
           <FilterSidebar
             sortOption={sortOption}
@@ -114,4 +113,4 @@ const BlogContent = ({ posts }: BlogContentProps): React.ReactNode => {
   );
 };
 
-export default BlogContent;
+export default ShortsContent;

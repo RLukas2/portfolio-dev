@@ -1,38 +1,58 @@
+'use client';
+
+import { EyeIcon } from 'lucide-react';
 import Link from 'next/link';
 
+import IncrementCounter from '@/components/increment-counter';
+import { Separator } from '@/components/ui/separator';
+import { Skeleton } from '@/components/ui/skeleton';
 import { ROUTES } from '@/constants/routes';
+import { useViews } from '@/features/content/hooks/use-views';
 
 import type { Short } from '.content-collections/generated';
 
 const ShortCard = ({ short }: { short: Short }) => {
-  const { slug, title, description, tags } = short;
+  const { slug, title, tags } = short;
+  const { views, isLoading: isLoadViews } = useViews({ slug });
 
   return (
     <Link
       href={`${ROUTES.shorts}/${slug}`}
-      className="group/short hover:bg-primary/5 relative flex flex-col place-items-stretch items-start space-y-2 self-start rounded-lg bg-transparent p-2.5 transition-colors lg:-mx-3 lg:w-[calc(100%+1.5rem)]"
+      className="group/short bg-card hover:bg-accent/50 relative flex flex-col gap-3 rounded-xl border p-4 transition-colors"
       title={title}
     >
-      <div className="flex flex-col gap-0.5">
-        <div className="flex items-center gap-3">
-          <p className="font-cal m-0 line-clamp-2 text-pretty group-hover/short:underline">
-            {title}
-          </p>
-          <div className="flex gap-2">
-            {tags.map((tag) => (
-              <span
-                key={tag}
-                className="bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs whitespace-nowrap"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </div>
-        <p className="text-muted-foreground m-0 line-clamp-2 text-sm text-pretty">
-          {description}
-        </p>
+      {/* Title */}
+      <h3 className="font-cal m-0 line-clamp-2 text-lg text-pretty group-hover/short:underline">
+        {title}
+      </h3>
+
+      {/* Views */}
+      <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
+        <EyeIcon className="text-primary size-4" />
+        {isLoadViews ? (
+          <Skeleton className="h-4 w-12" />
+        ) : (
+          <>
+            <IncrementCounter to={views} /> views
+          </>
+        )}
       </div>
+
+      <Separator />
+
+      {/* Tags */}
+      {tags && tags.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {tags.map((tag) => (
+            <span
+              key={tag}
+              className="bg-secondary text-muted-foreground rounded-lg px-2 py-1 text-xs"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      )}
     </Link>
   );
 };

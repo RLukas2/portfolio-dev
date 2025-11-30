@@ -12,7 +12,7 @@ const ContentBody = ({ slug, code, headings }: ContentBodyProps) => {
   if (!headings || headings === '[]') {
     return (
       <section>
-        <Container>
+        <Container wide>
           <Mdx code={code} className="mt-8" />
           <ContentEngagements slug={slug} />
         </Container>
@@ -23,10 +23,10 @@ const ContentBody = ({ slug, code, headings }: ContentBodyProps) => {
   return (
     <section>
       <Container wide>
-        <div className="flex flex-col gap-8 lg:flex-row">
+        <div className="mt-8 flex flex-col gap-8 lg:flex-row">
           {/* Main Content */}
           <div className="min-w-0 flex-1">
-            <Mdx code={code} className="mt-8" />
+            <Mdx code={code} />
             <ContentEngagements slug={slug} />
           </div>
           {/* Table of Contents Sidebar - Desktop only */}
