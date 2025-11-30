@@ -7,6 +7,26 @@ import useMounted from '@/hooks/use-mounted';
 
 import { Button } from './ui/button';
 
+const duration = 0.7;
+
+const moonVariants = {
+  checked: {
+    scale: 1,
+  },
+  unchecked: {
+    scale: 0,
+  },
+};
+
+const sunVariants = {
+  checked: {
+    scale: 0,
+  },
+  unchecked: {
+    scale: 1,
+  },
+};
+
 /**
  * ThemeSwitch Component
  * A button component that allows users to toggle between light and dark themes.
@@ -18,26 +38,6 @@ const ThemeSwitch = (): React.ReactNode => {
   const mounted = useMounted();
 
   const isDark = theme === 'dark';
-
-  const duration = 0.7;
-
-  const moonVariants = {
-    checked: {
-      scale: 1,
-    },
-    unchecked: {
-      scale: 0,
-    },
-  };
-
-  const sunVariants = {
-    checked: {
-      scale: 0,
-    },
-    unchecked: {
-      scale: 1,
-    },
-  };
 
   const scaleMoon = useMotionValue(isDark ? 1 : 0);
   const scaleSun = useMotionValue(isDark ? 0 : 1);
