@@ -1,5 +1,7 @@
 'use client';
 
+import { useMemo } from 'react';
+
 import Container from '@/components/core/container';
 import { ROUTES } from '@/constants/routes';
 import {
@@ -31,9 +33,13 @@ const Post = () => {
   } = usePostContext();
 
   // Get other published posts excluding the current one
-  const relatedPosts = allPosts
-    .filter((post) => post.published && post.slug !== slug)
-    .slice(0, 3);
+  const relatedPosts = useMemo(
+    () =>
+      allPosts
+        .filter((post) => post.published && post.slug !== slug)
+        .slice(0, 3),
+    [slug],
+  );
 
   const formattedModifiedDate = formatDate(modifiedDate);
 

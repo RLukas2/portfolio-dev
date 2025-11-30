@@ -11,7 +11,7 @@ import { CheckIcon } from 'lucide-react';
 import Image from 'next/image';
 import type { Session } from 'next-auth';
 import { signIn } from 'next-auth/react';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -29,6 +29,8 @@ import { useToast } from '@/hooks/use-toast';
 import { MAX_ENDORSERS_DISPLAY } from '../constants';
 import type { Skill } from '../types';
 import { formatEndorserNames } from '../utils';
+
+const springConfig = { stiffness: 100, damping: 5 };
 
 const SkillCard = ({
   skill,
@@ -54,7 +56,6 @@ const SkillCard = ({
   );
 
   const [hoveredKey, setHoveredKey] = useState<string | null>(null);
-  const springConfig = { stiffness: 100, damping: 5 };
   const x = useMotionValue(0);
 
   const rotate = useSpring(
@@ -67,14 +68,15 @@ const SkillCard = ({
     springConfig,
   );
 
-  const handleMouseMove = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-  ) => {
-    const halfWidth = event.currentTarget.offsetWidth / 2;
-    x.set(event.nativeEvent.offsetX - halfWidth);
-  };
+  const handleMouseMove = useCallback(
+    (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+      const halfWidth = event.currentTarget.offsetWidth / 2;
+      x.set(event.nativeEvent.offsetX - halfWidth);
+    },
+    [x],
+  );
 
-  const handleEndorse = async () => {
+  const handleEndorse = useCallback(async () => {
     if (isEndorsing) return;
 
     if (!isLoggedIn) {
@@ -104,7 +106,7 @@ const SkillCard = ({
     } finally {
       setIsEndorsing(false);
     }
-  };
+  }, [isEndorsing, isLoggedIn, onEndorse, skillId, toast]);
 
   return (
     <div className="bg-card shadow-border flex flex-col flex-nowrap items-stretch gap-4 rounded-lg p-4">

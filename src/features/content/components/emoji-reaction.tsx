@@ -41,7 +41,6 @@ const getRandomAnimationValue = (): AnimationValue => {
   };
 };
 
-// Static animation variants - defined outside component to prevent recreation
 const variants = {
   initial: { scale: 1 },
   hover: { scale: 1.2 },

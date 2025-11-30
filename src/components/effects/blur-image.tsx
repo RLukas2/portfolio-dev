@@ -10,7 +10,6 @@ interface BlurImageProps extends React.ComponentPropsWithoutRef<typeof Image> {
   lazy?: boolean;
 }
 
-// Static style object - defined outside component to prevent recreation
 const imageTransitionStyle = {
   transition: 'filter 700ms ease, transform 150ms ease',
 };

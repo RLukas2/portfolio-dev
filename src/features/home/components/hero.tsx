@@ -10,6 +10,20 @@ import { cn } from '@/lib/utils';
 import ProfileImage from './profile-image';
 import CurrentTechStacks from './tech-stack';
 
+const fadeInAnimation = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+};
+
+const fadeInDelayed1 = { delay: 0.1, duration: 0.3 };
+const fadeInDelayed2 = { delay: 0.2, duration: 0.3 };
+
+const slideInAnimation = {
+  initial: { x: -16, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  transition: { delay: 0.3 },
+};
+
 const Hero = () => {
   return (
     <motion.div
@@ -31,18 +45,18 @@ const Hero = () => {
           {/* Text Content */}
           <motion.div
             className="mb-0 text-xl font-medium tracking-wide text-blue-600 dark:text-blue-400"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
+            initial={fadeInAnimation.initial}
+            animate={fadeInAnimation.animate}
+            transition={fadeInDelayed1}
           >
             Hello, I&apos;m
           </motion.div>
 
           <motion.h1
             className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl lg:text-6xl"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.1, duration: 0.3 }}
+            initial={fadeInAnimation.initial}
+            animate={fadeInAnimation.animate}
+            transition={fadeInDelayed1}
           >
             Ngô Hoàng Tuấn
           </motion.h1>
@@ -52,18 +66,18 @@ const Hero = () => {
               'text-xl font-semibold tracking-tight md:text-2xl lg:text-3xl',
               'text-blue-600 dark:text-blue-400',
             )}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
+            initial={fadeInAnimation.initial}
+            animate={fadeInAnimation.animate}
+            transition={fadeInDelayed2}
           >
             Aspiring Backend Developer
           </motion.h2>
 
           <motion.p
             className="text-muted-foreground max-w-xl text-lg"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2, duration: 0.3 }}
+            initial={fadeInAnimation.initial}
+            animate={fadeInAnimation.animate}
+            transition={fadeInDelayed2}
           >
             I&apos;m a forth-year Computer Science student at HCMUS with
             practical experience in building backend systems through academic
@@ -74,9 +88,9 @@ const Hero = () => {
 
           <motion.div
             className="relative flex justify-center gap-4 lg:justify-start"
-            initial={{ x: -16, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            initial={slideInAnimation.initial}
+            animate={slideInAnimation.animate}
+            transition={slideInAnimation.transition}
           >
             <Button asChild variant="shadow" className="group">
               <Link href={'/#highlighted-projects'}>

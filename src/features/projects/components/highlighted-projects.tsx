@@ -23,7 +23,6 @@ const getHighlightedProjects = (
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .slice(0, maxDisplay);
 
-// Static animation variants - defined outside component to prevent recreation
 const variants = {
   initial: { y: 40, opacity: 0 },
   animate: { y: 0, opacity: 1 },
