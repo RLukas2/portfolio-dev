@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Maximize2Icon, MinusIcon, RefreshCwIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -33,15 +33,15 @@ const ImageComparison = ({ images = [], caption }: ImageComparisonProps) => {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isExpanded, setIsExpanded] = useState(false);
 
-  if (!images.length) return null;
-
-  const handleToggle = () => {
+  const handleToggle = useCallback(() => {
     setSelectedIndex((prevIndex) => (prevIndex === 0 ? 1 : 0));
-  };
+  }, []);
 
-  const handleExpand = () => {
+  const handleExpand = useCallback(() => {
     setIsExpanded((prevIsExpanded) => !prevIsExpanded);
-  };
+  }, []);
+
+  if (!images.length) return null;
 
   return (
     <div className="flex flex-col items-center space-y-3 rounded-md border px-6 py-3">

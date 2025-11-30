@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useMemo } from 'react';
 
 import { GitHub } from '@/components/common/icons';
 import { SITE } from '@/constants/site';
@@ -16,20 +17,38 @@ const GitHubInsights = () => {
 
   const contributions =
     stats?.contributions.contributionsCollection.contributionCalendar;
-  const totalContributions = contributions?.totalContributions ?? 0;
-  const weeks = contributions?.weeks ?? [];
 
-  const totalThisWeekContributions =
-    weeks[weeks.length - 1]?.contributionDays
-      .map((week) => week.contributionCount)
-      .reduce((prev, curr) => prev + curr, 0) ?? 0;
+  const {
+    totalContributions,
+    totalThisWeekContributions,
+    bestContribution,
+    averageContribution,
+  } = useMemo(() => {
+    const weeks = contributions?.weeks ?? [];
+    const totalContributions = contributions?.totalContributions ?? 0;
 
-  const totalContributionList = weeks.flatMap((week) =>
-    week.contributionDays.map((day) => day.contributionCount),
-  );
+    const totalThisWeekContributions =
+      weeks[weeks.length - 1]?.contributionDays
+        .map((week) => week.contributionCount)
+        .reduce((prev, curr) => prev + curr, 0) ?? 0;
 
-  const bestContribution = Math.max(...totalContributionList) ?? 0;
-  const averageContribution = totalContributions / totalContributionList.length;
+    const totalContributionList = weeks.flatMap((week) =>
+      week.contributionDays.map((day) => day.contributionCount),
+    );
+
+    const bestContribution = Math.max(...totalContributionList, 0);
+    const averageContribution =
+      totalContributionList.length > 0
+        ? totalContributions / totalContributionList.length
+        : 0;
+
+    return {
+      totalContributions,
+      totalThisWeekContributions,
+      bestContribution,
+      averageContribution,
+    };
+  }, [contributions]);
 
   return (
     <Block

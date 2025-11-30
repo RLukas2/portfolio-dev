@@ -4,7 +4,7 @@ import { compareDesc } from 'date-fns';
 import { motion, useInView } from 'framer-motion';
 import { ChevronRightIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import EmptyState from '@/components/common/empty-state';
 import { Button } from '@/components/ui/button';
@@ -23,6 +23,7 @@ const getHighlightedProjects = (
     .sort((a, b) => compareDesc(new Date(a.date), new Date(b.date)))
     .slice(0, maxDisplay);
 
+// Static animation variants - defined outside component to prevent recreation
 const variants = {
   initial: { y: 40, opacity: 0 },
   animate: { y: 0, opacity: 1 },
@@ -30,7 +31,7 @@ const variants = {
 
 const HighlightedProjects = () => {
   const projectsRef = useRef<HTMLDivElement>(null);
-  const projects = getHighlightedProjects();
+  const projects = useMemo(() => getHighlightedProjects(), []);
   const isInView = useInView(projectsRef, { once: true, margin: '-100px' });
 
   return (

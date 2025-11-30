@@ -1,6 +1,7 @@
 'use client';
 
 import Image from 'next/image';
+import { useMemo } from 'react';
 
 import type { ContentThumbnailProps } from '../../types/content';
 
@@ -9,17 +10,20 @@ const ContentThumbnail = ({
   title,
   imageMeta,
 }: ContentThumbnailProps) => {
+  const parsedImageMeta = useMemo(() => {
+    if (!imageMeta) return null;
+    return JSON.parse(imageMeta) as {
+      width: number;
+      height: number;
+      placeholder?: 'blur' | 'empty';
+      blurDataURL?: string;
+    };
+  }, [imageMeta]);
+
   // If there's no image or image metadata, return null
-  if (!image || !imageMeta) {
+  if (!image || !parsedImageMeta) {
     return null;
   }
-
-  const parsedImageMeta: {
-    width: number;
-    height: number;
-    placeholder?: 'blur' | 'empty';
-    blurDataURL?: string;
-  } = JSON.parse(imageMeta);
 
   return (
     <div className="relative h-64 w-full overflow-hidden">

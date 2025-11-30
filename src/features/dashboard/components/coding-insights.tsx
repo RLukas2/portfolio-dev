@@ -3,7 +3,7 @@
 import { formatDistanceToNow } from 'date-fns';
 import { fromZonedTime, toZonedTime } from 'date-fns-tz';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 import { WakaTime } from '@/components/common/icons';
 import Progress from '@/components/common/progress';
@@ -11,7 +11,6 @@ import { cn, formatDate } from '@/lib/utils';
 
 import { useStats } from '../hooks/use-stats';
 import type { CodingActivityStats } from '../types/stats';
-import type { WakaTimeSummary } from '../types/wakatime';
 import Block from './block';
 import OverviewCard from './overview-card';
 
@@ -55,25 +54,21 @@ const CodingInsights = () => {
     : 'N/A';
   const allTimeSinceToday = stats?.all_time_since_today?.text ?? 'N/A';
 
-  const languages = stats?.languages ?? [];
-  const editors = stats?.editors ?? [];
-
-  const activities: Array<{
-    title: string;
-    data: WakaTimeSummary[];
-    className: string;
-  }> = [
-    {
-      title: 'Languages',
-      data: languages,
-      className: 'bg-rainbow-gradient-inverse',
-    },
-    {
-      title: 'Editors',
-      data: editors,
-      className: 'bg-rainbow-gradient',
-    },
-  ];
+  const activities = useMemo(
+    () => [
+      {
+        title: 'Languages',
+        data: stats?.languages ?? [],
+        className: 'bg-rainbow-gradient-inverse',
+      },
+      {
+        title: 'Editors',
+        data: stats?.editors ?? [],
+        className: 'bg-rainbow-gradient',
+      },
+    ],
+    [stats?.languages, stats?.editors],
+  );
 
   return (
     <Block

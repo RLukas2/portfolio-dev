@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { randomBetween } from '@/lib/utils';
 
@@ -41,6 +41,7 @@ const getRandomAnimationValue = (): AnimationValue => {
   };
 };
 
+// Static animation variants - defined outside component to prevent recreation
 const variants = {
   initial: { scale: 1 },
   hover: { scale: 1.2 },
@@ -64,13 +65,13 @@ const EmojiReaction = ({
     if (disabled) setEmoji(disabledEmoji);
   }, [disabled, disabledEmoji]);
 
-  const handleClick = () => {
+  const handleClick = useCallback(() => {
     if (disabled) return;
 
     setHistory((prev) => [...prev, getRandomAnimationValue()]);
 
     onClick?.();
-  };
+  }, [disabled, onClick]);
 
   return (
     <motion.button

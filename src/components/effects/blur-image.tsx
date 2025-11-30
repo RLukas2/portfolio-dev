@@ -10,6 +10,11 @@ interface BlurImageProps extends React.ComponentPropsWithoutRef<typeof Image> {
   lazy?: boolean;
 }
 
+// Static style object - defined outside component to prevent recreation
+const imageTransitionStyle = {
+  transition: 'filter 700ms ease, transform 150ms ease',
+};
+
 /**
  * BlurImage Component
  * This component renders an image with a blur effect while loading.
@@ -59,9 +64,7 @@ const BlurImage = forwardRef<HTMLImageElement, BlurImageProps>(
             'rounded-lg',
             imageClassName,
           )}
-          style={{
-            transition: 'filter 700ms ease, transform 150ms ease',
-          }}
+          style={imageTransitionStyle}
           loading={lazy ? 'lazy' : undefined}
           priority={!lazy}
           quality={100}

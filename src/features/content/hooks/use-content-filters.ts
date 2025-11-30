@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import type { SortOption, SortOptionItem } from '@/features/content/components';
 
@@ -214,17 +214,17 @@ export const useContentFilters = <T extends FilterableContent>(
     return sortItems(filtered, sortOption, viewCounts);
   }, [items, query, selectedTags, sortOption, getSearchableText, viewCounts]);
 
-  const toggleTag = (tag: string) => {
+  const toggleTag = useCallback((tag: string) => {
     setSelectedTags((prev) =>
       prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
     );
-  };
+  }, []);
 
-  const clearFilters = () => {
+  const clearFilters = useCallback(() => {
     setQuery('');
     setSelectedTags([]);
     setSortOption(defaultSortOption);
-  };
+  }, [defaultSortOption]);
 
   const hasActiveFilters =
     !!query || selectedTags.length > 0 || sortOption !== defaultSortOption;
