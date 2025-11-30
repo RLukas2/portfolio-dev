@@ -4,7 +4,11 @@ import readingTime from 'reading-time';
 import { z } from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
-import { extractHeadings, serializeHeadings } from './extract-headings';
+import {
+  remarkExtractHeadings,
+  type TocHeading,
+} from '../mdx-plugins/remark/extract-headings';
+import { serializeHeadings } from './extract-headings';
 
 const shorts = defineCollection({
   name: 'Short',
@@ -25,6 +29,8 @@ const shorts = defineCollection({
         doc,
       },
       async () => {
+        const headings: TocHeading[] = [];
+
         const code = await compileMDX(
           {
             ...context,
@@ -34,7 +40,10 @@ const shorts = defineCollection({
           {
             cwd: process.cwd(),
             rehypePlugins,
-            remarkPlugins,
+            remarkPlugins: [
+              ...remarkPlugins,
+              [remarkExtractHeadings, { headings }],
+            ],
           },
         );
 
@@ -46,7 +55,7 @@ const shorts = defineCollection({
           slug: doc._meta.path,
           code,
           readingTime: parsedReadingTime,
-          headings: serializeHeadings(extractHeadings(doc.content)),
+          headings: serializeHeadings(headings),
         };
       },
     );

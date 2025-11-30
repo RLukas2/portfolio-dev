@@ -5,7 +5,11 @@ import z from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
 import { getBlurData } from '../mdx-plugins/remark/blur';
-import { extractHeadings, serializeHeadings } from './extract-headings';
+import {
+  remarkExtractHeadings,
+  type TocHeading,
+} from '../mdx-plugins/remark/extract-headings';
+import { serializeHeadings } from './extract-headings';
 import { getContentImagePath, getPostExcerpt } from './utils';
 
 const posts = defineCollection({
@@ -31,6 +35,9 @@ const posts = defineCollection({
         doc,
       },
       async () => {
+        // Create a headings array that will be populated by the remark plugin
+        const headings: TocHeading[] = [];
+
         const code = await compileMDX(
           {
             ...context,
@@ -40,7 +47,10 @@ const posts = defineCollection({
           {
             cwd: process.cwd(),
             rehypePlugins,
-            remarkPlugins,
+            remarkPlugins: [
+              ...remarkPlugins,
+              [remarkExtractHeadings, { headings }],
+            ],
           },
         );
 
@@ -72,7 +82,7 @@ const posts = defineCollection({
           longExcerpt,
           image,
           imageMeta: JSON.stringify(imageMeta),
-          headings: serializeHeadings(extractHeadings(doc.content)),
+          headings: serializeHeadings(headings),
         };
       },
     );

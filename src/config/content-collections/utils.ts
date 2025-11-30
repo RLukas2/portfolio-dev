@@ -1,5 +1,22 @@
 import removeMd from 'remove-markdown';
 
+/**
+ * Generates an excerpt from the given content.
+ *
+ * @param {{
+ *   content?: string | null;
+ *   defaultExcerpt?: string;
+ *   trimLength?: boolean;
+ *   min?: number;
+ *   max?: number;
+ * }} param0
+ * @param {string} param0.content - The raw MDX/Markdown content
+ * @param {string} param0.defaultExcerpt - The default excerpt to use if content is not available
+ * @param {boolean} param0.trimLength - Whether to trim the excerpt to a specific length
+ * @param {number} [param0.min=70] - Minimum length for trimming
+ * @param {number} [param0.max=150] - Maximum length for trimming
+ * @returns {string} - The generated excerpt
+ */
 export const getPostExcerpt = ({
   content,
   defaultExcerpt,
