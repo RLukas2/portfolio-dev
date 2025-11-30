@@ -15,7 +15,7 @@ import Analytics from '@/components/provider/analytics';
 import AppProvider from '@/components/provider/app-provider';
 import SpeedInsight from '@/components/provider/speed-insight';
 import { Toaster } from '@/components/ui/toaster';
-import { DEFAULT_METADATA, seo } from '@/lib/meta';
+import { buildWebsiteJsonLd, DEFAULT_METADATA, seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
 
 // Lazy load heavy client components to reduce initial bundle size
@@ -81,6 +81,15 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       <meta
         name="google-site-verification"
         content="k6PyMiGShL7wrz11l4Nvahbt-UpiTcg4o1peE9-HOhI"
+      />
+
+      {/* JSON-LD WebSite Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: buildWebsiteJsonLd(),
+        }}
+        key="website-jsonld"
       />
 
       {/* Preconnect to critical origins for faster resource loading */}

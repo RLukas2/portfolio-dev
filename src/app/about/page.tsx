@@ -11,7 +11,7 @@ import { SITE } from '@/constants/site';
 import Biography from '@/features/about/components/biography';
 import OpenForHire from '@/features/about/components/open-for-hire';
 import env from '@/lib/env';
-import { seo } from '@/lib/meta';
+import { buildPersonJsonLd, seo } from '@/lib/meta';
 
 export const metadata: Metadata = seo({
   title: 'About',
@@ -57,6 +57,15 @@ const AboutPage = () => {
           </div>
         </div>
       </Container>
+
+      {/* Person JSON-LD Schema */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: buildPersonJsonLd(),
+        }}
+        key="person-jsonld"
+      />
     </>
   );
 };

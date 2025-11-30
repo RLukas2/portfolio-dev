@@ -5,7 +5,7 @@ import { ROUTES } from '@/constants/routes';
 import { BASE_URL } from '@/constants/site';
 import Project from '@/features/projects/components/project';
 import { ProjectProvider } from '@/features/projects/components/project-provider';
-import { buildJsonLd, seo } from '@/lib/meta';
+import { buildProjectJsonLd, seo } from '@/lib/meta';
 import { formatDate } from '@/lib/utils';
 
 import type { Project as ProjectDB } from '.content-collections/generated';
@@ -56,7 +56,7 @@ const ProjectPage = async ({
 
   if (!project) return notFound();
 
-  const { title, description, date } = project;
+  const { title, description, date, stacks, repositoryUrl, image } = project;
 
   const datePublished = formatDate(date);
 
@@ -66,13 +66,14 @@ const ProjectPage = async ({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
-          __html: buildJsonLd({
+          __html: buildProjectJsonLd({
             title,
             description,
-            headline: title,
             datePublished,
-            dateModified: datePublished,
             url: `${BASE_URL}${ROUTES.projects}/${slug}`,
+            repositoryUrl,
+            image: image ? `${BASE_URL}${image}` : undefined,
+            technologies: stacks,
           }),
         }}
         key="project-jsonld"
