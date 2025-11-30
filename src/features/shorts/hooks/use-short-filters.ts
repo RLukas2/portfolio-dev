@@ -4,7 +4,7 @@ import { useMemo, useState } from 'react';
 
 import type { SortOption, SortOptionItem } from '@/features/content/components';
 
-import type { Post } from '.content-collections/generated';
+import type { Short } from '.content-collections/generated';
 
 export const SORT_OPTIONS: SortOptionItem[] = [
   { value: 'date-desc', label: 'Newest First' },
@@ -14,26 +14,27 @@ export const SORT_OPTIONS: SortOptionItem[] = [
 ];
 
 /**
- * Filters posts based on search query and selected tags.
+ * Filters shorts based on search query and selected tags.
  *
- * @param {Post[]} posts - Array of posts to filter
+ * @param {Short[]} shorts - Array of shorts to filter
  * @param {string} query - Search query string
  * @param {string[]} selectedTags - Array of selected tags
- * @returns {Post[]} - Array of filtered posts
+ * @returns {Short[]} - Array of filtered shorts
  */
-const filterPosts = (
-  posts: Post[],
+const filterShorts = (
+  shorts: Short[],
   query: string,
   selectedTags: string[],
-): Post[] => {
-  if (!posts) return [];
+): Short[] => {
+  if (!shorts) return [];
 
-  let filteredPosts = posts;
+  let filteredShorts = shorts;
 
   // Filter by search query
   if (query) {
-    filteredPosts = filteredPosts.filter((post) => {
-      const searchContent = post.title + post.excerpt + post.tags?.join(' ');
+    filteredShorts = filteredShorts.filter((short) => {
+      const searchContent =
+        short.title + short.description + short.tags?.join(' ');
       return searchContent
         .toLocaleLowerCase()
         .includes(query.toLocaleLowerCase());
@@ -42,23 +43,23 @@ const filterPosts = (
 
   // Filter by selected tags
   if (selectedTags.length > 0) {
-    filteredPosts = filteredPosts.filter((post) =>
-      selectedTags.some((tag) => post.tags?.includes(tag)),
+    filteredShorts = filteredShorts.filter((short) =>
+      selectedTags.some((tag) => short.tags?.includes(tag)),
     );
   }
 
-  return filteredPosts;
+  return filteredShorts;
 };
 
 /**
- * Sorts posts based on the selected sort option.
+ * Sorts shorts based on the selected sort option.
  *
- * @param {Post[]} posts - Array of posts to sort
+ * @param {Short[]} shorts - Array of shorts to sort
  * @param {SortOption} sortOption - Selected sort option
- * @returns {Post[]} - Array of sorted posts
+ * @returns {Short[]} - Array of sorted shorts
  */
-const sortPosts = (posts: Post[], sortOption: SortOption): Post[] => {
-  const sorted = [...posts];
+const sortShorts = (shorts: Short[], sortOption: SortOption): Short[] => {
+  const sorted = [...shorts];
 
   switch (sortOption) {
     case 'date-desc':
@@ -81,20 +82,20 @@ const sortPosts = (posts: Post[], sortOption: SortOption): Post[] => {
 };
 
 /**
- * Gets all unique tags from the list of posts.
+ * Gets all unique tags from the list of shorts.
  *
- * @param {Post[]} posts - Array of posts to extract tags from
+ * @param {Short[]} shorts - Array of shorts to extract tags from
  * @returns {string[]} - Array of unique tags
  */
-const getAllTags = (posts: Post[]): string[] => {
+const getAllTags = (shorts: Short[]): string[] => {
   const tagSet = new Set<string>();
-  posts.forEach((post) => {
-    post.tags?.forEach((tag) => tagSet.add(tag));
+  shorts.forEach((short) => {
+    short.tags?.forEach((tag) => tagSet.add(tag));
   });
   return Array.from(tagSet).sort();
 };
 
-export interface UsePostFiltersReturn {
+export interface UseShortFiltersReturn {
   query: string;
   setQuery: (query: string) => void;
   sortOption: SortOption;
@@ -104,26 +105,26 @@ export interface UsePostFiltersReturn {
   clearFilters: () => void;
   hasActiveFilters: boolean;
   allTags: string[];
-  filteredPosts: Post[];
+  filteredShorts: Short[];
 }
 
 /**
- * Custom hook to manage post filtering and sorting.
+ * Custom hook to manage short filtering and sorting.
  *
- * @param {Post[]} posts - Array of posts to manage
- * @returns {UsePostFiltersReturn} - Object containing filter and sort state and handlers
+ * @param {Short[]} shorts - Array of shorts to manage
+ * @returns {UseShortFiltersReturn} - Object containing filter and sort state and handlers
  */
-export const usePostFilters = (posts: Post[]): UsePostFiltersReturn => {
+export const useShortFilters = (shorts: Short[]): UseShortFiltersReturn => {
   const [query, setQuery] = useState('');
   const [sortOption, setSortOption] = useState<SortOption>('date-desc');
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
 
-  const allTags = useMemo(() => getAllTags(posts), [posts]);
+  const allTags = useMemo(() => getAllTags(shorts), [shorts]);
 
-  const filteredPosts = useMemo(() => {
-    const filtered = filterPosts(posts, query, selectedTags);
-    return sortPosts(filtered, sortOption);
-  }, [posts, query, selectedTags, sortOption]);
+  const filteredShorts = useMemo(() => {
+    const filtered = filterShorts(shorts, query, selectedTags);
+    return sortShorts(filtered, sortOption);
+  }, [shorts, query, selectedTags, sortOption]);
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prev) =>
@@ -150,6 +151,6 @@ export const usePostFilters = (posts: Post[]): UsePostFiltersReturn => {
     clearFilters,
     hasActiveFilters,
     allTags,
-    filteredPosts,
+    filteredShorts,
   };
 };

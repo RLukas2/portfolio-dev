@@ -3,28 +3,13 @@ import { XIcon } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
-import { SORT_OPTIONS, type SortOption } from '../hooks/use-post-filters';
-
-interface ActiveFiltersProps {
-  query: string;
-  setQuery: (query: string) => void;
-  sortOption: SortOption;
-  selectedTags: string[];
-  toggleTag: (tag: string) => void;
-  clearFilters: () => void;
-}
+import type { ActiveFiltersProps } from '../../types/content';
 
 /**
- * ActiveFilters component to display and manage currently applied filters.
+ * A reusable active filters component to display and manage currently applied filters.
  *
- * @param {ActiveFiltersProps} param0
- * @param {string} param0.query - Current search query
- * @param {(query: string) => void} param0.setQuery - Function to update the search query
- * @param {SortOption} param0.sortOption - Current sort option
- * @param {{}} param0.selectedTags - Array of currently selected tags
- * @param {(tag: string) => void} param0.toggleTag - Function to toggle a tag filter
- * @param {() => void} param0.clearFilters - Function to clear all filters
- * @returns {React.ReactNode} - The rendered ActiveFilters component
+ * @param {ActiveFiltersProps} props
+ * @returns {React.ReactNode}
  */
 const ActiveFilters = ({
   query,
@@ -33,6 +18,7 @@ const ActiveFilters = ({
   selectedTags,
   toggleTag,
   clearFilters,
+  sortOptions,
 }: ActiveFiltersProps): React.ReactNode => {
   return (
     <div className="flex flex-wrap items-center gap-2">
@@ -63,7 +49,7 @@ const ActiveFilters = ({
 
       {sortOption !== 'date-desc' && (
         <Badge variant="outline" className="gap-1">
-          {SORT_OPTIONS.find((o) => o.value === sortOption)?.label}
+          {sortOptions.find((o) => o.value === sortOption)?.label}
         </Badge>
       )}
 

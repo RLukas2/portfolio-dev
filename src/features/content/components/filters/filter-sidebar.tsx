@@ -12,32 +12,15 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 
-import { SORT_OPTIONS, type SortOption } from '../hooks/use-post-filters';
-
-interface PostFilterSidebarProps {
-  sortOption: SortOption;
-  setSortOption: (option: SortOption) => void;
-  selectedTags: string[];
-  toggleTag: (tag: string) => void;
-  allTags: string[];
-  hasActiveFilters: boolean;
-  clearFilters: () => void;
-}
+import type { FilterSidebarProps, SortOption } from '../../types/content';
 
 /**
- * PostFilterSidebar component that provides filtering and sorting options for blog posts.
+ * A reusable filter sidebar component for content lists (blog, shorts, etc.)
  *
- * @param {PostFilterSidebarProps} param0
- * @param {SortOption} param0.sortOption - Current sort option
- * @param {(option: SortOption) => void} param0.setSortOption - Function to update the sort option
- * @param {{}} param0.selectedTags - Array of currently selected tags
- * @param {(tag: string) => void} param0.toggleTag - Function to toggle a tag filter
- * @param {{}} param0.allTags - Array of all available tags
- * @param {boolean} param0.hasActiveFilters - Indicates if there are any active filters
- * @param {() => void} param0.clearFilters - Function to clear all filters
- * @returns {*}
+ * @param {FilterSidebarProps} props
+ * @returns {React.ReactNode}
  */
-const PostFilterSidebar = ({
+const FilterSidebar = ({
   sortOption,
   setSortOption,
   selectedTags,
@@ -45,7 +28,8 @@ const PostFilterSidebar = ({
   allTags,
   hasActiveFilters,
   clearFilters,
-}: PostFilterSidebarProps) => {
+  sortOptions,
+}: FilterSidebarProps): React.ReactNode => {
   return (
     <aside className="order-1 lg:order-2 lg:w-72 lg:shrink-0">
       <div className="sticky top-24 space-y-6 rounded-2xl border border-dashed p-6">
@@ -60,7 +44,7 @@ const PostFilterSidebar = ({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="w-full justify-between">
-                {SORT_OPTIONS.find((o) => o.value === sortOption)?.label}
+                {sortOptions.find((o) => o.value === sortOption)?.label}
                 <span className="text-muted-foreground">▼</span>
               </Button>
             </DropdownMenuTrigger>
@@ -69,7 +53,7 @@ const PostFilterSidebar = ({
                 value={sortOption}
                 onValueChange={(value) => setSortOption(value as SortOption)}
               >
-                {SORT_OPTIONS.map((option) => (
+                {sortOptions.map((option) => (
                   <DropdownMenuRadioItem
                     key={option.value}
                     value={option.value}
@@ -123,4 +107,4 @@ const PostFilterSidebar = ({
   );
 };
 
-export default PostFilterSidebar;
+export default FilterSidebar;
