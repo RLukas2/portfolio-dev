@@ -55,6 +55,18 @@ const components: MDXComponents = {
     }
     return <span className={className} {...props} />;
   },
+  blockquote: ({
+    className,
+    ...props
+  }: React.ComponentPropsWithoutRef<'blockquote'>) => (
+    <blockquote
+      className={cn(
+        'border-primary text-muted-foreground border-l-4 pl-4 italic',
+        className,
+      )}
+      {...props}
+    />
+  ),
 
   // Custom components
   AppsGrid,

@@ -8,3 +8,55 @@ highlight: false
 published: true
 stacks: ['Go', 'MongoDB']
 ---
+
+## Description
+
+This project implements a chat engine using the E2EE Signal Protocol in Go. It is designed to provide secure and private messaging capabilities.
+
+> This project is a project in the course CS434 - Computer Security at the University of Science - VNU-HCM.
+
+> This project is not production-ready and is intended for educational purposes only. It is not recommended to use this code in production environments without proper security audits and enhancements.
+
+## Key Features
+
+This chat engine implements the Signal Protocol for end-to-end encryption, providing:
+
+- **End-to-End Encryption**: Messages are encrypted on the sender's device and decrypted only on the recipient's device
+- **Forward Secrecy**: Each message uses a unique encryption key, ensuring past communications remain secure even if current keys are compromised
+- **Double Ratchet Algorithm**: Combines the cryptographic ratchet and DH ratchet for enhanced security
+- **Real-time Messaging**: WebSocket-based communication for instant message delivery
+- **Terminal User Interface**: Clean, responsive TUI built with tview for cross-platform compatibility
+- **User Management**: Online/offline status tracking and user discovery
+- **Room-based Chat**: Support for both direct messages and group chat rooms
+
+### Client Interface
+
+The client provides a terminal-based user interface with the following features:
+
+1. **Login Screen**: Enter username and server details
+2. **Room List**: View and join available chat rooms
+3. **User List**: See online/offline users and start direct messages
+4. **Chat Interface**: Send and receive encrypted messages
+
+### Navigation
+
+- **Arrow Keys**: Navigate through lists and interface elements
+- **Enter**: Select items or send messages
+- **Escape**: Go back or exit input fields
+- **Tab**: Switch between interface components
+- **`s`**: Focus search fields (in Users views)
+- **`` ` ``**: Switch between rooms and users view
+
+## Screenshots
+
+{[1, 2, 3, 4, 5].map((i) => (
+
+<Image
+  key={i}
+  src={`/media/projects/signal/demo${i}.png`}
+  alt={`Demo ${i}`}
+  quality={75}
+  width={800}
+  className={'mb-4'}
+/>
+))}
