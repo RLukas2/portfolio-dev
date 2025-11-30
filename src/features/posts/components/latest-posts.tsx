@@ -4,7 +4,7 @@ import { compareDesc } from 'date-fns';
 import { motion, useInView } from 'framer-motion';
 import { ChevronRightIcon } from 'lucide-react';
 import Link from 'next/link';
-import { useRef } from 'react';
+import { useMemo, useRef } from 'react';
 
 import EmptyState from '@/components/common/empty-state';
 import { Button } from '@/components/ui/button';
@@ -30,7 +30,7 @@ const variants = {
 
 const LatestPosts = () => {
   const postsRef = useRef<HTMLDivElement>(null);
-  const posts = getLatestPosts();
+  const posts = useMemo(() => getLatestPosts(), []);
   const isInView = useInView(postsRef, { once: true, margin: '-100px' });
 
   return (
