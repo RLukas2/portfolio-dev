@@ -81,7 +81,7 @@ const ShortsContent = ({ shorts }: ShortsContentProps): React.ReactNode => {
             )}
             {/* Shorts Grid or Empty State */}
             {filteredShorts.length ? (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+              <div className="group/grid grid grid-cols-1 gap-4 lg:grid-cols-2 xl:grid-cols-3">
                 {filteredShorts.map((short) => (
                   <ShortCard key={short._id} short={short} />
                 ))}

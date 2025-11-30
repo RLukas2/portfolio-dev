@@ -18,41 +18,49 @@ const ShortCard = ({ short }: { short: Short }) => {
   return (
     <Link
       href={`${ROUTES.shorts}/${slug}`}
-      className="group/short bg-card hover:bg-accent/50 relative flex flex-col gap-3 rounded-xl border p-4 transition-colors"
+      className={[
+        'relative flex h-full flex-col rounded-xl border p-6',
+        'transition-all duration-300 ease-out',
+        'group-hover/grid:opacity-50 hover:z-10 hover:-translate-y-1 hover:scale-[1.02] hover:rotate-1 hover:opacity-100! hover:shadow-lg',
+        'group/short',
+      ].join(' ')}
       title={title}
     >
-      {/* Title */}
-      <h3 className="font-cal m-0 line-clamp-2 text-lg text-pretty group-hover/short:underline">
+      {/* Title - grows to push content below to bottom */}
+      <h3 className="font-cal m-0 mb-auto line-clamp-3 text-xl text-pretty group-hover/short:underline">
         {title}
       </h3>
 
-      {/* Views */}
-      <div className="text-muted-foreground flex items-center gap-1.5 text-sm">
-        <EyeIcon className="text-primary size-4" />
-        {isLoadViews ? (
-          <Skeleton className="h-4 w-12" />
-        ) : (
-          <>
-            <IncrementCounter to={views} /> views
-          </>
+      {/* Bottom section - anchored to bottom */}
+      <div className="mt-4 flex flex-col gap-3">
+        {/* Views */}
+        <div className="text-foreground flex items-center gap-1.5 text-sm">
+          <EyeIcon className="text-primary size-4" />
+          {isLoadViews ? (
+            <Skeleton className="h-4 w-12" />
+          ) : (
+            <>
+              <IncrementCounter to={views} /> views
+            </>
+          )}
+        </div>
+
+        <Separator />
+
+        {/* Tags */}
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {tags.map((tag) => (
+              <span
+                key={tag}
+                className="bg-secondary text-muted-foreground rounded-lg px-2 py-1 text-xs"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
         )}
       </div>
-
-      <Separator />
-
-      {/* Tags */}
-      {tags && tags.length > 0 && (
-        <div className="flex flex-wrap gap-2">
-          {tags.map((tag) => (
-            <span
-              key={tag}
-              className="bg-secondary text-muted-foreground rounded-lg px-2 py-1 text-xs"
-            >
-              {tag}
-            </span>
-          ))}
-        </div>
-      )}
     </Link>
   );
 };
