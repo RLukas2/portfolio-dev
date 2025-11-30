@@ -81,8 +81,9 @@ const MessagePanel = ({
           type="submit"
           disabled={isSending || !message.trim()}
           className="py-1.5"
+          aria-label="Send message"
         >
-          <SendHorizontalIcon className="size-5" />
+          <SendHorizontalIcon className="size-5" aria-hidden="true" />
         </Button>
       </form>
       <div

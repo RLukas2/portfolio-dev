@@ -47,9 +47,14 @@ const NowPlayingBar = ({
                 onMouseLeave={() => setShowPlayingInfo(false)}
                 className="relative"
               >
-                <div className="flex items-center gap-2">
+                <div
+                  className="flex items-center gap-2"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Now playing: ${track.artist} - ${track.title}`}
+                >
                   <Equalizer />
-                  <span>Now playing: </span>
+                  <span aria-hidden="true">Now playing: </span>
                   <div className="flex items-center gap-2 transition-all duration-200">
                     {track.albumImageUrl && (
                       <Image
@@ -109,9 +114,14 @@ const NowPlayingBar = ({
                 onMouseLeave={() => setShowDeviceList(false)}
                 className="relative"
               >
-                <div className="flex items-center gap-1">
-                  <SpeakerIcon className="size-4" />
-                  <span>
+                <div
+                  className="flex items-center gap-1"
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`Listening on ${activeDevice?.name}`}
+                >
+                  <SpeakerIcon className="size-4" aria-hidden="true" />
+                  <span aria-hidden="true">
                     Listening on{' '}
                     <span className="font-medium">{activeDevice?.name}</span>
                   </span>

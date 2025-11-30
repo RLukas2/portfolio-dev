@@ -45,9 +45,11 @@ export default function ProfileImage() {
           alt="Ngo Hoang Tuan - Backend Engineer"
           objectFit="cover"
           priority
+          loading="eager"
+          quality={50}
           className="h-full w-full rounded-full"
-          width={1000}
-          height={1000}
+          width={512}
+          height={512}
         />
       </div>
     </motion.div>

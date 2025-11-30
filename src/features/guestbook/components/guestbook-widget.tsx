@@ -31,8 +31,12 @@ const GuestbookWidget = () => {
         asChild
         className="fixed right-5 bottom-10 z-10 hidden items-center md:flex"
       >
-        <Button variant="shadow" className="size-10 rounded-full p-0">
-          <BookOpenTextIcon />
+        <Button
+          variant="shadow"
+          className="size-10 rounded-full p-0"
+          aria-label="Open guestbook"
+        >
+          <BookOpenTextIcon aria-hidden="true" />
         </Button>
       </PopoverTrigger>
       <PopoverContent align="end" className="mb-2 w-md p-0">

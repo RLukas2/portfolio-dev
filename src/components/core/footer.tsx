@@ -44,9 +44,9 @@ const Footer = (): React.ReactNode => {
               key={`footerGroup${index}`}
               className={cn('flex flex-col items-start gap-2')}
             >
-              <h3 className={cn('text-foreground mb-2 font-semibold')}>
+              <h1 className={cn('text-foreground mb-2 font-semibold')}>
                 {group.header}
-              </h3>
+              </h1>
               {group.links.map(({ title, path }) => (
                 <Link
                   key={path}
