@@ -55,16 +55,19 @@ export const viewport: Viewport = {
 const fontCal = localFont({
   src: '../assets/fonts/CalSans-SemiBold.woff2',
   variable: '--font-cal',
+  display: 'swap',
 });
 
 const fontSans = PlusJakartaSans({
   subsets: ['latin'],
   variable: '--font-sans',
+  display: 'swap',
 });
 
 const fontMono = FiraCode({
   subsets: ['latin'],
   variable: '--font-mono',
+  display: 'swap',
 });
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
@@ -78,6 +81,28 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       <meta
         name="google-site-verification"
         content="k6PyMiGShL7wrz11l4Nvahbt-UpiTcg4o1peE9-HOhI"
+      />
+
+      {/* Preconnect to critical origins for faster resource loading */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossOrigin="anonymous"
+      />
+      <link rel="preconnect" href="https://va.vercel-scripts.com" />
+      <link rel="preconnect" href="https://vitals.vercel-insights.com" />
+
+      {/* DNS prefetch for external resources */}
+      <link rel="dns-prefetch" href="https://i.scdn.co" />
+      <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
+
+      {/* Preload LCP image for faster rendering */}
+      <link
+        rel="preload"
+        href="/media/rlukas/rlukas.jpg"
+        as="image"
+        type="image/jpeg"
       />
     </head>
     <body

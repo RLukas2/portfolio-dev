@@ -33,7 +33,7 @@ const Hero = () => {
             className="mb-0 text-xl font-medium tracking-wide text-blue-600 dark:text-blue-400"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
           >
             Hello, I&apos;m
           </motion.div>
@@ -42,7 +42,7 @@ const Hero = () => {
             className="text-4xl leading-tight font-extrabold tracking-tight md:text-5xl lg:text-6xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3, duration: 0.5 }}
+            transition={{ delay: 0.1, duration: 0.3 }}
           >
             Ngô Hoàng Tuấn
           </motion.h1>
@@ -54,7 +54,7 @@ const Hero = () => {
             )}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
           >
             Aspiring Backend Developer
           </motion.h2>
@@ -63,7 +63,7 @@ const Hero = () => {
             className="text-muted-foreground max-w-xl text-lg"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
+            transition={{ delay: 0.2, duration: 0.3 }}
           >
             I&apos;m a forth-year Computer Science student at HCMUS with
             practical experience in building backend systems through academic
@@ -76,7 +76,7 @@ const Hero = () => {
             className="relative flex justify-center gap-4 lg:justify-start"
             initial={{ x: -16, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.6 }}
+            transition={{ delay: 0.3 }}
           >
             <Button asChild variant="shadow" className="group">
               <Link href={'/#highlighted-projects'}>

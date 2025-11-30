@@ -9,7 +9,7 @@ export default function ProfileImage() {
       className="relative flex justify-center md:w-1/2"
       initial={{ opacity: 0, x: 50 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5, delay: 0.7 }}
+      transition={{ duration: 0.3, delay: 0.3 }}
     >
       {/* Glow effects */}
       <motion.div
