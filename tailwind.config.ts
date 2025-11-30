@@ -5,6 +5,47 @@ const config = {
         DEFAULT: {
           css: {
             color: 'var(--foreground)',
+            lineHeight: '1.8',
+            p: {
+              marginTop: '1.25em',
+              marginBottom: '1.25em',
+            },
+            h1: {
+              fontSize: '2.25rem',
+              fontWeight: '700',
+              marginTop: '0',
+              marginBottom: '0.875em',
+              lineHeight: '1.2',
+              letterSpacing: '-0.025em',
+            },
+            h2: {
+              fontSize: '1.75rem',
+              fontWeight: '600',
+              marginTop: '2em',
+              marginBottom: '1em',
+              lineHeight: '1.3',
+              letterSpacing: '-0.025em',
+            },
+            h3: {
+              fontSize: '1.375rem',
+              fontWeight: '600',
+              marginTop: '1.75em',
+              marginBottom: '0.75em',
+              lineHeight: '1.4',
+            },
+            h4: {
+              fontSize: '1.125rem',
+              fontWeight: '600',
+              marginTop: '1.5em',
+              marginBottom: '0.5em',
+              lineHeight: '1.5',
+            },
+            'h5, h6': {
+              fontSize: '1rem',
+              fontWeight: '600',
+              marginTop: '1.25em',
+              marginBottom: '0.5em',
+            },
             a: {
               textDecoration: 'none',
               color: 'var(--primary)',
@@ -17,6 +58,18 @@ const config = {
             'h2, h3, h4, h5, h6': {
               position: 'relative',
               color: 'var(--foreground)',
+            },
+            ul: {
+              marginTop: '1.25em',
+              marginBottom: '1.25em',
+            },
+            ol: {
+              marginTop: '1.25em',
+              marginBottom: '1.25em',
+            },
+            li: {
+              marginTop: '0.5em',
+              marginBottom: '0.5em',
             },
             img: {
               margin: '0 auto',
@@ -57,8 +110,8 @@ const config = {
               },
             },
             blockquote: {
-              color: 'var(--foreground)',
-              borderLeftColor: 'var(--accent)',
+              color: 'var(--muted-foreground)',
+              borderLeftColor: 'var(--primary)',
             },
             'p strong': {
               color: 'var(--foreground)',
