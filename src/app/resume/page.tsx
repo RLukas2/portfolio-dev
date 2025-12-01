@@ -22,7 +22,7 @@ const ResumePage = () => {
         description="A brief overview of my professional journey and career milestones."
       />
       <Container>
-        <CareerJourney />
+        <CareerJourney header={true} downloadButton={true} />
       </Container>
     </>
   );

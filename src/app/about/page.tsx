@@ -1,4 +1,4 @@
-import { FileTextIcon } from 'lucide-react';
+import { DownloadIcon, FileTextIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -10,6 +10,7 @@ import { ROUTES } from '@/constants/routes';
 import { SITE } from '@/constants/site';
 import Biography from '@/features/about/components/biography';
 import OpenForHire from '@/features/about/components/open-for-hire';
+import CareerJourney from '@/features/resume/components/career-journey';
 import env from '@/lib/env';
 import { buildPersonJsonLd, seo } from '@/lib/meta';
 
@@ -45,15 +46,31 @@ const AboutPage = () => {
             </div>
             <OpenForHire isOpenForHire={isAvailableForHire} />
 
-            <Link href={ROUTES.resume} className="my-4 text-inherit">
-              <Button variant="shadow" className="gap-x-1">
-                <FileTextIcon /> My Resume
+            <div className="my-4 flex flex-col gap-4">
+              <Button asChild variant="shadow" className="gap-x-2">
+                <Link href={`${ROUTES.resume}/download`} target="_blank">
+                  <DownloadIcon className="size-4" />
+                  Download CV
+                </Link>
               </Button>
-            </Link>
+
+              <Button asChild variant="shadow" className="gap-x-1">
+                <Link href={ROUTES.resume}>
+                  <FileTextIcon className="size-4" />
+                  View Resume
+                </Link>
+              </Button>
+            </div>
           </div>
 
           <div className="prose dark:prose-invert max-w-none xl:col-span-3">
             <Biography />
+
+            <h2 className="font-cal">Career Journey</h2>
+            <p className="text-muted-foreground m-0">
+              A timeline of my professional experience and education.
+            </p>
+            <CareerJourney />
           </div>
         </div>
       </Container>

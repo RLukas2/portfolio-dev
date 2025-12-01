@@ -1,6 +1,5 @@
-import { Email, GitHub, LinkedIn } from '@/components/common/icons';
 import Link from '@/components/common/link';
-import { SITE } from '@/constants/site';
+import NowSection from '@/features/about/components/now-section';
 
 import TechStacks from './tech-stacks';
 
@@ -71,28 +70,26 @@ const Biography = () => {
         It's not just about writing clean code; it's about writing code that
         creates tangible value.
       </p>
-      <p>
+      {/* <p>
         Outside of work, I'm perpetually curious about new tools and approaches.
         You'll find me tinkering on side projects most nights, partly because I
         genuinely love exploring emerging tech, and partly because it keeps my
         skills sharp. The tech landscape moves fast, so staying engaged with
         what's new keeps things interesting.
-      </p>
+      </p> */}
       <p>
         When I'm not coding, I'm usually unwinding with video games or music.
         Honestly, I think they're essential for maintaining sanity in this
         field. A healthy balance between shipping code and actually having a
         life? That's the real debugging skill. 🎮🎶
       </p>
-      <p>
-        Want to dig deeper into what I've worked on? Check out my resume to see
-        the full picture.{' '}
-      </p>
 
       <h2 className="font-cal">Tech Stack</h2>
       <TechStacks />
 
-      <h2 className="font-cal">Let's Connect</h2>
+      <NowSection />
+
+      {/* <h2 className="font-cal">Let's Connect</h2>
       <p>
         Questions or collaborations? Reach out to me at{' '}
         <Link
@@ -122,7 +119,7 @@ const Biography = () => {
         >
           <Email className="size-5" />
         </Link>
-      </div>
+      </div> */}
     </>
   );
 };

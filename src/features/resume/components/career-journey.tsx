@@ -14,7 +14,12 @@ import ExperienceEntry from './experience-entry';
 export const dynamic = 'force-dynamic';
 export const revalidate = 86400; // 24 hours
 
-const CareerJourney = () => {
+interface CareerJourneyProps {
+  header?: boolean;
+  downloadButton?: boolean;
+}
+
+const CareerJourney = ({ header, downloadButton }: CareerJourneyProps) => {
   /**
    * Last updated date formatted as a string
    * Update this date whenever you make changes to your resume
@@ -37,26 +42,30 @@ const CareerJourney = () => {
   return (
     <div className="space-y-8">
       {/* Header with download button */}
-      <div className="flex items-center justify-between">
-        <div>
-          <p className="text-muted-foreground text-sm">
-            Last updated:{' '}
-            <time dateTime={lastUpdated} className="font-medium">
-              {lastUpdated}
-            </time>
-          </p>
+      {header && (
+        <div className="flex items-center justify-between">
+          <div>
+            <p className="text-muted-foreground text-sm">
+              Last updated:{' '}
+              <time dateTime={lastUpdated} className="font-medium">
+                {lastUpdated}
+              </time>
+            </p>
+          </div>
+          {downloadButton && (
+            <Button asChild variant="shadow" size="default">
+              <Link
+                href={`${ROUTES.resume}/download`}
+                target="_blank"
+                className="gap-x-2"
+              >
+                <DownloadIcon className="size-4" />
+                Download PDF
+              </Link>
+            </Button>
+          )}
         </div>
-        <Button asChild variant="shadow" size="default">
-          <Link
-            href={`${ROUTES.resume}/download`}
-            target="_blank"
-            className="gap-x-2"
-          >
-            <DownloadIcon className="size-4" />
-            Download PDF
-          </Link>
-        </Button>
-      </div>
+      )}
 
       {timelineEntries && timelineEntries.length > 0 ? (
         <div className="relative">
