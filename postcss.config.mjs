@@ -316,9 +316,7 @@ const config = {
           'logical-properties-and-values': true,
         },
         enableClientSidePolyfills: true,
-        importFrom: [
-          './src/features/content/components/mdx/shiki.css',
-        ]
+        importFrom: ['./src/features/content/components/mdx/shiki.css'],
       },
     ],
     postcssMediaMinmax(),
