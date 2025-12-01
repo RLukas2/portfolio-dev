@@ -129,6 +129,51 @@ npm run start
 echo "Build complete!"
 ```
 
+### Code Highlighting Test
+
+```typescript {1,3-5}
+const first = 1; // highlighted
+const second = 2;
+const third = 3; // highlighted
+const fourth = 4; // highlighted
+const fifth = 5; // highlighted
+const sixth = 6;
+```
+
+```ts {2,4-6}
+export const formatDate = (date: string) => {
+  const parsed = parseISO(date); // highlighted
+  const timeZone = 'Asia/Jakarta';
+  const zoned = toZonedTime(parsed, timeZone); // highlighted
+  const formatted = format(zoned, 'MMMM dd, yyyy'); // highlighted
+  return formatted; // highlighted
+};
+```
+
+### Diff View
+
+```typescript
+export const formatDate = (date: string) => {
+  const parsed = parseISO(date);
+  const timeZone = 'UTC'; // [!code --]
+  const timeZone = 'Asia/Jakarta'; // [!code ++]
+  return format(toZonedTime(parsed, timeZone), 'MMMM dd, yyyy');
+};
+```
+
+```typescript
+function greet(name: string) {
+  return `Hello, ${name}!`; // [!code --]
+  return `Hi, ${name}! Welcome!`; // [!code ++]
+}
+```
+
+### Code focus
+
+```typescript
+const name = 'World'; // [!code word:World]
+```
+
 ## Blockquotes
 
 > This is a simple blockquote.

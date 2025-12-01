@@ -24,12 +24,15 @@
 
 /* Diff */
 .shiki code .diff.remove {
-  background-color: color-mix(in oklab, var(--destructive) 20%, transparent);
+  background-color: color-mix(in oklab, var(--destructive) 15%, transparent);
+  border-left: 2px solid var(--destructive);
+  padding-left: 14px;
 }
 
 .shiki code .diff::before {
   position: absolute;
-  left: 4px;
+  left: 6px;
+  font-weight: bold;
 }
 
 .shiki code .diff.remove::before {
@@ -38,7 +41,9 @@
 }
 
 .shiki code .diff.add {
-  background-color: color-mix(in oklab, var(--success) 20%, transparent);
+  background-color: color-mix(in oklab, var(--success) 15%, transparent);
+  border-left: 2px solid var(--success);
+  padding-left: 14px;
 }
 
 .shiki code .diff.add::before {

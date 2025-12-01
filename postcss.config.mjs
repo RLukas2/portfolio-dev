@@ -105,6 +105,9 @@ const colorMixVarResolverPlugin = () => {
         }
       });
 
+      // Track declarations that need fallbacks
+      const fallbackRules = new Map(); // selector -> [{ prop, originalValue }]
+
       // 2. Parse each declaration's value and replace var(...) in color-mix(...)
       root.walkDecls((decl) => {
         const originalValue = decl.value;
@@ -112,6 +115,7 @@ const colorMixVarResolverPlugin = () => {
 
         const parsed = valueParser(originalValue);
         let modified = false;
+        let hasUnresolvedVar = false;
 
         parsed.walk((node) => {
           if (node.type === 'function' && node.value === 'color-mix') {
@@ -124,25 +128,38 @@ const colorMixVarResolverPlugin = () => {
                 const varName = childNode.nodes[0]?.value;
                 if (!varName) return;
 
-                const resolvedVarName =
-                  cssVariables[varName] === undefined
-                    ? 'black'
-                    : cssVariables[varName]; // fall back to black if var is undefined
-                // add whitespace because it might just be a part of a color notation e.g. #fff 10%
-                const resolved = `${resolvedVarName} ` || `var(${varName})`;
+                const resolvedValue = cssVariables[varName];
 
-                childNode.type = 'word';
-                childNode.value = resolved;
-                childNode.nodes = [];
-                modified = true;
+                if (resolvedValue !== undefined) {
+                  // Variable found, replace the var(...) node with the resolved value
+                  childNode.type = 'word';
+                  childNode.value = resolvedValue;
+                  childNode.nodes = [];
+                  modified = true;
+                } else {
+                  // Variable not found
+                  hasUnresolvedVar = true;
+                }
               }
             });
           }
         });
 
-        if (modified) {
-          const newValue = parsed.toString();
-          decl.value = newValue;
+        // Only update if we made changes AND all variables were resolved
+        if (modified && !hasUnresolvedVar) {
+          decl.value = parsed.toString();
+        }
+
+        // Track fallback needed for this declaration
+        if (hasUnresolvedVar && decl.parent?.selector) {
+          const selector = decl.parent.selector;
+          if (!fallbackRules.has(selector)) {
+            fallbackRules.set(selector, []);
+          }
+          fallbackRules.get(selector).push({
+            prop: decl.prop,
+            originalValue: originalValue, // Keep the original color-mix() value
+          });
         }
       });
     },
@@ -299,6 +316,9 @@ const config = {
           'logical-properties-and-values': true,
         },
         enableClientSidePolyfills: true,
+        importFrom: [
+          './src/features/content/components/mdx/shiki.css',
+        ]
       },
     ],
     postcssMediaMinmax(),
