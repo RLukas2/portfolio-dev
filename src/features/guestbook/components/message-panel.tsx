@@ -9,6 +9,7 @@ import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ToastAction } from '@/components/ui/toast';
+import { useAsyncAction } from '@/hooks/use-async-action';
 import { useToast } from '@/hooks/use-toast';
 import { cn } from '@/lib/utils';
 
@@ -23,41 +24,38 @@ const MessagePanel = ({
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState('');
-  const [isSending, setIsSending] = useState(false);
   const { toast } = useToast();
+
+  const { execute: sendMessage, isLoading: isSending } = useAsyncAction(
+    onSendMessage,
+    {
+      onSuccess: () => {
+        setMessage('');
+        setTimeout(() => inputRef?.current?.focus(), 100);
+      },
+      errorMessage: 'There was a problem to add your message.',
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'There was a problem to add your message.',
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => sendMessage(message)}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+      },
+      showToastOnError: false,
+    },
+  );
 
   const handleSendMessage = async (event: FormEvent) => {
     event.preventDefault();
-
-    if (isSending) return;
-
-    try {
-      setIsSending(true);
-      await onSendMessage(message);
-      setMessage('');
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'There was a problem to add your message.';
-
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: message,
-        action: (
-          <ToastAction
-            altText="Try again"
-            onClick={() => onSendMessage(message)}
-          >
-            Try again
-          </ToastAction>
-        ),
-      });
-    } finally {
-      setIsSending(false);
-      setTimeout(() => inputRef?.current?.focus(), 100);
-    }
+    await sendMessage(message);
   };
 
   return (

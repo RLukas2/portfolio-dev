@@ -24,6 +24,7 @@ import {
 } from '@/components/ui/dialog';
 import { ToastAction } from '@/components/ui/toast';
 import { SITE } from '@/constants/site';
+import { useAsyncAction } from '@/hooks/use-async-action';
 import { useToast } from '@/hooks/use-toast';
 
 import { MAX_ENDORSERS_DISPLAY } from '../constants';
@@ -44,7 +45,6 @@ const SkillCard = ({
   const currentUserId = session?.id;
   const { id: skillId, name, users: endorsers } = skill;
   const isEndorsedByUser = endorsers.find((u) => u.id === currentUserId);
-  const [isEndorsing, setIsEndorsing] = useState(false);
   const { toast } = useToast();
 
   const isLoggedIn = Boolean(session?.user);
@@ -76,37 +76,31 @@ const SkillCard = ({
     [x],
   );
 
-  const handleEndorse = useCallback(async () => {
-    if (isEndorsing) return;
-
-    if (!isLoggedIn) {
-      await signIn();
-      return;
-    }
-
-    try {
-      setIsEndorsing(true);
+  const { execute: handleEndorse, isLoading: isEndorsing } = useAsyncAction(
+    async () => {
+      if (!isLoggedIn) {
+        await signIn();
+        return;
+      }
       await onEndorse(skillId);
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'There was a problem to endorse this skill.';
-
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: message,
-        action: (
-          <ToastAction altText="Try again" onClick={() => handleEndorse()}>
-            Try again
-          </ToastAction>
-        ),
-      });
-    } finally {
-      setIsEndorsing(false);
-    }
-  }, [isEndorsing, isLoggedIn, onEndorse, skillId, toast]);
+    },
+    {
+      errorMessage: 'There was a problem to endorse this skill.',
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'There was a problem to endorse this skill.',
+          action: (
+            <ToastAction altText="Try again" onClick={() => handleEndorse()}>
+              Try again
+            </ToastAction>
+          ),
+        });
+      },
+      showToastOnError: false,
+    },
+  );
 
   return (
     <div className="bg-card shadow-border flex flex-col flex-nowrap items-stretch gap-4 rounded-lg p-4">

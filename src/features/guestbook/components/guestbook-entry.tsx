@@ -3,11 +3,11 @@
 import { TrashIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useSession } from 'next-auth/react';
-import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { ToastAction } from '@/components/ui/toast';
 import { SITE } from '@/constants/site';
+import { useAsyncAction } from '@/hooks/use-async-action';
 import { useToast } from '@/hooks/use-toast';
 
 import type { Guestbook } from '../types';
@@ -22,7 +22,6 @@ const GuestbookEntry = ({
 }) => {
   const { data: session } = useSession();
   const { toast } = useToast();
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const { id, body, createdAt, user } = entry;
   const { name, email, image } = user;
@@ -44,32 +43,28 @@ const GuestbookEntry = ({
     return <span key={index}>{message}</span>;
   });
 
-  const onDeleteMessage = async (id: string) => {
-    if (isDeleting) return;
-
-    try {
-      setIsDeleting(true);
-      await onDelete(id);
-    } catch (error) {
-      const message =
-        error instanceof Error
-          ? error.message
-          : 'There was a problem to delete your message.';
-
-      toast({
-        variant: 'destructive',
-        title: 'Uh oh! Something went wrong.',
-        description: message,
-        action: (
-          <ToastAction altText="Try again" onClick={() => onDeleteMessage(id)}>
-            Try again
-          </ToastAction>
-        ),
-      });
-    } finally {
-      setIsDeleting(false);
-    }
-  };
+  const { execute: onDeleteMessage, isLoading: isDeleting } = useAsyncAction(
+    onDelete,
+    {
+      errorMessage: 'There was a problem to delete your message.',
+      onError: () => {
+        toast({
+          variant: 'destructive',
+          title: 'Uh oh! Something went wrong.',
+          description: 'There was a problem to delete your message.',
+          action: (
+            <ToastAction
+              altText="Try again"
+              onClick={() => onDeleteMessage(id)}
+            >
+              Try again
+            </ToastAction>
+          ),
+        });
+      },
+      showToastOnError: false,
+    },
+  );
 
   return (
     <div className="flex items-start gap-3 px-3">
