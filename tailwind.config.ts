@@ -16,7 +16,6 @@ const config = {
               marginTop: '0',
               marginBottom: '0.875em',
               lineHeight: '1.2',
-              letterSpacing: '-0.025em',
             },
             h2: {
               fontSize: '1.75rem',
@@ -24,7 +23,6 @@ const config = {
               marginTop: '2em',
               marginBottom: '1em',
               lineHeight: '1.3',
-              letterSpacing: '-0.025em',
             },
             h3: {
               fontSize: '1.375rem',

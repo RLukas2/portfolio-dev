@@ -1,17 +1,17 @@
 'use client';
 
-import { ClockIcon, EyeIcon } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { useMemo } from 'react';
 
-import IncrementCounter from '@/components/increment-counter';
-import { Skeleton } from '@/components/ui/skeleton';
+import {
+  ContentCardImage,
+  ContentCardMeta,
+  ContentCardTags,
+} from '@/components/common/content-card';
 import { ROUTES } from '@/constants/routes';
 import { useViews } from '@/features/content/hooks/use-views';
 import { MAX_TAG_PER_POSTS } from '@/features/posts/constants';
-import { cn } from '@/lib/utils';
-import { formatDate } from '@/lib/utils';
+import { useImageMeta } from '@/hooks/use-image-meta';
+import { cn, formatDate } from '@/lib/utils';
 
 import type { Post } from '.content-collections/generated';
 
@@ -22,39 +22,13 @@ type PostCardProps = {
 
 /**
  * PostCard component that displays a summary of a blog post.
- *
- * @param {PostCardProps} param0
- * @param {Post} param0.post
- * @param {string} param0.className
- * @returns {React.ReactNode} - The rendered PostCard component
  */
 const PostCard = ({ post, className }: PostCardProps) => {
   const { title, slug, date, excerpt, readingTime, image, imageMeta, tags } =
     post;
 
   const { views, isLoading: isLoadViews } = useViews({ slug });
-
-  const parsedImageMeta: {
-    width: number;
-    height: number;
-    placeholder?: 'blur' | 'empty';
-    blurDataURL?: string;
-  } = useMemo(() => JSON.parse(imageMeta), [imageMeta]);
-
-  const extraImageProps = useMemo(() => {
-    if (parsedImageMeta?.blurDataURL) {
-      return {
-        placeholder: 'blur',
-        blurDataURL: parsedImageMeta?.blurDataURL,
-      } as {
-        placeholder: 'blur' | 'empty';
-        blurDataURL?: string;
-      };
-    }
-
-    return {};
-  }, [parsedImageMeta?.blurDataURL]);
-
+  const { imageProps } = useImageMeta(imageMeta);
   const publishedAt = formatDate(date);
 
   return (
@@ -65,21 +39,17 @@ const PostCard = ({ post, className }: PostCardProps) => {
           className,
         )}
       >
-        {/* Image */}
-        <figure className="bg-card relative aspect-video overflow-hidden md:w-48 md:shrink-0 md:rounded-2xl">
-          <Image
-            src={image as string}
-            alt={title}
-            fill
-            className="rounded-t-lg object-cover transition-transform group-hover:scale-105 md:rounded-2xl"
-            priority
-            {...extraImageProps}
-          />
-        </figure>
+        <ContentCardImage
+          src={image as string}
+          alt={title}
+          imageProps={{
+            ...imageProps,
+            className: 'rounded-t-lg md:rounded-2xl',
+          }}
+          className="md:w-48 md:shrink-0 md:rounded-2xl"
+        />
 
-        {/* Detail */}
         <div className="w-full">
-          {/* Released Date */}
           <time
             dateTime={publishedAt}
             className="text-muted-foreground px-4 text-sm"
@@ -87,47 +57,19 @@ const PostCard = ({ post, className }: PostCardProps) => {
             {publishedAt}
           </time>
 
-          {/* Title */}
           <h3 className="font-cal text-card-foreground m-0 mt-2 px-4 text-2xl group-hover:underline md:text-3xl">
             {title}
           </h3>
 
-          {/* Excerpt */}
           <p className="text-muted-foreground m-0 mt-2 px-4">{excerpt}</p>
 
-          {/* Reading Time, Views, Tags */}
           <div className="mt-auto flex flex-wrap items-center justify-between gap-2 px-4 pt-4">
-            <div className="text-muted-foreground flex items-center gap-4 text-sm">
-              <div className="flex items-center gap-1">
-                <ClockIcon className="text-primary size-4" />
-                <span title="Estimated read time">{readingTime}</span>
-              </div>
-              <div
-                className="flex items-center gap-1"
-                title="Number of view(s)"
-              >
-                <EyeIcon className="text-primary size-4" />
-                {isLoadViews ? (
-                  <Skeleton className="h-5 w-16" />
-                ) : (
-                  <>
-                    <IncrementCounter to={views} /> views
-                  </>
-                )}
-              </div>
-            </div>
-            {tags && tags.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {tags.slice(0, MAX_TAG_PER_POSTS).map((tag) => (
-                  <span
-                    key={tag}
-                    className="bg-secondary text-muted-foreground rounded-lg px-2 py-1 text-xs"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            )}
+            <ContentCardMeta
+              readingTime={readingTime}
+              views={views}
+              isLoadingViews={isLoadViews}
+            />
+            <ContentCardTags tags={tags || []} maxTags={MAX_TAG_PER_POSTS} />
           </div>
         </div>
       </div>

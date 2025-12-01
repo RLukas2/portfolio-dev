@@ -1,10 +1,11 @@
 'use client';
 
 import { ChevronRightIcon, ExternalLink } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
-import { cloneElement, useMemo } from 'react';
+import { cloneElement } from 'react';
 
+import { ContentCardImage } from '@/components/common/content-card';
+import ExternalLinkComponent from '@/components/common/external-link';
 import { GitHub } from '@/components/common/icons';
 import { Button } from '@/components/ui/button';
 import {
@@ -14,6 +15,7 @@ import {
 } from '@/components/ui/tooltip';
 import { ROUTES } from '@/constants/routes';
 import { STACKS } from '@/constants/stacks';
+import { useImageMeta } from '@/hooks/use-image-meta';
 import { cn } from '@/lib/utils';
 
 import type { Project } from '.content-collections/generated';
@@ -36,27 +38,7 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
     stacks,
   } = project;
 
-  const parsedImageMeta: {
-    width: number;
-    height: number;
-    placeholder?: 'blur' | 'empty';
-    blurDataURL?: string;
-  } = useMemo(() => JSON.parse(imageMeta), [imageMeta]);
-
-  const extraImageProps = useMemo(() => {
-    if (image && parsedImageMeta?.blurDataURL) {
-      return {
-        placeholder: 'blur',
-        blurDataURL: parsedImageMeta?.blurDataURL,
-      } as {
-        placeholder: 'blur' | 'empty';
-        blurDataURL?: string;
-      };
-    }
-
-    return {};
-  }, [image, parsedImageMeta?.blurDataURL]);
-
+  const { imageProps } = useImageMeta(imageMeta);
   const projectDetailUrl = `${ROUTES.projects}/${slug}`;
   const liveSiteUrl = url ?? playStoreUrl;
 
@@ -67,21 +49,17 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
         className,
       )}
     >
-      {/* Image */}
-      <div className="bg-card relative aspect-video overflow-hidden md:aspect-square md:w-64 md:shrink-0 md:rounded-2xl">
-        <Image
-          src={image as string}
-          alt={title}
-          fill
-          className="rounded-t-lg object-cover object-center transition-transform group-hover:scale-105 md:rounded-2xl"
-          priority
-          {...extraImageProps}
-        />
-      </div>
+      <ContentCardImage
+        src={image as string}
+        alt={title}
+        imageProps={{
+          ...imageProps,
+          className: 'rounded-t-lg object-center md:rounded-2xl',
+        }}
+        className="md:aspect-square md:w-64 md:shrink-0 md:rounded-2xl"
+      />
 
-      {/* Content */}
       <div className="flex flex-1 flex-col rounded-b-xl border border-dashed px-4 py-4 md:rounded-2xl">
-        {/* Title & Description */}
         <div className="flex flex-col space-y-2 p-4">
           <Link href={projectDetailUrl}>
             <h2 className="font-cal text-card-foreground m-0 text-3xl hover:underline">
@@ -91,7 +69,6 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
           <p className="text-muted-foreground m-0">{description}</p>
         </div>
 
-        {/* Stacks */}
         {stacks && stacks.length > 0 && (
           <div className="mx-4 mb-4 flex items-center gap-2">
             <p className="text-sm">Tools: </p>
@@ -115,7 +92,6 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
           </div>
         )}
 
-        {/* CTA */}
         <div className="mt-auto flex flex-wrap items-center gap-2 px-4 pb-4">
           <Button asChild variant="shadow" size="default">
             <Link href={projectDetailUrl}>
@@ -124,26 +100,16 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
           </Button>
           <div className="ml-auto flex items-center gap-4">
             {repositoryUrl && (
-              <a
-                href={repositoryUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm transition-colors"
-              >
+              <ExternalLinkComponent href={repositoryUrl}>
                 <GitHub className="size-4" />
                 Repository
-              </a>
+              </ExternalLinkComponent>
             )}
             {liveSiteUrl && (
-              <a
-                href={liveSiteUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-foreground inline-flex items-center gap-1.5 text-sm transition-colors"
-              >
+              <ExternalLinkComponent href={liveSiteUrl}>
                 <ExternalLink className="size-4" />
                 Open Live Site
-              </a>
+              </ExternalLinkComponent>
             )}
           </div>
         </div>

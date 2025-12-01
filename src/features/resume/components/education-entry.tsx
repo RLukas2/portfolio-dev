@@ -10,6 +10,10 @@ import { Badge } from '@/components/ui/badge';
 
 import type { Education } from '../types';
 import TimelineCard from './shared/timeline-card';
+import {
+  TimelineEntryAccomplishments,
+  TimelineEntryMetaItem,
+} from './shared/timeline-entry';
 import { calculateDuration, formatDateRange } from './shared/timeline-utils';
 
 interface EducationEntryProps {
@@ -18,13 +22,7 @@ interface EducationEntryProps {
 }
 
 /**
- * Education component
- * Displays information about a single educational entry.
- *
- * @param {EducationEntryProps} param0 - Props for the EducationEntry component.
- * @param {Education} param0.education - The education data to display.
- * @param {boolean} param0.isLast - Whether this is the last entry in the timeline.
- * @returns {React.ReactNode} The rendered EducationEntry component.
+ * Education component - displays a single educational entry
  */
 const EducationEntry = ({
   education,
@@ -48,7 +46,6 @@ const EducationEntry = ({
       url={institution.url}
       isLast={isLast}
     >
-      {/* Header content */}
       <div className="flex flex-col gap-1">
         <h2 className="font-cal text-foreground m-0 text-lg font-semibold">
           {institution.url ? (
@@ -72,31 +69,16 @@ const EducationEntry = ({
         </div>
       </div>
 
-      {/* Meta information */}
       <div className="text-muted-foreground mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-        <div className="flex items-center gap-1.5">
-          <CalendarIcon className="size-3.5" />
+        <TimelineEntryMetaItem icon={<CalendarIcon className="size-3.5" />}>
           <span>{formatDateRange(start, endDate)}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <MapPinIcon className="size-3.5" />
+        </TimelineEntryMetaItem>
+        <TimelineEntryMetaItem icon={<MapPinIcon className="size-3.5" />}>
           <span>{institution.location}</span>
-        </div>
+        </TimelineEntryMetaItem>
       </div>
 
-      {/* Accomplishments */}
-      {accomplishments && accomplishments.length > 0 && (
-        <ul className="mt-4 space-y-2 pl-0">
-          {accomplishments.map((accomplishment, index) => (
-            <li
-              key={index}
-              className="text-muted-foreground before:bg-primary/50 relative pl-4 text-sm leading-relaxed before:absolute before:top-2 before:left-0 before:size-1.5 before:rounded-full"
-            >
-              {accomplishment}
-            </li>
-          ))}
-        </ul>
-      )}
+      <TimelineEntryAccomplishments accomplishments={accomplishments || []} />
     </TimelineCard>
   );
 };

@@ -10,6 +10,10 @@ import {
 
 import type { Experience } from '../types';
 import TimelineCard from './shared/timeline-card';
+import {
+  TimelineEntryAccomplishments,
+  TimelineEntryMetaItem,
+} from './shared/timeline-entry';
 import { calculateDuration, formatDateRange } from './shared/timeline-utils';
 
 interface ExperienceEntryProps {
@@ -18,13 +22,7 @@ interface ExperienceEntryProps {
 }
 
 /**
- * Experience component
- * Displays information about a single work experience entry.
- *
- * @param {ExperienceEntryProps} param0 - Props for the ExperienceEntry component.
- * @param {Experience} param0.experience - The experience data to display.
- * @param {boolean} param0.isLast - Whether this is the last entry in the timeline.
- * @returns {React.ReactNode} The rendered ExperienceEntry component.
+ * Experience component - displays a single work experience entry
  */
 const ExperienceEntry = ({
   experience,
@@ -42,7 +40,6 @@ const ExperienceEntry = ({
       url={company.url}
       isLast={isLast}
     >
-      {/* Header content */}
       <div className="flex flex-col gap-1">
         <h2 className="font-cal text-foreground m-0 text-lg font-semibold">
           {role}
@@ -61,23 +58,19 @@ const ExperienceEntry = ({
         </div>
       </div>
 
-      {/* Meta information */}
       <div className="text-muted-foreground mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
-        <div className="flex items-center gap-1.5">
-          <CalendarIcon className="size-3.5" />
+        <TimelineEntryMetaItem icon={<CalendarIcon className="size-3.5" />}>
           <span>{formatDateRange(start, endDate)}</span>
           <span className="text-muted-foreground/60">·</span>
           <span className="text-primary/80 font-medium">{durationText}</span>
-        </div>
-        <div className="flex items-center gap-1.5">
-          <MapPinIcon className="size-3.5" />
+        </TimelineEntryMetaItem>
+        <TimelineEntryMetaItem icon={<MapPinIcon className="size-3.5" />}>
           <span>{company.location}</span>
           <span className="text-muted-foreground/60">·</span>
           <span>{company.workingArrangement}</span>
-        </div>
+        </TimelineEntryMetaItem>
       </div>
 
-      {/* Tech stack */}
       {stacks.length > 0 && (
         <div className="mt-4 flex flex-row flex-wrap gap-1.5">
           {stacks.map(({ name, icon }) => (
@@ -93,19 +86,7 @@ const ExperienceEntry = ({
         </div>
       )}
 
-      {/* Accomplishments */}
-      {accomplishments.length > 0 && (
-        <ul className="mt-4 space-y-2 pl-0">
-          {accomplishments.map((accomplishment, index) => (
-            <li
-              key={index}
-              className="text-muted-foreground before:bg-primary/50 relative pl-4 text-sm leading-relaxed before:absolute before:top-2 before:left-0 before:size-1.5 before:rounded-full"
-            >
-              {accomplishment}
-            </li>
-          ))}
-        </ul>
-      )}
+      <TimelineEntryAccomplishments accomplishments={accomplishments} />
     </TimelineCard>
   );
 };
