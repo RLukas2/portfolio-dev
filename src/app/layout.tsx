@@ -12,6 +12,7 @@ import Footer from '@/components/core/footer';
 import Header from '@/components/core/header';
 import ConsoleMessage from '@/components/effects/console-message';
 import Analytics from '@/components/provider/analytics';
+import AnalyticsTracker from '@/components/provider/analytics-tracker';
 import AppProvider from '@/components/provider/app-provider';
 import SpeedInsight from '@/components/provider/speed-insight';
 import { Toaster } from '@/components/ui/toaster';
@@ -93,6 +94,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
     >
       <ConsoleMessage />
       <AppProvider>
+        <AnalyticsTracker />
         <div id="__app" className={cn('flex min-h-screen flex-col')}>
           <StarBackground />
           <Header />

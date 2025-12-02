@@ -1,4 +1,4 @@
-import { DownloadIcon, FileTextIcon } from 'lucide-react';
+import { FileTextIcon } from 'lucide-react';
 import type { Metadata } from 'next';
 import Image from 'next/image';
 
@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { SITE } from '@/constants/site';
 import Biography from '@/features/about/components/biography';
+import DownloadCVButton from '@/features/about/components/download-cv-button';
 import OpenForHire from '@/features/about/components/open-for-hire';
 import CareerJourney from '@/features/resume/components/career-journey';
 import env from '@/lib/env';
@@ -47,12 +48,7 @@ const AboutPage = () => {
             <OpenForHire isOpenForHire={isAvailableForHire} />
 
             <div className="my-4 flex flex-col gap-4">
-              <Button asChild variant="shadow" className="gap-x-2">
-                <Link href={`${ROUTES.resume}/download`} target="_blank">
-                  <DownloadIcon className="size-4" />
-                  Download CV
-                </Link>
-              </Button>
+              <DownloadCVButton />
 
               <Button asChild variant="shadow" className="gap-x-1">
                 <Link href={ROUTES.resume}>
