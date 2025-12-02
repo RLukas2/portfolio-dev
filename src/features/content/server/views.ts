@@ -62,23 +62,38 @@ export const countViewsBySlugAndSessionId = async (
 export const addView = async (
   slug: string,
   sessionId: string,
+  analytics?: {
+    ipAddress?: string;
+    userAgent?: string;
+    referrer?: string;
+    country?: string;
+  },
 ): Promise<void> => {
+  // Detect content type from slug
+  const { detectContentType } =
+    await import('@/features/content/utils/content-type-detector');
+  const contentType = detectContentType(slug);
+
   // First, ensure ContentMeta exists or get its ID
   const contentMeta = await db.contentMeta.upsert({
     where: { slug },
     update: {}, // No update needed if exists
     create: {
       slug,
-      type: 'POST', // Default type, adjust based on your content type logic
+      type: contentType,
     },
   });
 
-  // Then create the view, but handle duplicate case
+  // Then create the view with analytics data
   try {
     await db.view.create({
       data: {
         sessionId,
         contentId: contentMeta.id,
+        ipAddress: analytics?.ipAddress,
+        userAgent: analytics?.userAgent,
+        referrer: analytics?.referrer,
+        country: analytics?.country,
       },
     });
   } catch (error: any) {
@@ -87,4 +102,53 @@ export const addView = async (
       throw error;
     }
   }
+};
+
+/**
+ * Get view analytics by slug
+ */
+export const getViewAnalytics = async (slug: string) => {
+  const views = await db.view.findMany({
+    where: {
+      deletedAt: null,
+      content: { slug, deletedAt: null },
+    },
+    select: {
+      ipAddress: true,
+      userAgent: true,
+      referrer: true,
+      country: true,
+      createdAt: true,
+    },
+    orderBy: { createdAt: 'desc' },
+  });
+
+  // Aggregate analytics
+  const countryStats = views.reduce(
+    (acc, view) => {
+      if (view.country) {
+        acc[view.country] = (acc[view.country] || 0) + 1;
+      }
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  const referrerStats = views.reduce(
+    (acc, view) => {
+      if (view.referrer) {
+        const url = new URL(view.referrer).hostname;
+        acc[url] = (acc[url] || 0) + 1;
+      }
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
+  return {
+    totalViews: views.length,
+    countryStats,
+    referrerStats,
+    recentViews: views.slice(0, 10),
+  };
 };
