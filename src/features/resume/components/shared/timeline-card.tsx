@@ -37,7 +37,7 @@ const TimelineCard = ({
       {/* Card content */}
       <div
         className={cn(
-          'border-border/50 hover:border-border rounded-xl border p-4 transition-all duration-300 hover:shadow-lg',
+          'border-border/50 hover:border-primary rounded-xl border p-4 transition-all duration-300 hover:shadow-lg',
           className,
         )}
       >
