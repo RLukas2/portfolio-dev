@@ -42,6 +42,7 @@ const GetInTouch = () => {
             target="_blank"
             rel="noopener noreferrer"
             title="LinkedIn"
+            aria-label="Visit my LinkedIn profile"
           >
             <LinkedIn className="size-4" />
           </Link>
