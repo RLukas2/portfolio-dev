@@ -47,7 +47,7 @@ export const addShare = async (
   // First, ensure ContentMeta exists or get its ID
   const contentMeta = await db.contentMeta.upsert({
     where: { slug },
-    update: {}, // No update needed if exists
+    update: { deletedAt: null },
     create: {
       slug,
       type: contentType,

@@ -73,8 +73,8 @@ export const addView = async (
   const { detectContentType } =
     await import('@/features/content/utils/content-type-detector');
   const contentType = detectContentType(slug);
+
   // First, ensure ContentMeta exists or get its ID
-  // Also reset deletedAt in case it was soft-deleted by the sync script
   const contentMeta = await db.contentMeta.upsert({
     where: { slug },
     update: { deletedAt: null },
