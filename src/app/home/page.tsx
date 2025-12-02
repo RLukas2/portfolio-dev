@@ -33,13 +33,22 @@ const GetInTouch = dynamic(
   },
 );
 
+const SectionDivider = dynamic(
+  () => import('@/components/common/section-divider'),
+  {
+    ssr: true,
+  },
+);
+
 const HomePage = () => {
   return (
     <div className={cn('flex flex-col')}>
       <Container className={cn('gap-8')}>
         <Hero />
         <HighlightedProjects />
+        <SectionDivider />
         <LatestPosts />
+        <SectionDivider />
         <GetInTouch />
       </Container>
     </div>
