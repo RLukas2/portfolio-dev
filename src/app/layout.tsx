@@ -72,12 +72,10 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         name="apple-mobile-web-app-title"
         content={DEFAULT_METADATA.applicationName ?? ''}
       />
-
       <meta
         name="google-site-verification"
         content="k6PyMiGShL7wrz11l4Nvahbt-UpiTcg4o1peE9-HOhI"
       />
-
       {/* JSON-LD WebSite Schema */}
       <script
         type="application/ld+json"
@@ -86,7 +84,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         }}
         key="website-jsonld"
       />
-
       {/* Preconnect to critical origins for faster resource loading */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link
@@ -95,19 +92,10 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         crossOrigin="anonymous"
       />
       <link rel="preconnect" href="https://va.vercel-scripts.com" />
-      <link rel="preconnect" href="https://vitals.vercel-insights.com" />
-
+      <link rel="preconnect" href="https://vitals.vercel-insights.com" />{' '}
       {/* DNS prefetch for external resources */}
       <link rel="dns-prefetch" href="https://i.scdn.co" />
       <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
-
-      {/* Preload LCP image for faster rendering */}
-      <link
-        rel="preload"
-        href="/media/rlukas/rlukas.jpg"
-        as="image"
-        type="image/jpeg"
-      />
     </head>
     <body
       className={cn(fontSans.variable, fontMono.variable, fontCal.variable)}
