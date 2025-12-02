@@ -92,7 +92,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         crossOrigin="anonymous"
       />
       <link rel="preconnect" href="https://va.vercel-scripts.com" />
-      <link rel="preconnect" href="https://vitals.vercel-insights.com" />{' '}
+      <link rel="preconnect" href="https://vitals.vercel-insights.com" />
       {/* DNS prefetch for external resources */}
       <link rel="dns-prefetch" href="https://i.scdn.co" />
       <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
