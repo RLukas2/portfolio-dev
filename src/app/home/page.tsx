@@ -10,6 +10,12 @@ import { cn } from '@/lib/utils';
 export const metadata: Metadata = seo({
   title: 'Home',
   url: '/',
+  openGraph: {
+    images: ['/media/site/og-image.jpg'],
+  },
+  twitter: {
+    images: ['/media/site/og-image.jpg'],
+  },
 });
 
 const HighlightedProjects = dynamic(

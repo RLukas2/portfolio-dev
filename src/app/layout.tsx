@@ -31,12 +31,6 @@ const NowPlaying = dynamic(
 
 export const metadata: Metadata = seo({
   ...DEFAULT_METADATA,
-  openGraph: {
-    images: ['/media/site/og-image.png'],
-  },
-  twitter: {
-    images: ['/media/site/og-image.png'],
-  },
 });
 
 export const viewport: Viewport = {
