@@ -2,26 +2,25 @@
 
 ## [1.2.0](https://github.com/RLukas2/portfolio-dev/compare/v1.1.0...v1.2.0) (2025-12-02)
 
-
 ### Features
 
-* add comprehensive analytics and content management features ([af1428f](https://github.com/RLukas2/portfolio-dev/commit/af1428f05b4b3dcf61504ba654fe1199e57ad146))
-* add content helper functions for content ([4c017ef](https://github.com/RLukas2/portfolio-dev/commit/4c017ef5377f4790a7572078c64213f58a1a51f0))
-* add empty migration for soft deletes and consistent naming ([cbde3d2](https://github.com/RLukas2/portfolio-dev/commit/cbde3d2f997c559c3b3753aceb82c983e19204a3))
-* add JSON-LD schemas for Person and Website ([6a4be74](https://github.com/RLukas2/portfolio-dev/commit/6a4be74830eda25f7f93654d7bfadb2788ad5fbb))
-* add maimai adventure blog post and accompanying images ([acadc89](https://github.com/RLukas2/portfolio-dev/commit/acadc89d1dfb215d413641c8922b5a6ede6f6468))
-* add minimum height and width to Button component ([5435112](https://github.com/RLukas2/portfolio-dev/commit/543511235e381dca151cd97517f0e8dddca74065))
-* add NowSection component and improve aboutMe ([bef2ca5](https://github.com/RLukas2/portfolio-dev/commit/bef2ca526b33c3ea90484e1e8acbe4a613ef3b27))
-* add print styles and hide non-essential elements for print layout ([a5b10a1](https://github.com/RLukas2/portfolio-dev/commit/a5b10a1829ca573aa5441f0453779edfd030a43c))
-* add reusable content card components and image metadata hook ([0a2a4d2](https://github.com/RLukas2/portfolio-dev/commit/0a2a4d20fd5e650b62ebf76de55632bce5ee98f9))
-* add SectionDivider component ([a85bc41](https://github.com/RLukas2/portfolio-dev/commit/a85bc41e5b4c6b4477b6c592afa1babc9e2e8c02))
-* add social button to GetInTouch component ([db3c70f](https://github.com/RLukas2/portfolio-dev/commit/db3c70f3891d3a50e1f87f196b0dc2da82b22b5c))
-* enhance code highlighting and diff view styles in MDX components ([312cf05](https://github.com/RLukas2/portfolio-dev/commit/312cf05b6091bcc4359d850adb135e7877d264bb))
-* enhance data models with new fields and relationships ([135dad7](https://github.com/RLukas2/portfolio-dev/commit/135dad75805ffd1a3be0235f36a866a981291b54))
-* implement base content schema ([d5f781b](https://github.com/RLukas2/portfolio-dev/commit/d5f781bf94357b4dc300ec47d0c716c821156698))
-* implement reusable ContentDetailLoading component ([a2006df](https://github.com/RLukas2/portfolio-dev/commit/a2006df4f388e4e11c94bc0bef3b6632a9c8d2b1))
-* implement useAsyncAction hook ([38bcf11](https://github.com/RLukas2/portfolio-dev/commit/38bcf1109a775281b4aff37e7d940fa2b5f54f81))
-* mark heading hierarchy as complete in to-do list ([e5d3f97](https://github.com/RLukas2/portfolio-dev/commit/e5d3f975fd0dc39477c11359eb7aad31be722745))
+- add comprehensive analytics and content management features ([af1428f](https://github.com/RLukas2/portfolio-dev/commit/af1428f05b4b3dcf61504ba654fe1199e57ad146))
+- add content helper functions for content ([4c017ef](https://github.com/RLukas2/portfolio-dev/commit/4c017ef5377f4790a7572078c64213f58a1a51f0))
+- add empty migration for soft deletes and consistent naming ([cbde3d2](https://github.com/RLukas2/portfolio-dev/commit/cbde3d2f997c559c3b3753aceb82c983e19204a3))
+- add JSON-LD schemas for Person and Website ([6a4be74](https://github.com/RLukas2/portfolio-dev/commit/6a4be74830eda25f7f93654d7bfadb2788ad5fbb))
+- add maimai adventure blog post and accompanying images ([acadc89](https://github.com/RLukas2/portfolio-dev/commit/acadc89d1dfb215d413641c8922b5a6ede6f6468))
+- add minimum height and width to Button component ([5435112](https://github.com/RLukas2/portfolio-dev/commit/543511235e381dca151cd97517f0e8dddca74065))
+- add NowSection component and improve aboutMe ([bef2ca5](https://github.com/RLukas2/portfolio-dev/commit/bef2ca526b33c3ea90484e1e8acbe4a613ef3b27))
+- add print styles and hide non-essential elements for print layout ([a5b10a1](https://github.com/RLukas2/portfolio-dev/commit/a5b10a1829ca573aa5441f0453779edfd030a43c))
+- add reusable content card components and image metadata hook ([0a2a4d2](https://github.com/RLukas2/portfolio-dev/commit/0a2a4d20fd5e650b62ebf76de55632bce5ee98f9))
+- add SectionDivider component ([a85bc41](https://github.com/RLukas2/portfolio-dev/commit/a85bc41e5b4c6b4477b6c592afa1babc9e2e8c02))
+- add social button to GetInTouch component ([db3c70f](https://github.com/RLukas2/portfolio-dev/commit/db3c70f3891d3a50e1f87f196b0dc2da82b22b5c))
+- enhance code highlighting and diff view styles in MDX components ([312cf05](https://github.com/RLukas2/portfolio-dev/commit/312cf05b6091bcc4359d850adb135e7877d264bb))
+- enhance data models with new fields and relationships ([135dad7](https://github.com/RLukas2/portfolio-dev/commit/135dad75805ffd1a3be0235f36a866a981291b54))
+- implement base content schema ([d5f781b](https://github.com/RLukas2/portfolio-dev/commit/d5f781bf94357b4dc300ec47d0c716c821156698))
+- implement reusable ContentDetailLoading component ([a2006df](https://github.com/RLukas2/portfolio-dev/commit/a2006df4f388e4e11c94bc0bef3b6632a9c8d2b1))
+- implement useAsyncAction hook ([38bcf11](https://github.com/RLukas2/portfolio-dev/commit/38bcf1109a775281b4aff37e7d940fa2b5f54f81))
+- mark heading hierarchy as complete in to-do list ([e5d3f97](https://github.com/RLukas2/portfolio-dev/commit/e5d3f975fd0dc39477c11359eb7aad31be722745))
 
 ## [1.1.0](https://github.com/RLukas2/portfolio-dev/compare/v1.0.0...v1.1.0) (2025-11-30)
 
