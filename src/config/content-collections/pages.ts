@@ -1,16 +1,14 @@
 import { defineCollection } from '@content-collections/core';
 import { compileMDX } from '@content-collections/mdx';
-import z from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
+import { pageSchema } from './base-schema';
 
 const pages = defineCollection({
   name: 'Page',
   directory: 'content/pages',
   include: '**/*.mdx',
-  schema: z.object({
-    content: z.string().optional(),
-  }),
+  schema: pageSchema,
   transform: (doc, context) => {
     return context.cache(
       {
@@ -31,10 +29,12 @@ const pages = defineCollection({
           },
         );
 
+        const slug = doc._meta.path;
+
         return {
           ...doc,
           _id: doc._meta.filePath,
-          slug: doc._meta.path,
+          slug,
           code,
         };
       },

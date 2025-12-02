@@ -1,27 +1,20 @@
 import { defineCollection } from '@content-collections/core';
 import { compileMDX } from '@content-collections/mdx';
 import readingTime from 'reading-time';
-import { z } from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
 import {
   remarkExtractHeadings,
   type TocHeading,
 } from '../mdx-plugins/remark/extract-headings';
+import { shortSchema } from './base-schema';
 import { serializeHeadings } from './extract-headings';
 
 const shorts = defineCollection({
   name: 'Short',
   directory: 'content/shorts',
   include: '**/*.mdx',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.iso.datetime(),
-    published: z.boolean().default(false),
-    tags: z.array(z.string()),
-    content: z.string().optional(),
-  }),
+  schema: shortSchema,
   transform: (doc, context) => {
     return context.cache(
       {
@@ -49,10 +42,12 @@ const shorts = defineCollection({
 
         const { text: parsedReadingTime } = readingTime(doc.content);
 
+        const slug = doc._meta.path;
+
         return {
           ...doc,
           _id: doc._meta.filePath,
-          slug: doc._meta.path,
+          slug,
           code,
           readingTime: parsedReadingTime,
           headings: serializeHeadings(headings),

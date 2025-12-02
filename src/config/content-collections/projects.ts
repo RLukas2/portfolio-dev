@@ -1,7 +1,6 @@
 import { defineCollection } from '@content-collections/core';
 import { compileMDX } from '@content-collections/mdx';
 import readingTime from 'reading-time';
-import z from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
 import { getBlurData } from '../mdx-plugins/remark/blur';
@@ -9,6 +8,7 @@ import {
   remarkExtractHeadings,
   type TocHeading,
 } from '../mdx-plugins/remark/extract-headings';
+import { projectSchema } from './base-schema';
 import { serializeHeadings } from './extract-headings';
 import { getContentImagePath } from './utils';
 
@@ -16,19 +16,7 @@ const projects = defineCollection({
   name: 'Project',
   directory: 'content/projects',
   include: '**/*.mdx',
-  schema: z.object({
-    title: z.string(),
-    description: z.string(),
-    date: z.iso.date(),
-    published: z.boolean().default(false),
-    highlight: z.boolean().default(false),
-    stacks: z.array(z.string()).default([]),
-    url: z.url().nullable().optional(),
-    repositoryUrl: z.url().optional(),
-    playStoreUrl: z.url().optional(),
-    image: z.string(),
-    content: z.string().optional(),
-  }),
+  schema: projectSchema,
 
   transform: (doc, context) => {
     return context.cache(
@@ -61,10 +49,12 @@ const projects = defineCollection({
           getContentImagePath('projects', doc.image),
         );
 
+        const slug = doc._meta.path;
+
         return {
           ...doc,
           _id: doc._meta.filePath,
-          slug: doc._meta.path,
+          slug,
           readingTime: parsedReadingTime,
           code,
           image,
