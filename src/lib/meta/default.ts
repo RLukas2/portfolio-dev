@@ -22,6 +22,12 @@ export const DEFAULT_METADATA: Metadata = {
   publisher: SITE.author.name,
   category: 'Portfolio',
   keywords: SITE.keywords,
+  alternates: {
+    canonical: fullURL().origin,
+    types: {
+      'application/rss+xml': `${fullURL().origin}/feed.xml`,
+    },
+  },
   openGraph: {
     type: 'website',
     url: fullURL().origin,
@@ -53,6 +59,9 @@ export const DEFAULT_METADATA: Metadata = {
     site: SITE.author.twitter,
     creator: SITE.author.twitter,
     images: defaultOgImage,
+  },
+  verification: {
+    google: 'k6PyMiGShL7wrz11l4Nvahbt-UpiTcg4o1peE9-HOhI',
   },
   other: {
     'msapplication-TileColor': '#2563eb',

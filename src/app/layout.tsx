@@ -66,10 +66,6 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
         name="apple-mobile-web-app-title"
         content={DEFAULT_METADATA.applicationName ?? ''}
       />
-      <meta
-        name="google-site-verification"
-        content="k6PyMiGShL7wrz11l4Nvahbt-UpiTcg4o1peE9-HOhI"
-      />
       {/* JSON-LD WebSite Schema */}
       <script
         type="application/ld+json"

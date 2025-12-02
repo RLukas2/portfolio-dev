@@ -14,16 +14,19 @@ const sitemap = (): MetadataRoute.Sitemap => {
     .filter((post) => post.published)
     .map((post) => ({
       url: `${BASE_URL}${ROUTES.blog}/${post.slug}`,
-      lastModified: post.date.split('T')[0],
+      lastModified: post.modifiedDate
+        ? new Date(post.modifiedDate)
+        : new Date(post.date),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
+      images: post.image ? [`${BASE_URL}${post.image}`] : undefined,
     }));
 
   const shorts = allShorts
     .filter((short) => short.published)
     .map((short) => ({
       url: `${BASE_URL}${ROUTES.shorts}/${short.slug}`,
-      lastModified: short.date.split('T')[0],
+      lastModified: new Date(short.date),
       changeFrequency: 'monthly' as const,
       priority: 0.6,
     }));
@@ -48,9 +51,10 @@ const sitemap = (): MetadataRoute.Sitemap => {
     .filter((project) => project.published)
     .map((project) => ({
       url: `${BASE_URL}${ROUTES.projects}/${project.slug}`,
-      lastModified: new Date().toISOString().split('T')[0],
+      lastModified: new Date(project.date),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
+      images: project.image ? [`${BASE_URL}${project.image}`] : undefined,
     }));
 
   const routes = [
@@ -66,7 +70,7 @@ const sitemap = (): MetadataRoute.Sitemap => {
     ROUTES.uses,
   ].map((route) => ({
     url: `${BASE_URL}${route}`,
-    lastModified: new Date().toISOString().split('T')[0],
+    lastModified: new Date(),
     changeFrequency: routePriorities[route]?.changeFrequency ?? 'monthly',
     priority: routePriorities[route]?.priority ?? 0.5,
   }));

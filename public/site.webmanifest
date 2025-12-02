@@ -1,6 +1,9 @@
 {
-  "name": "xbrk",
-  "short_name": "xbrk",
+  "name": "Tuan Ngo-Hoang Portfolio",
+  "short_name": "RLukas2",
+  "description": "Portfolio of Tuan Ngo-Hoang - Software Engineer specializing in back-end development",
+  "start_url": "/",
+  "scope": "/",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
@@ -13,9 +16,21 @@
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
+    },
+    {
+      "src": "/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
-  "theme_color": "#ffffff",
+  "theme_color": "#2563eb",
   "background_color": "#ffffff",
-  "display": "standalone"
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "categories": [
+    "portfolio",
+    "technology",
+    "development"
+  ]
 }
