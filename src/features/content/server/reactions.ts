@@ -67,13 +67,18 @@ export const addReaction = async ({
   type: ReactionType;
   count: number;
 }) => {
+  // Detect content type from slug
+  const { detectContentType } =
+    await import('@/features/content/utils/content-type-detector');
+  const contentType = detectContentType(slug);
+
   // First, ensure ContentMeta exists or get its ID
   const contentMeta = await db.contentMeta.upsert({
     where: { slug },
     update: {}, // No update needed if exists
     create: {
       slug,
-      type: 'POST', // Default type, adjust based on your content type logic
+      type: contentType,
     },
   });
 
