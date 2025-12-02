@@ -6,10 +6,10 @@ import db from '@/lib/db';
 
 export const countSharesBySlug = async (slug: string): Promise<number> => {
   const result = await db.contentMeta.findFirst({
-    where: { slug },
+    where: { slug, deletedAt: null },
     include: {
       _count: {
-        select: { shares: true },
+        select: { shares: { where: { deletedAt: null } } },
       },
     },
   });
@@ -26,7 +26,8 @@ export const countUserShares = async (
     where: {
       sessionId,
       type,
-      content: { slug },
+      deletedAt: null,
+      content: { slug, deletedAt: null },
     },
   });
 
@@ -38,17 +39,22 @@ export const addShare = async (
   sessionId: string,
   type: ShareType,
 ): Promise<void> => {
+  // First, ensure ContentMeta exists or get its ID
+  const contentMeta = await db.contentMeta.upsert({
+    where: { slug },
+    update: {}, // No update needed if exists
+    create: {
+      slug,
+      type: 'POST', // Default type, adjust based on your content type logic
+    },
+  });
+
+  // Then create the share
   await db.share.create({
     data: {
       sessionId,
       type,
-      content: {
-        connectOrCreate: {
-          where: { slug },
-          create: { slug },
-        },
-      },
+      contentId: contentMeta.id,
     },
-    include: { content: true },
   });
 };

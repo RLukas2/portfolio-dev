@@ -46,7 +46,7 @@ export const POST = async (req: NextRequest) => {
     const userId = session.id as string;
 
     const alreadyEndorsed = await countEndorsement({
-      skill_id: skillId,
+      skillId: skillId,
       userId,
     });
 

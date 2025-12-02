@@ -6,6 +6,7 @@ import db from '@/lib/db';
 
 export const countAllReactions = async (): Promise<number> => {
   const count = await db.reaction.aggregate({
+    where: { deletedAt: null },
     _sum: { count: true },
   });
 
@@ -37,7 +38,10 @@ const mapReactions = (
 };
 
 export const getReactions = async (slug: string, sessionId?: string) => {
-  const conditions = { content: { slug } };
+  const conditions: any = {
+    deletedAt: null,
+    content: { slug, deletedAt: null },
+  };
 
   if (sessionId) {
     Object.assign(conditions, { sessionId });
@@ -63,17 +67,43 @@ export const addReaction = async ({
   type: ReactionType;
   count: number;
 }) => {
-  await db.reaction.create({
-    data: {
-      sessionId,
-      type,
-      count,
-      content: {
-        connectOrCreate: {
-          where: { slug },
-          create: { slug },
-        },
-      },
+  // First, ensure ContentMeta exists or get its ID
+  const contentMeta = await db.contentMeta.upsert({
+    where: { slug },
+    update: {}, // No update needed if exists
+    create: {
+      slug,
+      type: 'POST', // Default type, adjust based on your content type logic
     },
   });
+
+  // Then create or update the reaction
+  try {
+    await db.reaction.create({
+      data: {
+        sessionId,
+        type,
+        count,
+        contentId: contentMeta.id,
+      },
+    });
+  } catch (error: any) {
+    // If unique constraint error, update existing reaction
+    if (error.code === 'P2002') {
+      await db.reaction.updateMany({
+        where: {
+          contentId: contentMeta.id,
+          sessionId,
+          type,
+        },
+        data: {
+          count: {
+            increment: count,
+          },
+        },
+      });
+    } else {
+      throw error;
+    }
+  }
 };
