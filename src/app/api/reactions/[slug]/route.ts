@@ -4,7 +4,7 @@ import type { NextRequest } from 'next/server';
 import { MAX_REACTIONS_PER_SESSION } from '@/features/content/constants';
 import { addReaction, getReactions } from '@/features/content/server/reactions';
 import type { Reactions } from '@/features/content/types/reactions';
-import { getSessionId, response } from '@/lib/server';
+import { getSessionId, response } from '@/server/server';
 import type { APIErrorResponse, APISingleResponse } from '@/types/api';
 
 export const GET = async (

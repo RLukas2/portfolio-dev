@@ -2,7 +2,7 @@ import { countAllReactions } from '@/features/content/server/reactions';
 import { countAllViews } from '@/features/content/server/views';
 import type { EngagementStats } from '@/features/dashboard/types/stats';
 import { countAllEndorsements } from '@/features/endorsements/server/actions';
-import { response } from '@/lib/server';
+import { response } from '@/server/server';
 import type { APIErrorResponse, APISingleResponse } from '@/types/api';
 
 export const dynamic = 'force-dynamic';

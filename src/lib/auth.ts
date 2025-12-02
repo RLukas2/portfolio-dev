@@ -5,7 +5,7 @@ import GoogleProvider from 'next-auth/providers/google';
 
 import env from '@/lib/env';
 
-import prisma from './db';
+import prisma from '../server/db';
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),

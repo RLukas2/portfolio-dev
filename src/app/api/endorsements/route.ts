@@ -8,7 +8,7 @@ import {
 } from '@/features/endorsements/server/actions';
 import type { SkillCategory } from '@/features/endorsements/types';
 import { authOptions } from '@/lib/auth';
-import { response } from '@/lib/server';
+import { response } from '@/server/server';
 import type {
   APIErrorResponse,
   APIListResponse,

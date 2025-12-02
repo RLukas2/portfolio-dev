@@ -6,7 +6,7 @@ import {
   countSharesBySlug,
   countUserShares,
 } from '@/features/content/server/shares';
-import { getSessionId, response } from '@/lib/server';
+import { getSessionId, response } from '@/server/server';
 import type { APIErrorResponse, APISingleResponse } from '@/types/api';
 
 export const GET = async (

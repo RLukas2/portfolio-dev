@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/lib/db';
+import db from '@/server/db';
 
 export const countAllViews = async (): Promise<number> => {
   return await db.view.count({

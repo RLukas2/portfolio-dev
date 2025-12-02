@@ -1,6 +1,6 @@
 import { getNowPlaying } from '@/features/now-playing/server/actions';
 import type { NowPlaying } from '@/features/now-playing/types';
-import { response } from '@/lib/server';
+import { response } from '@/server/server';
 import type { APIErrorResponse, APISingleResponse } from '@/types/api';
 
 export const fetchCache = 'force-no-store';

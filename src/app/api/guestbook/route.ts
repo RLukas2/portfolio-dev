@@ -7,7 +7,7 @@ import {
 } from '@/features/guestbook/server/actions';
 import type { Guestbook } from '@/features/guestbook/types';
 import { authOptions } from '@/lib/auth';
-import { response } from '@/lib/server';
+import { response } from '@/server/server';
 import type {
   APIErrorResponse,
   APIListResponse,

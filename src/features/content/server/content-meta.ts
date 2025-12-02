@@ -2,7 +2,7 @@
 
 import type { ContentType } from '@prisma/client';
 
-import db from '@/lib/db';
+import db from '@/server/db';
 
 /**
  * Create or update content metadata

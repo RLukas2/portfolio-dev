@@ -2,7 +2,7 @@
 
 import type { Prisma, ReactionType } from '@prisma/client';
 
-import db from '@/lib/db';
+import db from '@/server/db';
 
 export const countAllReactions = async (): Promise<number> => {
   const count = await db.reaction.aggregate({

@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/lib/db';
+import db from '@/server/db';
 
 /**
  * Soft delete helpers for all models

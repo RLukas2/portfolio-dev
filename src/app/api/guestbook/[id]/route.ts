@@ -7,7 +7,7 @@ import {
   deleteEntry,
 } from '@/features/guestbook/server/actions';
 import { authOptions } from '@/lib/auth';
-import { response } from '@/lib/server';
+import { response } from '@/server/server';
 import type { APIErrorResponse } from '@/types/api';
 
 export const DELETE = async (

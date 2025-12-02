@@ -2,7 +2,7 @@
 
 import type { ShareType } from '@prisma/client';
 
-import db from '@/lib/db';
+import db from '@/server/db';
 
 export const countSharesBySlug = async (slug: string): Promise<number> => {
   const result = await db.contentMeta.findFirst({

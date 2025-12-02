@@ -2,7 +2,7 @@
 
 import type { Prisma } from '@prisma/client';
 
-import db from '@/lib/db';
+import db from '@/server/db';
 
 import type { Guestbook } from '../types';
 
