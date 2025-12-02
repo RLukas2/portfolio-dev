@@ -1,7 +1,6 @@
 import { defineCollection } from '@content-collections/core';
 import { compileMDX } from '@content-collections/mdx';
 import readingTime from 'reading-time';
-import z from 'zod';
 
 import { rehypePlugins, remarkPlugins } from '../mdx-plugins';
 import { getBlurData } from '../mdx-plugins/remark/blur';
@@ -9,6 +8,7 @@ import {
   remarkExtractHeadings,
   type TocHeading,
 } from '../mdx-plugins/remark/extract-headings';
+import { postSchema } from './base-schema';
 import { serializeHeadings } from './extract-headings';
 import { getContentImagePath, getPostExcerpt } from './utils';
 
@@ -16,18 +16,7 @@ const posts = defineCollection({
   name: 'Post',
   directory: 'content/posts',
   include: '**/*.mdx',
-  schema: z.object({
-    title: z.string(),
-    image: z.string().optional(),
-    excerpt: z.string().optional(),
-    description: z.string().optional(),
-    published: z.boolean().default(false),
-    date: z.iso.datetime(),
-    modifiedDate: z.iso.datetime(),
-    tags: z.array(z.string()).default([]),
-    keywords: z.array(z.string()).default([]),
-    content: z.string().optional(),
-  }),
+  schema: postSchema,
   transform: (doc, context) => {
     return context.cache(
       {
@@ -72,10 +61,12 @@ const posts = defineCollection({
           getContentImagePath('blog', doc.image),
         );
 
+        const slug = doc._meta.path;
+
         return {
           ...doc,
           _id: doc._meta.filePath,
-          slug: doc._meta.path,
+          slug,
           readingTime: parsedReadingTime,
           code,
           excerpt,
