@@ -28,17 +28,19 @@ const Hero = () => {
   return (
     <motion.div
       className={cn(
-        'layout min-h-screen py-8 text-center md:mt-16 md:py-16 lg:py-32',
+        'layout min-h-screen text-center md:mt-8 md:py-16 lg:py-24',
       )}
       id="hero"
       aria-label="Hero section"
     >
       <div
-        className={cn('flex w-full flex-col items-center gap-10 md:flex-row')}
+        className={cn(
+          'flex w-full flex-col items-center md:flex-row md:gap-16',
+        )}
       >
         <motion.div
           className={cn(
-            'mt-12 flex flex-col items-center space-y-6 text-center md:mb-0 md:w-1/2 md:items-start md:text-left',
+            'mt-12 mb-8 flex flex-col items-center space-y-4 text-center md:mb-0 md:w-1/2 md:items-start md:text-left',
           )}
           viewport={{ once: true }}
         >
@@ -94,8 +96,8 @@ const Hero = () => {
           >
             <Button asChild variant="shadow" className="group">
               <Link href={'/#highlighted-projects'}>
-                Learn How{' '}
-                <ChevronDownIcon className="transition-transform duration-200 group-hover:translate-x-1" />
+                View My Work{' '}
+                <ChevronDownIcon className="transition-transform duration-200 group-hover:translate-y-1" />
               </Link>
             </Button>
 

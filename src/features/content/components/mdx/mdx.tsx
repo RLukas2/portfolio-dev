@@ -89,7 +89,7 @@ const Mdx = ({ code, className }: { code: string; className?: string }) => {
     <div
       ref={containerRef}
       className={cn(
-        'prose dark:prose-invert prose-lg w-full max-w-none',
+        'prose dark:prose-invert w-full max-w-none',
         'prose-headings:scroll-m-20',
         'prose-p:leading-relaxed',
         'prose-li:leading-relaxed',

@@ -3,6 +3,8 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 
+import { cn } from '@/lib/utils';
+
 const containerAnimation = {
   initial: { opacity: 0, x: 50 },
   animate: { opacity: 1, x: 0 },
@@ -55,15 +57,22 @@ export default function ProfileImage() {
       />
 
       {/* Profile Image */}
-      <div className="pointer-events-none relative h-auto min-h-[280px] w-[90%] max-w-[450px] overflow-hidden rounded-full border-4 border-white shadow-lg shadow-black/20 dark:border-gray-800">
+      <div
+        className={cn(
+          'group relative',
+          'h-auto min-h-[280px] w-[90%] max-w-[450px]',
+          'overflow-hidden rounded-full border-4 border-white',
+          'shadow-lg shadow-black/20 dark:border-gray-800',
+          'transition-transform duration-300 hover:scale-105',
+        )}
+      >
         <Image
           src="/media/rlukas/rlukas.jpg"
           alt="Ngo Hoang Tuan - Backend Engineer"
-          objectFit="cover"
+          className={cn('h-full w-full', 'rounded-full object-cover')}
           priority
           loading="eager"
           quality={50}
-          className="h-full w-full rounded-full"
           width={512}
           height={512}
         />
