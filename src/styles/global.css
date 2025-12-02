@@ -525,12 +525,7 @@
       animation: shine 3s infinite;
     }
   }
-
   @media (max-width: 640px) {
-    html {
-      font-size: 90%;
-    }
-
     .btn-primary,
     .btn-secondary {
       @apply px-4 py-2;
