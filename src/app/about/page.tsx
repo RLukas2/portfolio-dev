@@ -46,15 +46,15 @@ const AboutPage = () => {
             </div>
             <OpenForHire isOpenForHire={isAvailableForHire} />
 
-            <div className="my-4 flex flex-col gap-4">
-              <Button asChild variant="shadow" className="gap-x-2">
+            <div className="my-4 flex flex-row gap-4 md:flex-col">
+              <Button asChild variant="shadow" size="sm" className="gap-x-1">
                 <Link href={`${ROUTES.resume}/download`} target="_blank">
                   <DownloadIcon className="size-4" />
                   Download CV
                 </Link>
               </Button>
 
-              <Button asChild variant="shadow" className="gap-x-1">
+              <Button asChild variant="shadow" size="sm" className="gap-x-1">
                 <Link href={ROUTES.resume}>
                   <FileTextIcon className="size-4" />
                   View Resume
@@ -70,6 +70,7 @@ const AboutPage = () => {
             <p className="text-muted-foreground m-0">
               A timeline of my professional experience and education.
             </p>
+
             <CareerJourney />
           </div>
         </div>
