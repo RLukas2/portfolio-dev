@@ -58,6 +58,7 @@ const GetInTouch = () => {
             target="_blank"
             rel="noopener noreferrer"
             title="GitHub"
+            aria-label="Visit my GitHub profile"
           >
             <GitHub className="size-4" />
           </Link>
