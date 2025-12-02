@@ -77,7 +77,9 @@ const stacks: Stack[] = [
 const CurrentTechStacks = (): React.ReactNode => {
   return (
     <motion.div
-      variants={slideInAnimation}
+      initial={slideInAnimation.initial}
+      animate={slideInAnimation.animate}
+      transition={slideInAnimation.transition}
       className="mb-8 flex flex-wrap justify-center gap-2 md:gap-3 lg:justify-start"
       role="list"
       aria-label="Technologies I work with"
