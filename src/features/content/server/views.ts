@@ -3,7 +3,9 @@
 import db from '@/lib/db';
 
 export const countAllViews = async (): Promise<number> => {
-  return await db.view.count();
+  return await db.view.count({
+    where: { deletedAt: null },
+  });
 };
 
 /**
@@ -12,9 +14,10 @@ export const countAllViews = async (): Promise<number> => {
  */
 export const getAllViewCounts = async (): Promise<Record<string, number>> => {
   const results = await db.contentMeta.findMany({
+    where: { deletedAt: null },
     include: {
       _count: {
-        select: { views: true },
+        select: { views: { where: { deletedAt: null } } },
       },
     },
   });
@@ -30,10 +33,10 @@ export const getAllViewCounts = async (): Promise<Record<string, number>> => {
 
 export const countViewsBySlug = async (slug: string): Promise<number> => {
   const result = await db.contentMeta.findFirst({
-    where: { slug },
+    where: { slug, deletedAt: null },
     include: {
       _count: {
-        select: { views: true },
+        select: { views: { where: { deletedAt: null } } },
       },
     },
   });
@@ -48,7 +51,8 @@ export const countViewsBySlugAndSessionId = async (
   const result = await db.view.count({
     where: {
       sessionId,
-      content: { slug },
+      deletedAt: null,
+      content: { slug, deletedAt: null },
     },
   });
 
@@ -59,16 +63,28 @@ export const addView = async (
   slug: string,
   sessionId: string,
 ): Promise<void> => {
-  await db.view.create({
-    data: {
-      sessionId,
-      content: {
-        connectOrCreate: {
-          where: { slug },
-          create: { slug },
-        },
-      },
+  // First, ensure ContentMeta exists or get its ID
+  const contentMeta = await db.contentMeta.upsert({
+    where: { slug },
+    update: {}, // No update needed if exists
+    create: {
+      slug,
+      type: 'POST', // Default type, adjust based on your content type logic
     },
-    include: { content: true },
   });
+
+  // Then create the view, but handle duplicate case
+  try {
+    await db.view.create({
+      data: {
+        sessionId,
+        contentId: contentMeta.id,
+      },
+    });
+  } catch (error: any) {
+    // Ignore unique constraint errors (view already exists for this session)
+    if (!error.code || error.code !== 'P2002') {
+      throw error;
+    }
+  }
 };

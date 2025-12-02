@@ -43,34 +43,46 @@ model Session {
 }
 
 model SkillCategory {
-  id                 BigInt  @id @default(autoincrement())
-  name               String  @db.VarChar(255)
-  skills_in_category Skill[]
+  id        BigInt    @id @default(autoincrement())
+  name      String    @db.VarChar(255)
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+  updatedAt DateTime  @updatedAt
+  skills    Skill[]
 
+  @@index([deletedAt])
   @@map("skill_categories")
 }
 
 model Skill {
-  id                BigInt         @id @default(autoincrement())
-  name              String         @unique @db.VarChar(255)
-  skill_category_id BigInt?
-  endorsements      Endorsement[]
-  skill_category    SkillCategory? @relation(fields: [skill_category_id], references: [id])
+  id              BigInt         @id @default(autoincrement())
+  name            String         @unique @db.VarChar(255)
+  createdAt       DateTime       @default(now())
+  deletedAt       DateTime?
+  skillCategoryId BigInt?
+  updatedAt       DateTime       @updatedAt
+  endorsements    Endorsement[]
+  skillCategory   SkillCategory? @relation(fields: [skillCategoryId], references: [id])
 
-  @@index([skill_category_id])
+  @@index([skillCategoryId])
+  @@index([deletedAt])
   @@map("skills")
 }
 
 model Endorsement {
-  id        BigInt   @id @default(autoincrement())
-  skill_id  BigInt?
-  updatedAt DateTime @default(now()) @updatedAt
-  userId    String?
-  skill     Skill?   @relation(fields: [skill_id], references: [id])
-  user      User?    @relation(fields: [userId], references: [id])
+  id        BigInt    @id @default(autoincrement())
+  updatedAt DateTime  @updatedAt
+  userId    String
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+  skillId   BigInt
+  skill     Skill     @relation(fields: [skillId], references: [id], onDelete: Cascade)
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@index([skill_id])
+  @@unique([skillId, userId])
+  @@index([skillId])
   @@index([userId])
+  @@index([deletedAt])
   @@map("endorsements")
 }
 
@@ -81,9 +93,10 @@ model User {
   emailVerified DateTime?
   image         String?
   accounts      Account[]
-  sessions      Session[]
   endorsements  Endorsement[]
   guestbook     Guestbook[]
+  sessions      Session[]
+  testimonials  Testimonial[]
 
   @@map("users")
 }
@@ -98,13 +111,23 @@ model VerificationToken {
 }
 
 model ContentMeta {
-  id        BigInt     @id @default(autoincrement())
-  slug      String     @unique
-  createdAt DateTime   @default(now())
-  views     View[]
-  shares    Share[]
-  reactions Reaction[]
+  id          BigInt      @id @default(autoincrement())
+  slug        String      @unique
+  createdAt   DateTime    @default(now())
+  deletedAt   DateTime?
+  published   Boolean     @default(true)
+  publishedAt DateTime?
+  title       String?
+  type        ContentType
+  updatedAt   DateTime    @updatedAt
+  reactions   Reaction[]
+  shares      Share[]
+  views       View[]
 
+  @@index([type])
+  @@index([published])
+  @@index([publishedAt])
+  @@index([deletedAt])
   @@map("content_meta")
 }
 
@@ -113,9 +136,19 @@ model View {
   sessionId String
   contentId BigInt
   createdAt DateTime    @default(now())
+  country   String?     @db.VarChar(2)
+  deletedAt DateTime?
+  ipAddress String?     @db.VarChar(45)
+  referrer  String?
+  userAgent String?
   content   ContentMeta @relation(fields: [contentId], references: [id], onDelete: Cascade)
 
+  @@unique([contentId, sessionId])
   @@index([contentId])
+  @@index([sessionId])
+  @@index([createdAt])
+  @@index([country])
+  @@index([deletedAt])
   @@map("views")
 }
 
@@ -125,17 +158,15 @@ model Share {
   type      ShareType?  @default(OTHERS)
   contentId BigInt
   createdAt DateTime    @default(now())
+  deletedAt DateTime?
   content   ContentMeta @relation(fields: [contentId], references: [id], onDelete: Cascade)
 
   @@index([contentId])
+  @@index([sessionId])
+  @@index([type])
+  @@index([createdAt])
+  @@index([deletedAt])
   @@map("shares")
-}
-
-enum ShareType {
-  CLIPBOARD
-  TWITTER
-  LINKEDIN
-  OTHERS
 }
 
 model Reaction {
@@ -145,10 +176,73 @@ model Reaction {
   contentId BigInt
   count     Int?          @default(1)
   createdAt DateTime      @default(now())
+  deletedAt DateTime?
   content   ContentMeta   @relation(fields: [contentId], references: [id], onDelete: Cascade)
 
+  @@unique([contentId, sessionId, type])
   @@index([contentId])
+  @@index([sessionId])
+  @@index([type])
+  @@index([createdAt])
+  @@index([deletedAt])
   @@map("reactions")
+}
+
+model Guestbook {
+  id        BigInt    @id @default(autoincrement())
+  body      String    @db.VarChar(1024)
+  userId    String?
+  createdAt DateTime  @default(now())
+  deletedAt DateTime?
+  updatedAt DateTime  @updatedAt
+  user      User?     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@map("guestbook")
+}
+
+model Testimonial {
+  id           BigInt            @id @default(autoincrement())
+  userId       String
+  rating       Int               @db.SmallInt
+  message      String
+  relationship String            @db.VarChar(50)
+  project      String?           @db.VarChar(255)
+  featured     Boolean           @default(false)
+  status       TestimonialStatus @default(PENDING)
+  helpful      Int               @default(0)
+  reported     Int               @default(0)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  deletedAt    DateTime?
+  approvedAt   DateTime?
+  approvedBy   String?
+  user         User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([featured])
+  @@index([status])
+  @@index([rating])
+  @@index([createdAt])
+  @@index([deletedAt])
+  @@index([featured, createdAt])
+  @@map("testimonials")
+}
+
+enum ContentType {
+  POST
+  PROJECT
+  SHORT
+  PAGE
+}
+
+enum ShareType {
+  CLIPBOARD
+  TWITTER
+  LINKEDIN
+  OTHERS
 }
 
 enum ReactionType {
@@ -158,13 +252,8 @@ enum ReactionType {
   THINKING
 }
 
-model Guestbook {
-  id         BigInt   @id @default(autoincrement())
-  body       String   @db.VarChar(1024)
-  created_at DateTime @default(now())
-  userId     String?
-  user       User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@index([userId])
-  @@map("guestbook")
+enum TestimonialStatus {
+  PENDING
+  APPROVED
+  REJECTED
 }

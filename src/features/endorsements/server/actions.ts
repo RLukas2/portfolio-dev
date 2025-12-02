@@ -7,15 +7,20 @@ import db from '@/lib/db';
 import type { SkillCategory } from '../types';
 
 export const countAllEndorsements = async (): Promise<number> => {
-  return await db.endorsement.count();
+  return await db.endorsement.count({
+    where: { deletedAt: null },
+  });
 };
 
 export const getEndorsements = async (): Promise<SkillCategory[]> => {
   const data = await db.skillCategory.findMany({
+    where: { deletedAt: null },
     include: {
-      skills_in_category: {
+      skills: {
+        where: { deletedAt: null },
         include: {
           endorsements: {
+            where: { deletedAt: null },
             include: { user: true },
             orderBy: {
               updatedAt: 'desc',
@@ -26,9 +31,9 @@ export const getEndorsements = async (): Promise<SkillCategory[]> => {
     },
   });
 
-  return data.map(({ name, skills_in_category }) => ({
+  return data.map(({ name, skills }) => ({
     name,
-    skills: skills_in_category.map(({ id, name: skillName, endorsements }) => ({
+    skills: skills.map(({ id, name: skillName, endorsements }) => ({
       id: id.toString(),
       name: skillName,
       users: endorsements
@@ -61,7 +66,7 @@ export const createEndorsement = async ({
   await db.endorsement.create({
     data: {
       userId,
-      skill_id: skillId,
+      skillId,
     },
   });
 };
