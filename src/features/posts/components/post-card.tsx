@@ -35,7 +35,9 @@ const PostCard = ({ post, className }: PostCardProps) => {
     <Link href={`${ROUTES.blog}/${slug}`} className={cn('block rounded-md')}>
       <div
         className={cn(
-          'group flex flex-col gap-4 rounded-2xl py-2 md:flex-row-reverse',
+          'group flex flex-col gap-4 rounded-2xl py-2',
+          'md:flex-row-reverse',
+          'transition-all duration-300 hover:scale-[1.02]',
           className,
         )}
       >
@@ -57,13 +59,19 @@ const PostCard = ({ post, className }: PostCardProps) => {
             {publishedAt}
           </time>
 
-          <h3 className="font-cal text-card-foreground m-0 mt-2 px-4 text-2xl group-hover:underline md:text-3xl">
+          <h3
+            className={cn(
+              'font-cal text-card-foreground text-2xl md:text-3xl',
+              'm-0 mt-2 px-4',
+              'group-hover:text-primary transition-colors duration-200 group-hover:underline',
+            )}
+          >
             {title}
           </h3>
 
           <p className="text-muted-foreground m-0 mt-2 px-4">{excerpt}</p>
 
-          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 px-4 pt-4">
+          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 p-4">
             <ContentCardMeta
               readingTime={readingTime}
               views={views}
