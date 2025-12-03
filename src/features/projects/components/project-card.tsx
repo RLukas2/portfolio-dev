@@ -45,7 +45,9 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
   return (
     <div
       className={cn(
-        'group md:rounded-0 gap-0 rounded-2xl md:flex md:gap-8',
+        'group gap-0 rounded-2xl',
+        'md:rounded-0 md:flex md:gap-8',
+        'transition-all duration-300 hover:scale-[1.02]',
         className,
       )}
     >
@@ -59,14 +61,28 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
         className="md:aspect-square md:w-64 md:shrink-0 md:rounded-2xl"
       />
 
-      <div className="flex flex-1 flex-col rounded-b-xl border border-dashed px-4 py-4 md:rounded-2xl">
+      <div
+        className={cn(
+          'flex flex-1 flex-col px-4 py-4',
+          'rounded-b-xl border border-dashed md:rounded-2xl',
+          'group-hover:border-primary/50 transition-colors duration-300',
+        )}
+      >
         <div className="flex flex-col space-y-2 p-4">
           <Link href={projectDetailUrl}>
-            <h2 className="font-cal text-card-foreground m-0 text-3xl hover:underline">
+            <h2
+              className={cn(
+                'font-cal text-card-foreground text-3xl',
+                'm-0',
+                'hover:text-primary transition-colors duration-200 hover:underline',
+              )}
+            >
               {title}
             </h2>
           </Link>
-          <p className="text-muted-foreground m-0">{description}</p>
+          <p className="text-muted-foreground line-cramp-2 m-0">
+            {description}
+          </p>
         </div>
 
         {stacks && stacks.length > 0 && (
@@ -92,6 +108,7 @@ const ProjectCard = ({ project, className }: ProjectCardProps) => {
           </div>
         )}
 
+        {/* Button Details */}
         <div className="mt-auto flex flex-wrap items-center gap-2 px-4 pb-4">
           <Button asChild variant="shadow" size="default">
             <Link href={projectDetailUrl}>
