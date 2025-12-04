@@ -10,7 +10,8 @@ const ContentSecurityPolicy = [
   // images — allow only required hosts + data/blob if you need them
   "img-src 'self' https://www.google-analytics.com https://*.googletagmanager.com https://*.gstatic.com data: blob:",
   "font-src 'self' https://fonts.gstatic.com data:",
-  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net cdn.vercel-insights.com vercel.live vitals.vercel-insights.com",
+  // "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net cdn.vercel-insights.com vercel.live vitals.vercel-insights.com https://*.ingest.sentry.io wss://vercel.live",
+  "connect-src 'self' *", // Uncommented to allow all connections
   'frame-src https://*.googletagmanager.com',
   "object-src 'none'",
   "base-uri 'none'",
