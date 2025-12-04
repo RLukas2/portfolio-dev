@@ -17,6 +17,7 @@
 import type { Certification } from '../types';
 
 export const CERTIFICATIONS: Certification[] = [
+  // Example
   // {
   //   name: 'AWS Certified Solutions Architect',
   //   issuer: 'Amazon Web Services',
