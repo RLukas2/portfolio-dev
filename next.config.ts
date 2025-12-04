@@ -96,6 +96,9 @@ const nextConfig: NextConfig = {
 
   // Transpile packages
   transpilePackages: ['@t3-oss/env-nextjs', '@t3-oss/env-core', 'zod'],
+
+  // Allow Dev Origin from localhost
+  allowedDevOrigins: ['192.168.100.*', '192.168.1.*'],
 };
 
 const SentryWebpackPluginOptions = {
