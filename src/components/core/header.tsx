@@ -29,7 +29,7 @@ const Header = (): React.ReactNode => {
         isScrolled ? 'shadow-sm' : 'saturate-110',
       )}
     >
-      <Container>
+      <Container wide>
         <div className={cn('flex h-full flex-1 items-center justify-between')}>
           <div className={cn('flex items-center gap-4')}>
             {/* Logo */}
