@@ -3,8 +3,9 @@
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
+import useMounted from '@/hooks/use-mounted';
+
 import { CommandPaletteProvider } from '../command-palette/command-palette';
-import { TooltipProvider } from '../ui/tooltip';
 
 /**
  * AppProvider component to wrap the application with necessary providers.
@@ -15,6 +16,11 @@ import { TooltipProvider } from '../ui/tooltip';
  * @returns {*}
  */
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
+  const isMounted = useMounted();
+  if (!isMounted) {
+    return null;
+  }
+
   return (
     <ThemeProvider
       attribute="class"
@@ -23,9 +29,7 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       disableTransitionOnChange
     >
       <SessionProvider>
-        <CommandPaletteProvider>
-          <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
-        </CommandPaletteProvider>
+        <CommandPaletteProvider>{children}</CommandPaletteProvider>
       </SessionProvider>
     </ThemeProvider>
   );

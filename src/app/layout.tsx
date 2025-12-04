@@ -16,6 +16,7 @@ import AnalyticsTracker from '@/components/provider/analytics-tracker';
 import AppProvider from '@/components/provider/app-provider';
 import SpeedInsight from '@/components/provider/speed-insight';
 import { Toaster } from '@/components/ui/toaster';
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { buildWebsiteJsonLd, DEFAULT_METADATA, seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
 
@@ -93,19 +94,21 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       suppressHydrationWarning
     >
       <ConsoleMessage />
-      <AppProvider>
-        <AnalyticsTracker />
-        <div id="__app" className={cn('flex min-h-screen flex-col')}>
-          <StarBackground />
-          <Header />
-          <main>{children}</main>
-          <Footer />
-          <NowPlaying />
-        </div>
-        <Analytics />
-        <SpeedInsight />
-        <Toaster />
-      </AppProvider>
+      <TooltipProvider delayDuration={200}>
+        <AppProvider>
+          <AnalyticsTracker />
+          <div id="__app" className={cn('flex min-h-screen flex-col')}>
+            <StarBackground />
+            <Header />
+            <main>{children}</main>
+            <Footer />
+            <NowPlaying />
+          </div>
+          <Analytics />
+          <SpeedInsight />
+          <Toaster />
+        </AppProvider>
+      </TooltipProvider>
     </body>
   </html>
 );
