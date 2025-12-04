@@ -72,7 +72,8 @@ export default function ProfileImage() {
           className={cn('h-full w-full', 'rounded-full object-cover')}
           priority
           loading="eager"
-          quality={50}
+          fetchPriority="high"
+          quality={75}
           width={512}
           height={512}
         />
