@@ -54,7 +54,7 @@ const PostCard = ({ post, className }: PostCardProps) => {
         <div className="w-full">
           <time
             dateTime={publishedAt}
-            className="text-muted-foreground px-4 text-sm"
+            className="text-muted-foreground text-sm"
           >
             {publishedAt}
           </time>
@@ -62,16 +62,16 @@ const PostCard = ({ post, className }: PostCardProps) => {
           <h3
             className={cn(
               'font-cal text-card-foreground text-2xl md:text-3xl',
-              'm-0 mt-2 px-4',
+              'm-0 mt-2',
               'group-hover:text-primary transition-colors duration-200 group-hover:underline',
             )}
           >
             {title}
           </h3>
 
-          <p className="text-muted-foreground m-0 mt-2 px-4">{excerpt}</p>
+          <p className="text-muted-foreground m-0 mt-2">{excerpt}</p>
 
-          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 p-4">
+          <div className="mt-auto flex flex-wrap items-center justify-between gap-2 py-4">
             <ContentCardMeta
               readingTime={readingTime}
               views={views}
