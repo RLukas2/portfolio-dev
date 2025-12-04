@@ -5,7 +5,7 @@ import { ThemeProvider } from 'next-themes';
 
 import useMounted from '@/hooks/use-mounted';
 
-import { CommandPaletteProvider } from '../command-palette';
+import { CommandPaletteProvider } from '../command-palette/command-palette';
 import { TooltipProvider } from '../ui/tooltip';
 
 /**
