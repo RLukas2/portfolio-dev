@@ -55,6 +55,7 @@ const searchContent = <T extends SearchableContent>(
       eventName: `Search: ${type} - ${item.title}`,
       type: 'CONTENT' as const,
       description: trim(getDescription(item) || '', DESCRIPTION_LENGTH),
+      closeOnSelect: true,
     }));
 };
 
