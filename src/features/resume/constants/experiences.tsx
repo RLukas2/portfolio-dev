@@ -1,6 +1,21 @@
+/** @file experiences.tsx
+ *
+ * This file contains a list of professional experiences, each represented as an object
+ * with properties such as company, role, startDate, endDate, stacks, and accomplishments.
+ *
+ * Each experience object adheres to the Experience interface defined in src/features/resume/types.ts.
+ * - company: The name and details of the company or organization.
+ * - role: The job title or position held.
+ * - startDate: The date when the experience began, formatted as 'YYYY-MM'.
+ * - endDate: The date when the experience ended, formatted as 'YYYY-MM' or null for present.
+ * - stacks: A list of technologies and tools used during the experience.
+ * - accomplishments: A list of notable achievements or contributions made during the experience.
+ *
+ */
+
 import { ReactJS, TypeScript } from '@/components/common/icons';
 
-import type { Experience } from './types';
+import type { Experience } from '../types';
 
 export const EXPERIENCES: Experience[] = [
   {
