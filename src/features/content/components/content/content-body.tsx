@@ -34,6 +34,7 @@ const ContentBody = ({
             <Mdx code={code} />
             {engagements && <ContentEngagements slug={slug} />}
           </div>
+
           {/* Table of Contents Sidebar - Desktop only */}
           {headings && (
             <aside className="hidden lg:block lg:w-64 lg:shrink-0 print:hidden">
