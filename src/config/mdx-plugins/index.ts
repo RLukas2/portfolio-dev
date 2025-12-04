@@ -14,24 +14,7 @@ export const rehypePlugins: PluggableList = [
   rehypeAccessibleEmojis,
   rehypeKatex,
   rehypeSlug,
-  [
-    rehypeAutolinkHeadings,
-    {
-      behavior: 'append',
-      properties: {
-        className: ['heading-anchor'],
-        ariaLabel: 'Link to section',
-      },
-      content: {
-        type: 'element',
-        tagName: 'span',
-        properties: {
-          className: ['heading-anchor-icon'],
-        },
-        children: [{ type: 'text', value: '#' }],
-      },
-    },
-  ],
+  rehypeAutolinkHeadings,
 ];
 export const remarkPlugins: PluggableList = [
   remarkGfm,
