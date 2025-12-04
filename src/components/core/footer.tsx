@@ -22,7 +22,7 @@ const Footer = (): React.ReactNode => {
       <div className={cn('border-muted-background col-span-1 border-b')} />
 
       {/* Footer Content */}
-      <Container className={cn('mt-8 flex flex-col gap-8 md:mt-16')}>
+      <Container wide className={cn('mt-8 flex flex-col gap-8 md:mt-16')}>
         <motion.div
           className={cn('mb-4 grid grid-cols-2 gap-6 md:grid-cols-4')}
           initial={{ opacity: 0, y: 20 }}
