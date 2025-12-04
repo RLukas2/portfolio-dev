@@ -49,10 +49,14 @@ const SkillsSection = () => {
             transition={{ delay: categoryIndex * 0.1 }}
             className="bg-card rounded-xl border p-6"
           >
-            <h3 className="mb-4 text-xl font-semibold">{category.category}</h3>
+            {/* Category Name */}
+            <h3 className="m-0 mb-4 text-xl font-semibold">
+              {category.category}
+            </h3>
             <div className="space-y-4">
               {category.skills.map((skill, skillIndex) => (
                 <div key={skill.name} className="space-y-2">
+                  {/* Icon and Skill Name */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       {skill.icon && (
@@ -66,6 +70,8 @@ const SkillsSection = () => {
                       {PROFICIENCY_LABELS[skill.level]}
                     </span>
                   </div>
+
+                  {/* Progress Bar */}
                   <div className="bg-muted relative h-2 overflow-hidden rounded-full">
                     <motion.div
                       initial={{ width: 0 }}
