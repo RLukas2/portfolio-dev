@@ -54,6 +54,8 @@ const nextConfig: NextConfig = {
       { hostname: 'ui-avatars.com' },
     ],
 
+    qualities: [50, 75],
+
     // Add caching headers for images
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },

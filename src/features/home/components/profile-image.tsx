@@ -73,7 +73,7 @@ export default function ProfileImage() {
           priority
           loading="eager"
           fetchPriority="high"
-          quality={75}
+          quality={50}
           width={512}
           height={512}
         />
