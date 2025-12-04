@@ -62,6 +62,7 @@ const CertificationsSection = ({ className }: CertificationsSectionProps) => {
               className="bg-card group rounded-xl border p-6 transition-all hover:shadow-lg"
             >
               <div className="flex items-start gap-4">
+                {/* Logo */}
                 {cert.logo ? (
                   <div className="relative size-12 shrink-0 overflow-hidden rounded-lg">
                     <Image
@@ -77,14 +78,17 @@ const CertificationsSection = ({ className }: CertificationsSectionProps) => {
                   </div>
                 )}
 
+                {/* Content */}
                 <div className="flex-1 space-y-2">
+                  {/* Name & Issuer */}
                   <div>
-                    <h3 className="font-semibold">{cert.name}</h3>
-                    <p className="text-muted-foreground text-sm">
+                    <h3 className="m-0 font-semibold">{cert.name}</h3>
+                    <p className="text-muted-foreground m-0 text-sm">
                       {cert.issuer}
                     </p>
                   </div>
 
+                  {/* Issue Date & Expiry Date & Credential ID & Credential URL */}
                   <div className="flex flex-wrap items-center gap-2 text-xs">
                     <div className="text-muted-foreground flex items-center gap-1">
                       <CalendarIcon className="size-3" />
