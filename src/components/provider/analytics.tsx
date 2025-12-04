@@ -5,6 +5,11 @@ import Script from 'next/script';
 
 import env from '@/lib/env';
 
+/**
+ * Analytics Component - Performance Optimized
+ * Uses 'lazyOnload' strategy to defer analytics loading until after page is interactive.
+ * This prevents analytics from blocking initial page render and improves TBT.
+ */
 const Analytics = () => {
   const GA_ID = env.NEXT_PUBLIC_GOOGLE_ANALYTICS;
 
@@ -12,16 +17,16 @@ const Analytics = () => {
     <>
       <VercelAnalytics />
 
-      {/* Google Analytics */}
       {GA_ID && (
         <>
           <Script
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           />
+
           <Script
             id="google-analytics"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: `
                 window.dataLayer = window.dataLayer || [];

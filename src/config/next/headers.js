@@ -1,20 +1,26 @@
-const ContentSecurityPolicy = `
-  default-src 'self' vercel.live;
-  worker-src 'self' blob:;
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
-  style-src 'self' *.googleapis.com 'unsafe-inline' 'unsafe-eval';
-  img-src 'self' *.gstatic.com * blob: data:;
-  object-src 'none';
-  base-uri 'none';
-  media-src 'self';
-  connect-src *;
-  font-src 'self' *.gstatic.com data:;
-`;
+const ContentSecurityPolicy = [
+  "default-src 'self' vercel.live",
+  "worker-src 'self' blob:",
+  // explicit element/attribute directives for scripts
+  "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com https://www.google-analytics.com https://*.googletagmanager.com",
+  "script-src-elem 'self' 'unsafe-eval' 'unsafe-inline' https://*.googletagmanager.com https://www.google-analytics.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com",
+  "script-src-attr 'none'",
+  // styles — avoid unsafe-eval and only allow inline if you must
+  "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'",
+  // images — allow only required hosts + data/blob if you need them
+  "img-src 'self' https://www.google-analytics.com https://*.googletagmanager.com https://*.gstatic.com data: blob:",
+  "font-src 'self' https://fonts.gstatic.com data:",
+  "connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com https://stats.g.doubleclick.net cdn.vercel-insights.com vercel.live vitals.vercel-insights.com",
+  'frame-src https://*.googletagmanager.com',
+  "object-src 'none'",
+  "base-uri 'none'",
+  "media-src 'self'",
+].join('; ');
 
 const securityHeaders = [
   {
     key: 'Content-Security-Policy',
-    value: ContentSecurityPolicy.replace(/\n/g, ''),
+    value: ContentSecurityPolicy,
   },
   {
     key: 'Referrer-Policy',
