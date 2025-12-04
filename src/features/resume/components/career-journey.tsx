@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { ROUTES } from '@/constants/routes';
 import { cn, formatDate } from '@/lib/utils';
 
-import { EDUCATION } from '../education';
-import { EXPERIENCES } from '../experiences';
+import { EDUCATION } from '../constants/education';
+import { EXPERIENCES } from '../constants/experiences';
 import type { Experience } from '../types';
 import EducationEntry from './education-entry';
 import ExperienceEntry from './experience-entry';
@@ -45,7 +45,12 @@ const CareerJourney = ({ header, downloadButton }: CareerJourneyProps) => {
       {header && (
         <div className="flex items-center justify-between">
           <div>
-            <p className="text-muted-foreground text-sm">
+            <h2 className="font-cal text-3xl">Career Journey</h2>
+            <p className="text-muted-foreground m-0 mt-2">
+              A timeline of my professional experience and education.
+            </p>
+
+            <p className="text-muted-foreground m-0 text-sm">
               Last updated:{' '}
               <time dateTime={lastUpdated} className="font-medium">
                 {lastUpdated}

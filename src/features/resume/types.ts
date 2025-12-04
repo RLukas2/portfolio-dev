@@ -45,3 +45,35 @@ export type EducationEntry = Education & { type: 'education' };
 
 // Union type for timeline entries
 export type TimelineEntry = ExperienceEntry | EducationEntry;
+
+// Certification type
+export interface Certification {
+  name: string;
+  issuer: string;
+  issueDate: string;
+  expiryDate?: string | null;
+  credentialId?: string;
+  credentialUrl?: string;
+  logo?: string;
+}
+
+// Award type
+export interface Award {
+  title: string;
+  issuer: string;
+  date: string;
+  description?: string;
+  icon?: string;
+}
+
+// Skill types
+export interface Skill {
+  name: string;
+  level: 1 | 2 | 3 | 4 | 5; // 1 = Beginner, 5 = Expert
+  icon?: JSX.Element;
+}
+
+export interface SkillCategory {
+  category: string;
+  skills: Skill[];
+}

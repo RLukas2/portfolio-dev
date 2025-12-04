@@ -1,10 +1,25 @@
-import type { Education } from './types';
+/** @file education.tsx
+ *
+ * This file contains a list of educational experiences, each represented as an object
+ * with properties such as institution, degree, fieldOfStudy, startDate, endDate, and accomplishments.
+ *
+ * Each education object adheres to the Education interface defined in src/features/resume/types.ts.
+ * - institution: The name and details of the educational institution.
+ * - degree: The degree obtained or pursued.
+ * - fieldOfStudy: The field of study or major.
+ * - startDate: The date when the education began, formatted as 'YYYY-MM'.
+ * - endDate: The date when the education ended, formatted as 'YYYY-MM'.
+ * - accomplishments: A list of notable achievements or activities during the educational experience.
+ *
+ */
+
+import type { Education } from '../types';
 
 export const EDUCATION: Education[] = [
   {
     institution: {
       name: 'University of Science - VNUHCM',
-      logo: '/media/resume/vnuhcm.png', // Optional - add your logo here
+      logo: '/media/resume/vnuhcm.png',
       url: 'https://hcmus.edu.vn',
       location: 'Ho Chi Minh City, Vietnam',
     },
@@ -21,8 +36,8 @@ export const EDUCATION: Education[] = [
   {
     institution: {
       name: 'Le Hong Phong High School for the Gifted',
-      logo: '/media/resume/lhp.png', // Optional - add your logo here
-      url: 'http://www.thpt-lehongphong-tphcm.edu.vn/', // Optional - add institution URL
+      logo: '/media/resume/lhp.png',
+      url: 'http://www.thpt-lehongphong-tphcm.edu.vn/',
       location: 'Ho Chi Minh City, Vietnam',
     },
     degree: 'High School Diploma',
