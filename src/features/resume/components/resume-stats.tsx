@@ -94,8 +94,8 @@ const ResumeStats = ({ className }: ResumeStatsProps) => {
               <stat.icon className={`size-6 ${stat.color}`} />
             </div>
             <div>
-              <p className="font-cal text-2xl font-bold">{stat.value}</p>
-              <p className="text-muted-foreground text-sm">{stat.label}</p>
+              <p className="font-cal m-0 text-2xl font-bold">{stat.value}</p>
+              <p className="text-muted-foreground m-0 text-sm">{stat.label}</p>
             </div>
           </div>
         </motion.div>

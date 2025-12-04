@@ -43,13 +43,17 @@ const AwardsSection = () => {
             className="bg-card group rounded-xl border p-6 transition-all hover:shadow-lg"
           >
             <div className="flex gap-4">
+              {/* Icon */}
               <div className="flex size-12 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 text-2xl">
                 {award.icon || <TrophyIcon className="size-6 text-white" />}
               </div>
 
               <div className="flex-1 space-y-2">
                 <div>
-                  <h3 className="text-lg font-semibold">{award.title}</h3>
+                  {/* Title */}
+                  <h3 className="m-0 text-lg font-semibold">{award.title}</h3>
+
+                  {/* Issuer & Date */}
                   <div className="text-muted-foreground flex items-center gap-2 text-sm">
                     <span>{award.issuer}</span>
                     <span>•</span>
@@ -57,8 +61,9 @@ const AwardsSection = () => {
                   </div>
                 </div>
 
+                {/* Description */}
                 {award.description && (
-                  <p className="text-muted-foreground text-sm">
+                  <p className="text-muted-foreground m-0 text-sm">
                     {award.description}
                   </p>
                 )}
