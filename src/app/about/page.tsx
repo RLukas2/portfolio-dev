@@ -62,11 +62,7 @@ const AboutPage = () => {
           <div className="prose dark:prose-invert max-w-none xl:col-span-3">
             <Biography />
 
-            <h2 className="font-cal">Career Journey</h2>
-            <p className="text-muted-foreground m-0">
-              A timeline of my professional experience and education.
-            </p>
-            <CareerJourney />
+            <CareerJourney header={true} />
           </div>
         </div>
       </Container>
