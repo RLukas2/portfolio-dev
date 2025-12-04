@@ -27,6 +27,15 @@ const Anchor = forwardRef<HTMLAnchorElement, AnchorProps>(
       throw new Error('Link must have an href');
     }
 
+    // If className has anchor then it is header-href title
+    if (className?.includes('heading-anchor')) {
+      return (
+        <NextLink href={href} ref={ref} className={cn(className)} {...props}>
+          {children}
+        </NextLink>
+      );
+    }
+
     if (href.startsWith('/')) {
       return (
         <NextLink

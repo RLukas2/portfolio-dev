@@ -76,22 +76,21 @@
 
 /* Heading anchor links */
 .heading-anchor {
-  margin-left: 0.5rem;
   text-decoration: none;
-  opacity: 0;
-  transition: opacity 0.2s ease-in-out;
+  position: relative;
 }
 
-h1:hover .heading-anchor,
-h2:hover .heading-anchor,
-h3:hover .heading-anchor,
-h4:hover .heading-anchor,
-h5:hover .heading-anchor,
-h6:hover .heading-anchor,
-.heading-anchor:focus {
-  opacity: 1;
+.heading-anchor:hover {
+  text-decoration: underline;
 }
 
 .heading-anchor-icon {
   color: var(--muted-foreground);
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+  margin-left: 0.25rem;
+}
+
+.heading-anchor:hover .heading-anchor-icon {
+  opacity: 1;
 }
