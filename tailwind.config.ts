@@ -20,21 +20,21 @@ const config = {
             h2: {
               fontSize: '1.75rem',
               fontWeight: '600',
-              marginTop: '2em',
-              marginBottom: '1em',
+              marginTop: '1.5em',
+              marginBottom: '0.5em',
               lineHeight: '1.3',
             },
             h3: {
               fontSize: '1.375rem',
               fontWeight: '600',
-              marginTop: '1.75em',
-              marginBottom: '0.75em',
+              marginTop: '1.25em',
+              marginBottom: '0.5em',
               lineHeight: '1.4',
             },
             h4: {
               fontSize: '1.125rem',
               fontWeight: '600',
-              marginTop: '1.5em',
+              marginTop: '1.25em',
               marginBottom: '0.5em',
               lineHeight: '1.5',
             },
@@ -44,6 +44,10 @@ const config = {
               marginTop: '1.25em',
               marginBottom: '0.5em',
             },
+            'h2, h3, h4, h5, h6': {
+              position: 'relative',
+              color: 'var(--foreground)',
+            },
             a: {
               textDecoration: 'none',
               color: 'var(--primary)',
@@ -52,10 +56,6 @@ const config = {
                 color: 'var(--primary)',
               },
               code: { color: 'var(--primary)' },
-            },
-            'h2, h3, h4, h5, h6': {
-              position: 'relative',
-              color: 'var(--foreground)',
             },
             ul: {
               marginTop: '1.25em',
