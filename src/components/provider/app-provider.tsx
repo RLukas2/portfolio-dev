@@ -3,7 +3,7 @@
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
-import useMounted from '@/hooks/use-mounted';
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 import { CommandPaletteProvider } from '../command-palette/command-palette';
 
@@ -16,11 +16,6 @@ import { CommandPaletteProvider } from '../command-palette/command-palette';
  * @returns {*}
  */
 const AppProvider = ({ children }: { children: React.ReactNode }) => {
-  const isMounted = useMounted();
-  if (!isMounted) {
-    return null;
-  }
-
   return (
     <ThemeProvider
       attribute="class"
@@ -29,7 +24,9 @@ const AppProvider = ({ children }: { children: React.ReactNode }) => {
       disableTransitionOnChange
     >
       <SessionProvider>
-        <CommandPaletteProvider>{children}</CommandPaletteProvider>
+        <CommandPaletteProvider>
+          <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
+        </CommandPaletteProvider>
       </SessionProvider>
     </ThemeProvider>
   );

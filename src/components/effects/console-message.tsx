@@ -1,9 +1,14 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 const ConsoleMessage = () => {
+  const hasLogged = useRef(false);
+
   useEffect(() => {
+    if (hasLogged.current) return;
+    hasLogged.current = true;
+
     const asciiArt = `
 ██   ██ ███████ ██      ██       ██████      ██████  ███████ ██    ██ ███████ ██       ██████  ██████  ███████ ██████  ██
 ██   ██ ██      ██      ██      ██    ██     ██   ██ ██      ██    ██ ██      ██      ██    ██ ██   ██ ██      ██   ██ ██
