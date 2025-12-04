@@ -36,22 +36,22 @@ export const SKILLS: SkillCategory[] = [
     skills: [
       {
         name: 'TypeScript',
-        level: 5,
+        level: 3,
         icon: <TypeScript className="size-5 fill-[#3178C6]" />,
       },
       {
         name: 'JavaScript',
-        level: 5,
+        level: 3,
         icon: <JavaScript className="size-5 fill-[#F7DF1E]" />,
       },
       {
         name: 'React',
-        level: 5,
+        level: 2,
         icon: <ReactJS className="size-5 fill-[#61DAFB]" />,
       },
       {
         name: 'Next.js',
-        level: 5,
+        level: 2,
         icon: <NextJS className="size-5" />,
       },
     ],
@@ -61,7 +61,7 @@ export const SKILLS: SkillCategory[] = [
     skills: [
       {
         name: 'Golang',
-        level: 4,
+        level: 3,
         icon: <GoLang className="size-5 fill-[#00ADD8]" />,
       },
       {
@@ -71,17 +71,17 @@ export const SKILLS: SkillCategory[] = [
       },
       {
         name: 'Node.js',
-        level: 5,
+        level: 3,
         icon: <NodeJS className="size-5 fill-[#339933]" />,
       },
       {
         name: 'Express.js',
-        level: 5,
+        level: 3,
         icon: <ExpressJS className="size-5" />,
       },
       {
         name: 'C#',
-        level: 3,
+        level: 2,
         icon: <CSharp className="size-5 fill-[#239120]" />,
       },
     ],
@@ -91,17 +91,17 @@ export const SKILLS: SkillCategory[] = [
     skills: [
       {
         name: 'PostgreSQL',
-        level: 4,
+        level: 2,
         icon: <PostgreSQL className="size-5 fill-[#4169E1]" />,
       },
       {
         name: 'MongoDB',
-        level: 4,
+        level: 3,
         icon: <MongoDB className="size-5 fill-[#47A248]" />,
       },
       {
         name: 'Redis',
-        level: 3,
+        level: 1,
         icon: <Redis className="size-5 fill-[#DC382D]" />,
       },
     ],
@@ -111,17 +111,17 @@ export const SKILLS: SkillCategory[] = [
     skills: [
       {
         name: 'Docker',
-        level: 4,
+        level: 3,
         icon: <Docker className="size-5 fill-[#2496ED]" />,
       },
       {
         name: 'Git',
-        level: 5,
+        level: 3,
         icon: <Git className="size-5 fill-[#F05032]" />,
       },
       {
         name: 'Postman',
-        level: 4,
+        level: 2,
         icon: <Postman className="size-5 fill-[#FF6C37]" />,
       },
     ],
