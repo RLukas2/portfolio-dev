@@ -4,7 +4,7 @@ const config = {
       typography: (theme: (value: string) => void) => ({
         DEFAULT: {
           css: {
-            color: 'var(--foreground)',
+            color: 'var(--muted-foreground)',
             lineHeight: '1.8',
             p: {
               marginTop: '1.25em',
