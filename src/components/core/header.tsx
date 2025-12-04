@@ -6,8 +6,8 @@ import { NAV_LINKS } from '@/constants/links';
 import useScroll from '@/hooks/use-scroll';
 import { cn } from '@/lib/utils';
 
-import { CommandPalette } from '../command-palette/command-palette';
 import Link from '../common/link';
+import { CommandPalette } from '../provider/client-components';
 import ThemeSwitch from '../theme-switch';
 import { Separator } from '../ui/separator';
 import Container from './container';

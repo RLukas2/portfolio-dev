@@ -32,3 +32,12 @@ export const ConsoleMessage = dynamic(
   () => import('@/components/effects/console-message'),
   { ssr: false },
 );
+
+// Heavy UI component - lazy load the command palette dialog
+export const CommandPalette = dynamic(
+  () =>
+    import('@/components/command-palette/command-palette').then(
+      (mod) => mod.CommandPalette,
+    ),
+  { ssr: false },
+);

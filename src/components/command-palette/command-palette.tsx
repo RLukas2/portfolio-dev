@@ -1,8 +1,8 @@
 'use client';
 
-import type { Dispatch, SetStateAction } from 'react';
-import { createContext, Fragment, useContext, useMemo, useState } from 'react';
+import { Fragment, useState } from 'react';
 
+import { useCommandPaletteContext } from '@/components/command-palette/command-palette-context';
 import { useCommandGroups } from '@/components/command-palette/hooks/use-command-groups';
 import { useCommandPalette } from '@/components/command-palette/hooks/use-command-palette';
 import { useContentSearch } from '@/components/command-palette/hooks/use-content-search';
@@ -29,43 +29,12 @@ const PLACEHOLDERS = [
   'Press Enter to select an option',
 ];
 
-interface CommandPaletteContextProps {
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-}
-
-export const CommandPaletteContext = createContext<CommandPaletteContextProps>({
-  isOpen: false,
-  setIsOpen: () => {},
-});
-
-export const useCommandPaletteContext = () => {
-  const context = useContext(CommandPaletteContext);
-
-  if (!context) {
-    throw new Error(
-      'useCommandPaletteContext must be used within a CommandPaletteProvider',
-    );
-  }
-
-  return context;
-};
-
-export const CommandPaletteProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const value = useMemo(() => ({ isOpen, setIsOpen }), [isOpen]);
-
-  return (
-    <CommandPaletteContext.Provider value={value}>
-      {children}
-    </CommandPaletteContext.Provider>
-  );
-};
+// Re-export for backward compatibility
+export {
+  CommandPaletteContext,
+  CommandPaletteProvider,
+  useCommandPaletteContext,
+} from './command-palette-context';
 
 /**
  * CommandPalette Component

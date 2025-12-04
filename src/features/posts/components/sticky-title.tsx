@@ -3,8 +3,8 @@
 import { motion } from 'framer-motion';
 import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
 
-import { CommandPalette } from '@/components/command-palette/command-palette';
 import Container from '@/components/core/container';
+import { CommandPalette } from '@/components/provider/client-components';
 import ThemeSwitch from '@/components/theme-switch';
 import { Separator } from '@/components/ui/separator';
 import useMediaQuery from '@/hooks/use-media-query';

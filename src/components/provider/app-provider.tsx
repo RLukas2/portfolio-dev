@@ -1,11 +1,18 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
 
 import { TooltipProvider } from '@/components/ui/tooltip';
 
-import { CommandPaletteProvider } from '../command-palette/command-palette';
+const CommandPaletteProvider = dynamic(
+  () =>
+    import('../command-palette/command-palette-context').then(
+      (mod) => mod.CommandPaletteProvider,
+    ),
+  { ssr: false },
+);
 
 /**
  * AppProvider component to wrap the application with necessary providers.
