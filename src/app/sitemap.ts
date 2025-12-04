@@ -19,7 +19,13 @@ const sitemap = (): MetadataRoute.Sitemap => {
         : new Date(post.date),
       changeFrequency: 'monthly' as const,
       priority: 0.7,
-      images: post.image ? [`${BASE_URL}${post.image}`] : undefined,
+      images: post.image
+        ? [
+            post.image.startsWith('http')
+              ? post.image
+              : `${BASE_URL}${post.image}`,
+          ]
+        : undefined,
     }));
 
   const shorts = allShorts
@@ -54,7 +60,13 @@ const sitemap = (): MetadataRoute.Sitemap => {
       lastModified: new Date(project.date),
       changeFrequency: 'monthly' as const,
       priority: 0.8,
-      images: project.image ? [`${BASE_URL}${project.image}`] : undefined,
+      images: project.image
+        ? [
+            project.image.startsWith('http')
+              ? project.image
+              : `${BASE_URL}${project.image}`,
+          ]
+        : undefined,
     }));
 
   const routes = [
