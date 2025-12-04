@@ -14,7 +14,24 @@ export const rehypePlugins: PluggableList = [
   rehypeAccessibleEmojis,
   rehypeKatex,
   rehypeSlug,
-  rehypeAutolinkHeadings,
+  [
+    rehypeAutolinkHeadings,
+    {
+      behavior: 'wrap',
+      properties: {
+        className: ['heading-anchor', 'text-foreground'],
+        ariaLabel: 'Link to section',
+      },
+      content: {
+        type: 'element',
+        tagName: 'span',
+        properties: {
+          className: ['heading-anchor-icon'],
+        },
+        children: [{ type: 'text', value: ' #' }],
+      },
+    },
+  ],
 ];
 export const remarkPlugins: PluggableList = [
   remarkGfm,
