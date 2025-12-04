@@ -39,7 +39,12 @@ const Short = () => {
       </ContentHeader>
 
       {/* Body Section */}
-      <ContentBody slug={slug} code={code} headings={headings} />
+      <ContentBody
+        slug={slug}
+        code={code}
+        headings={headings}
+        engagements={false}
+      />
     </div>
   );
 };

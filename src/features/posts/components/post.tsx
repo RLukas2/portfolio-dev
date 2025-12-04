@@ -69,9 +69,14 @@ const Post = () => {
         <ContentMeta date={date} readingTime={readingTime} slug={slug} />
       </ContentHeader>
       {/* Reading Section */}
-      <ContentBody slug={slug} code={code} headings={headings} />
+      <ContentBody
+        slug={slug}
+        code={code}
+        headings={headings}
+        engagements={false}
+      />
       {/* Footer */}
-      <Container>
+      <Container wide>
         <div className="my-8 flex items-center justify-between">
           <div className="text-muted-foreground text-sm">
             Last updated: {formattedModifiedDate}
@@ -81,7 +86,7 @@ const Post = () => {
       {/* Related Posts */}
       {relatedPosts.length > 0 && (
         <div className="mt-16 border-t pt-12 print:hidden">
-          <Container>
+          <Container wide>
             <h2 className="font-cal text-2xl md:text-3xl">
               Other posts you might like
             </h2>
