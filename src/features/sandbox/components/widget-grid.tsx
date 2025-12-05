@@ -4,6 +4,7 @@ import { useRef } from 'react';
 
 import { Card } from '@/components/common/card';
 import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
+import { GitHubWidget } from '@/features/sandbox/components/github-widget';
 import { SocialWidget } from '@/features/sandbox/components/social-widget';
 import { TypingWidget } from '@/features/sandbox/components/typing-widget';
 import {
@@ -22,6 +23,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
   return (
     <section
       ref={gridRef}
+      id="bento"
       className={cn(
         'auto-rows-fr grid-cols-36 flex-col gap-4 max-lg:grid-cols-6 max-md:flex max-md:gap-4 md:grid',
         className,
@@ -87,7 +89,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         mouseEffect
         className="card group col-start-1 col-end-[19] row-start-9 row-end-[15] rounded-3xl max-lg:col-start-1 max-lg:col-end-4 max-lg:row-start-6 max-lg:row-end-9"
       >
-        <div>Widget 7</div>
+        <GitHubWidget />
       </Card>
       <Card
         mouseEffect
