@@ -8,6 +8,7 @@ import { FeaturedWidget } from '@/features/sandbox/components/featured-widget';
 import { GitHubWidget } from '@/features/sandbox/components/github-widget';
 import LocationWidget from '@/features/sandbox/components/location-widget';
 import { SocialWidget } from '@/features/sandbox/components/social-widget';
+import { SpotifyWidget } from '@/features/sandbox/components/spotify-widget';
 import { TechStackWidget } from '@/features/sandbox/components/techstack-widget';
 import { TypingWidget } from '@/features/sandbox/components/typing-widget';
 import {
@@ -75,7 +76,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         mouseEffect
         className="card group col-start-[24] col-end-[37] row-start-1 row-end-4 rounded-3xl max-lg:col-start-1 max-lg:col-end-4 max-lg:row-start-4 max-lg:row-end-6"
       >
-        <div>Widget 5</div>
+        <SpotifyWidget />
       </Card>
       <Card
         mouseEffect
