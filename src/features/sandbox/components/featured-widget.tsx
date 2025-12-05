@@ -1,5 +1,3 @@
-'use client';
-
 import { Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
@@ -53,6 +51,7 @@ export function FeaturedWidget({
               src={imageSrc}
               alt={imageAlt}
               fill
+              priority
               className="object-cover object-top transition-[object-position] duration-[2s] ease-in-out group-hover:object-bottom"
             />
           </div>

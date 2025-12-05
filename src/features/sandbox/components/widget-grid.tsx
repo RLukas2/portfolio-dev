@@ -1,7 +1,3 @@
-'use client';
-
-import { useRef } from 'react';
-
 import { Card } from '@/components/common/card';
 import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
 import { FeaturedWidget } from '@/features/sandbox/components/featured-widget';
@@ -22,11 +18,8 @@ interface WidgetGridProps {
 }
 
 const WidgetGrid = ({ className }: WidgetGridProps) => {
-  const gridRef = useRef<HTMLDivElement>(null);
-
   return (
     <section
-      ref={gridRef}
       id="bento"
       className={cn(
         'auto-rows-fr grid-cols-36 flex-col gap-4 max-lg:grid-cols-6 max-md:flex max-md:gap-4 md:grid',

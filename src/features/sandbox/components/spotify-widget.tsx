@@ -15,8 +15,6 @@ interface SpotifyWidgetProps {
 export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
   const { track, isLoading } = useLastPlayed();
 
-  const hasTrack = track?.songUrl;
-
   return (
     <Link
       href={track?.songUrl ?? 'https://open.spotify.com'}
@@ -32,7 +30,7 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       <div className="bg-muted relative aspect-square h-full shrink-0 overflow-hidden rounded-xl">
         {isLoading ? (
           <div className="bg-muted size-full animate-pulse" />
-        ) : hasTrack && track.albumImageUrl ? (
+        ) : track?.albumImageUrl ? (
           <Image
             src={track.albumImageUrl}
             alt={track.album ?? 'Album cover'}

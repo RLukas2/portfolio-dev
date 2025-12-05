@@ -6,14 +6,14 @@ import { Badge } from '@/components/ui/badge';
 import { SKILLS } from '@/features/resume/constants/skills';
 import { cn } from '@/lib/utils';
 
+// Pre-compute skills outside component - SKILLS is a constant
+const allSkills = SKILLS.flatMap((category) => category.skills);
+
 interface TechStackWidgetProps {
   className?: string;
 }
 
 export function TechStackWidget({ className = '' }: TechStackWidgetProps) {
-  // Flatten all skills from all categories
-  const allSkills = SKILLS.flatMap((category) => category.skills);
-
   return (
     <div
       className={cn(

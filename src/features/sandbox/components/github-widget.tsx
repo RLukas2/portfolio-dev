@@ -1,7 +1,5 @@
 'use client';
 
-import { useMemo } from 'react';
-
 import { GitHub } from '@/components/common/icons';
 import { Badge } from '@/components/ui/badge';
 import Contributions from '@/features/dashboard/components/contributions';
@@ -19,10 +17,7 @@ export function GitHubWidget({ className = '' }: GitHubWidgetProps) {
   const contributions =
     stats?.contributions.contributionsCollection.contributionCalendar;
 
-  const totalContributions = useMemo(
-    () => contributions?.totalContributions ?? 0,
-    [contributions],
-  );
+  const totalContributions = contributions?.totalContributions ?? 0;
   return (
     <div
       className={cn(
