@@ -11,10 +11,9 @@
 
 :root {
   --radius: 0.5rem;
-
   --background: hsl(0 0% 100%);
   --foreground: hsl(0 0% 3.9%);
-  --card: hsl(0 0% 97%);
+  --card: hsl(210 40% 98%);
   --card-foreground: hsl(0 0% 15%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(0 0% 3.9%);
@@ -54,7 +53,7 @@
 .dark {
   --background: hsl(0 0% 3.9%);
   --foreground: hsl(0 0% 98%);
-  --card: hsl(240 6% 10%);
+  --card: hsl(215 25% 12%);
   --card-foreground: hsl(0 0% 95%);
   --popover: hsl(0 0% 3.9%);
   --popover-foreground: hsl(0 0% 98%);
@@ -358,6 +357,42 @@
 /* -------------------------------------------------------------------------- */
 
 @layer components {
+  .card {
+    --mouse-x: 0px;
+    --mouse-y: 0px;
+    @apply bg-card text-card-foreground relative overflow-hidden rounded-3xl border;
+    @apply transition-all duration-300 ease-in-out;
+    @apply hover:border-primary/50 hover:shadow-primary/5 hover:shadow-lg;
+    @apply focus-visible:ring-primary focus-visible:ring-offset-background focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none;
+  }
+
+  .card-compact {
+    @apply p-4;
+  }
+
+  .card-default {
+    @apply p-6;
+  }
+
+  .card-content {
+    @apply inset-[1px] z-[10] flex flex-col rounded-[inherit];
+  }
+
+  .card-mouse-effect::before {
+    content: '';
+    @apply pointer-events-none absolute inset-0;
+    @apply opacity-0 transition-opacity duration-300;
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(59, 130, 246, 0.15),
+      transparent 40%
+    );
+  }
+
+  .card-mouse-effect:hover::before {
+    @apply opacity-100;
+  }
+
   .equalizer {
     @apply relative flex size-[13px] justify-between;
 
