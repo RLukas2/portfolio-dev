@@ -59,3 +59,12 @@ export interface NowPlaying {
   title?: string;
   albumImageUrl?: string;
 }
+
+export interface RecentlyPlayedItem {
+  track: TrackObject;
+  played_at: string;
+}
+
+export interface RecentlyPlayedResponse {
+  items: RecentlyPlayedItem[];
+}

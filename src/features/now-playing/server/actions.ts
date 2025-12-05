@@ -6,6 +6,7 @@ import {
   API_SPOTIFY_TOKEN_ENDPOINT,
   NOW_PLAYING_ENDPOINT,
   PLAYER_DEVICES_ENDPOINT,
+  RECENTLY_PLAYED_ENDPOINT,
   SPOTIFY_ACCESS_TOKEN,
   SPOTIFY_REFRESH_TOKEN,
 } from '../constants';
@@ -15,6 +16,7 @@ import type {
   Device,
   DeviceObject,
   NowPlaying,
+  RecentlyPlayedResponse,
 } from '../types';
 
 export const getAccessToken = async (): Promise<{ access_token: string }> => {
@@ -74,6 +76,11 @@ export const getNowPlaying = async (): Promise<NowPlaying> => {
 
   const { item, is_playing, currently_playing_type } = response;
 
+  // If nothing is playing, get the last played track
+  if (!is_playing || !item) {
+    return getRecentlyPlayed();
+  }
+
   return {
     isPlaying: is_playing,
     album: item?.album?.name,
@@ -83,5 +90,37 @@ export const getNowPlaying = async (): Promise<NowPlaying> => {
     songUrl: item?.external_urls?.spotify,
     title: item?.name,
     currentlyPlayingType: currently_playing_type,
+  };
+};
+
+export const getRecentlyPlayed = async (): Promise<NowPlaying> => {
+  const { access_token } = await getAccessToken();
+
+  const response = await fetcher<RecentlyPlayedResponse>(
+    `${RECENTLY_PLAYED_ENDPOINT}?limit=1`,
+    {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+      },
+    },
+  );
+
+  const lastPlayed = response?.items?.[0]?.track;
+
+  if (!lastPlayed) {
+    return { isPlaying: false };
+  }
+
+  return {
+    isPlaying: false,
+    album: lastPlayed.album?.name,
+    albumImageUrl: lastPlayed.album?.images?.find(
+      (image) => image?.width === 640,
+    )?.url,
+    artist: lastPlayed.artists?.map(({ name }) => name).join(', '),
+    songUrl: lastPlayed.external_urls?.spotify,
+    title: lastPlayed.name,
+    currentlyPlayingType: 'track',
   };
 };
