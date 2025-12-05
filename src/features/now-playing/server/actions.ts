@@ -76,11 +76,6 @@ export const getNowPlaying = async (): Promise<NowPlaying> => {
 
   const { item, is_playing, currently_playing_type } = response;
 
-  // If nothing is playing, get the last played track
-  if (!is_playing || !item) {
-    return getRecentlyPlayed();
-  }
-
   return {
     isPlaying: is_playing,
     album: item?.album?.name,
