@@ -3,6 +3,9 @@
 import { useRef } from 'react';
 
 import { Card } from '@/components/common/card';
+import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
+import { SocialWidget } from '@/features/sandbox/components/social-widget';
+import { SOCIAL_LINKS } from '@/features/sandbox/constants/social-links';
 import { cn } from '@/lib/utils';
 
 interface WidgetGridProps {
@@ -25,12 +28,23 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
       <Card className="relative col-start-1 col-end-11 row-start-1 row-end-[7] aspect-square max-lg:col-end-3 max-lg:row-end-3">
         <div>Widget 1</div>
       </Card>
-      <Card
-        mouseEffect
-        className="col-start-1 col-end-11 row-start-[7] row-end-[9] grid grid-cols-3 gap-4 max-lg:col-end-4 max-lg:row-start-3 max-lg:row-end-4"
-      >
-        <div>Widget 2</div>
-      </Card>
+
+      <div className="col-start-1 col-end-11 row-start-[7] row-end-[9] grid grid-cols-3 gap-4 max-lg:col-end-4 max-lg:row-start-3 max-lg:row-end-4">
+        {SOCIAL_LINKS.map((link) => (
+          <Card
+            key={link.label}
+            mouseEffect
+            className="card roundex-3xl aspect-square"
+          >
+            <SocialWidget
+              key={link.label}
+              Icon={link.icon}
+              href={link.url}
+              label={link.label}
+            />
+          </Card>
+        ))}
+      </div>
 
       <Card
         mouseEffect
@@ -42,7 +56,10 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         mouseEffect
         className="card group col-start-11 col-end-[24] row-start-[7] row-end-[9] rounded-3xl max-lg:col-start-4 max-lg:col-end-7 max-lg:row-start-3 max-lg:row-end-4"
       >
-        <div>Widget 4</div>
+        <DiscoverWidget
+          href="https://www.example.com"
+          text="Explore more projects"
+        />
       </Card>
 
       <Card
