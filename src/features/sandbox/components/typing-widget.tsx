@@ -26,42 +26,49 @@ export function TypingWidget({
       target="_blank"
       rel="noopener noreferrer"
       className={cn(
-        'group flex size-full flex-col p-4',
+        'flex h-full flex-col justify-between p-4',
         'relative overflow-hidden',
+        'max-md:gap-12',
         className,
       )}
     >
+      {/* Background Large Number */}
+      <div
+        className={cn(
+          'absolute inset-0 flex items-center justify-center',
+          'mask-[linear-gradient(to_top,transparent,black)] text-[196px] leading-none font-bold opacity-10',
+        )}
+      >
+        {wpm}
+      </div>
+
       {/* Header Badge */}
       <Badge variant="wide" className="gap-2">
         <KeyboardIcon className="size-6" />
         <span className="text-sm">Typing speed</span>
       </Badge>
       {/* Main WPM Display */}
-      <div className="relative flex flex-1 items-end">
-        {/* Background Large Number */}
-        <div className="absolute inset-0 flex items-center justify-center mask-[linear-gradient(to_top,transparent,black)] opacity-10">
-          <span className="text-[150px] leading-none font-bold">{wpm}</span>
-        </div>
-
+      <div>
         {/* Foreground WPM */}
-        <div className="relative flex items-baseline gap-2">
+        <div className="flex items-baseline gap-2">
           <span className="text-8xl leading-none">{wpm}</span>
           <span className="text-4xl">wpm</span>
         </div>
-      </div>
-      {/* Stats Row */}
-      <div className="text-muted-foreground mt-4 flex items-center gap-6">
-        <div className="flex items-center gap-1">
-          <Clock className="text-muted-foreground group-hover:text-foreground size-4" />
-          <span className="text-foreground font-medium">{time}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Target className="text-muted-foreground group-hover:text-foreground size-4" />
-          <span className="text-foreground font-medium">{accuracy}</span>
-        </div>
-        <div className="flex items-center gap-1">
-          <Languages className="text-muted-foreground group-hover:text-foreground size-4" />
-          <span className="text-foreground font-medium">{language}</span>
+
+        {/* Stats Row */}
+        <div className="flex gap-4">
+          <div className="flex items-center gap-1">
+            <Clock className="text-muted-foreground group-hover:text-foreground size-4" />
+            <span className="text-foreground font-medium">{time}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Target className="text-muted-foreground group-hover:text-foreground size-4" />
+            <span className="text-foreground font-medium">{accuracy}</span>
+          </div>
+          <div className="flex items-center gap-1">
+            <Languages className="text-muted-foreground group-hover:text-foreground size-4" />
+            <span className="text-foreground font-medium">{language}</span>
+          </div>
         </div>
       </div>
     </Link>
