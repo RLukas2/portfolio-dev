@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { MinusIcon, PlusIcon } from 'lucide-react';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { CircleMarker, MapContainer, TileLayer, useMap } from 'react-leaflet';
 
 import { cn } from '@/lib/utils';
@@ -106,20 +106,23 @@ function MapZoomHandler({ zoom }: { zoom: number }) {
   return null;
 }
 
+// Derive radius from zoom level
+const getRadiusFromZoom = (zoom: number) => 50 + (zoom - MAX_ZOOM) * 20;
+
 export default function LocationMap() {
   const { resolvedTheme } = useTheme();
   const isDark = resolvedTheme === 'dark';
   const [zoom, setZoom] = useState(MAX_ZOOM);
-  const [radius, setRadius] = useState(50);
+
+  // Derive radius from zoom instead of separate state
+  const radius = useMemo(() => getRadiusFromZoom(zoom), [zoom]);
 
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev + 1, MAX_ZOOM));
-    setRadius((prev) => Math.min(prev + 20, 100));
   };
 
   const handleZoomOut = () => {
     setZoom((prev) => Math.max(prev - 1, MIN_ZOOM));
-    setRadius((prev) => Math.max(prev - 20, 10));
   };
 
   return (

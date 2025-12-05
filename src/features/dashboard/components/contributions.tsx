@@ -7,6 +7,14 @@ import { cn } from '@/lib/utils';
 
 import type { ContributionCalendar } from '../types/github';
 
+// Generate deterministic delay based on date string (stable across renders)
+const getDelayFromDate = (date: string, maxDays: number) => {
+  const hash = date
+    .split('')
+    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  return (hash % 100) * 0.01 * maxDays * 0.15;
+};
+
 const Contributions = ({
   data,
   className,
@@ -79,8 +87,10 @@ const Contributions = ({
                 {week.contributionDays.map((contribution) => {
                   const backgroundColor =
                     contribution.contributionCount > 0 && contribution.color;
-                  const getRandomDelayAnimate =
-                    Math.random() * week.contributionDays.length * 0.15;
+                  const delayAnimate = getDelayFromDate(
+                    contribution.date,
+                    week.contributionDays.length,
+                  );
 
                   return (
                     <motion.span
@@ -92,7 +102,7 @@ const Contributions = ({
                         animate: {
                           opacity: 1,
                           translateY: 0,
-                          transition: { delay: getRandomDelayAnimate },
+                          transition: { delay: delayAnimate },
                         },
                       }}
                       className="bg-muted my-0.5 block size-[14.85px] rounded-sm"
