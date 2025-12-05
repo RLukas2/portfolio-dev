@@ -51,7 +51,7 @@ export function TypingWidget({
       <div>
         {/* Foreground WPM */}
         <div className="flex items-baseline gap-2">
-          <span className="text-8xl leading-none">{wpm}</span>
+          <span className="text-7xl leading-none">{wpm}</span>
           <span className="text-4xl">wpm</span>
         </div>
 
