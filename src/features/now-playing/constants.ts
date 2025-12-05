@@ -10,4 +10,5 @@ export const SPOTIFY_REFRESH_TOKEN = env.SPOTIFY_CLIENT_REFRESH_TOKEN;
 export const API_SPOTIFY_TOKEN_ENDPOINT =
   'https://accounts.spotify.com/api/token';
 export const NOW_PLAYING_ENDPOINT = `${API_SPOTIFY_BASE_URL}/me/player/currently-playing`;
+export const RECENTLY_PLAYED_ENDPOINT = `${API_SPOTIFY_BASE_URL}/me/player/recently-played`;
 export const PLAYER_DEVICES_ENDPOINT = `${API_SPOTIFY_BASE_URL}/me/player/devices`;
