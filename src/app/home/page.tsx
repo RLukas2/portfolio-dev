@@ -18,6 +18,13 @@ export const metadata: Metadata = seo({
   },
 });
 
+const WidgetGrid = dynamic(
+  () => import('@/features/sandbox/components/widget-grid'),
+  {
+    loading: () => <Loading />,
+  },
+);
+
 const HighlightedProjects = dynamic(
   () => import('@/features/projects/components/highlighted-projects'),
   {
@@ -51,6 +58,8 @@ const HomePage = () => {
     <div className={cn('flex flex-col')}>
       <Container className={cn('gap-8')}>
         <Hero />
+        <WidgetGrid />
+        <SectionDivider />
         <HighlightedProjects />
         <SectionDivider />
         <LatestPosts />

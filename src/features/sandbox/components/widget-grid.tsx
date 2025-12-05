@@ -37,14 +37,9 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
           <Card
             key={link.label}
             mouseEffect
-            className="card roundex-3xl aspect-square"
+            className="card aspect-square rounded-3xl"
           >
-            <SocialWidget
-              key={link.label}
-              Icon={link.icon}
-              href={link.url}
-              label={link.label}
-            />
+            <SocialWidget Icon={link.icon} href={link.url} label={link.label} />
           </Card>
         ))}
       </div>
@@ -60,7 +55,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         className="card group col-start-11 col-end-[24] row-start-[7] row-end-[9] rounded-3xl max-lg:col-start-4 max-lg:col-end-7 max-lg:row-start-3 max-lg:row-end-4"
       >
         <DiscoverWidget
-          href="https://www.example.com"
+          href="/#highlighted-projects"
           text="Explore more projects"
         />
       </Card>
