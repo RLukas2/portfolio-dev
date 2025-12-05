@@ -49,13 +49,16 @@ export const Card = ({
     },
     [href],
   );
+
   const baseClasses = cn(
     'group',
     mouseEffect && 'card-mouse-effect',
     className,
   );
 
-  const content = <div className="card-content max-md:border">{children}</div>;
+  const content = (
+    <div className="card-content max-md:border md:absolute">{children}</div>
+  );
 
   if (href) {
     return (
