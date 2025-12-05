@@ -92,7 +92,7 @@ const Hero = () => {
             transition={slideInAnimation.transition}
           >
             <Button asChild variant="shadow" className="group">
-              <Link href={'/#highlighted-projects'}>
+              <Link href={'/#bento'}>
                 View My Work{' '}
                 <ChevronDownIcon className="transition-transform duration-200 group-hover:translate-y-1" />
               </Link>
