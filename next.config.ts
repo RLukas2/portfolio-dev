@@ -1,11 +1,8 @@
 import { withContentCollections } from '@content-collections/next';
-import { withSentryConfig } from '@sentry/nextjs';
 import type { NextConfig } from 'next';
 
 import appHeaders from './src/config/next/headers';
 import redirects from './src/config/next/redirects';
-
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 // Derive the application URL based on environment variables
 const derivedUrl =
@@ -101,20 +98,4 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.100.*', '192.168.1.*'],
 };
 
-const SentryWebpackPluginOptions = {
-  org: 'rickie-lukas',
-  project: 'portfolio-dev',
-
-  // Only print logs for uploading source maps in CI
-  // Set to `true` to suppress logs
-  silent: !process.env.CI,
-
-  // Automatically tree-shake Sentry logger statements to reduce bundle size
-  disableLogger: true,
-};
-
-export default isDevelopment
-  ? withContentCollections(nextConfig)
-  : withContentCollections(
-      withSentryConfig(nextConfig, SentryWebpackPluginOptions),
-    );
+export default withContentCollections(nextConfig);

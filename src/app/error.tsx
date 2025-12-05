@@ -1,6 +1,6 @@
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
+// import * as Sentry from '@sentry/nextjs';
 import { useEffect } from 'react';
 
 import Link from '@/components/common/link';
@@ -15,8 +15,7 @@ interface ErrorPageProps {
 
 const ErrorPage = ({ error, reset }: ErrorPageProps) => {
   useEffect(() => {
-    // Log the error to Sentry
-    Sentry.captureException(error);
+    // Log the error to Sentry if available.
   }, [error]);
 
   return (
