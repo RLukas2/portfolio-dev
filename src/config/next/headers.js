@@ -4,7 +4,7 @@ const ContentSecurityPolicy = [
   // explicit element/attribute directives for scripts
   "script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com https://www.google-analytics.com https://*.googletagmanager.com",
   "script-src-elem 'self' 'unsafe-eval' 'unsafe-inline' https://*.googletagmanager.com https://www.google-analytics.com cdn.vercel-insights.com vercel.live va.vercel-scripts.com",
-  "script-src-attr 'none'",
+  "script-src-attr 'unsafe-hashes' 'unsafe-inline' *",
   // styles — avoid unsafe-eval and only allow inline if you must
   "style-src 'self' https://fonts.googleapis.com 'unsafe-inline'",
   // images — allow only required hosts + data/blob if you need them

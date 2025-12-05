@@ -18,7 +18,7 @@ const BEASTIES_OPTIONS = {
   preload: 'swap',
 
   // Preload fonts
-  preloadFonts: true,
+  preloadFonts: false,
 
   // Don't remove the original stylesheet links
   pruneSource: false,
