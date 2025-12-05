@@ -5,12 +5,6 @@ import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 
-const containerAnimation = {
-  initial: { opacity: 0, x: 50 },
-  animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.3, delay: 0.3 },
-};
-
 const primaryGlowAnimation = {
   animate: {
     scale: [1, 1.1, 1],
@@ -38,12 +32,7 @@ const secondaryGlowAnimation = {
 
 export default function ProfileImage() {
   return (
-    <motion.div
-      className="relative flex justify-center md:w-1/2"
-      initial={containerAnimation.initial}
-      animate={containerAnimation.animate}
-      transition={containerAnimation.transition}
-    >
+    <div className="animate-profile-slide-in relative flex justify-center md:w-1/2">
       {/* Glow effects */}
       <motion.div
         className="absolute inset-0 rounded-full bg-linear-to-r from-blue-500 to-purple-500 opacity-30 blur-3xl"
@@ -79,6 +68,6 @@ export default function ProfileImage() {
           sizes="(max-width: 512px) 100vw, 512px"
         />
       </div>
-    </motion.div>
+    </div>
   );
 }

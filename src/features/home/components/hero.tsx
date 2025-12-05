@@ -14,13 +14,13 @@ const fadeInAnimation = {
   animate: { opacity: 1 },
 };
 
-const fadeInDelayed1 = { delay: 0.1, duration: 0.3 };
-const fadeInDelayed2 = { delay: 0.2, duration: 0.3 };
+const fadeInDelayed1 = { delay: 0.1, duration: 0.2 };
+const fadeInDelayed2 = { delay: 0.2, duration: 0.2 };
 
 const slideInAnimation = {
   initial: { x: -16, opacity: 0 },
   animate: { x: 0, opacity: 1 },
-  transition: { delay: 0.3 },
+  transition: { delay: 0.2 },
 };
 
 const Hero = () => {
