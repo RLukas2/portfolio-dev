@@ -57,7 +57,9 @@ export const Card = ({
   );
 
   const content = (
-    <div className="card-content max-md:border md:absolute">{children}</div>
+    <div className="card-content max-md:overflow-hidden max-md:border md:absolute">
+      {children}
+    </div>
   );
 
   if (href) {
