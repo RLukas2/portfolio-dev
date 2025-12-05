@@ -7,7 +7,13 @@ import { cn } from '@/lib/utils';
 
 import type { ContributionCalendar } from '../types/github';
 
-const Contributions = ({ data }: { data?: ContributionCalendar }) => {
+const Contributions = ({
+  data,
+  className,
+}: {
+  data?: ContributionCalendar;
+  className?: string;
+}) => {
   const [selectedContribution, setSelectedContribution] = useState<{
     count: number | null;
     date: string | null;
@@ -52,7 +58,7 @@ const Contributions = ({ data }: { data?: ContributionCalendar }) => {
   }, []);
 
   return (
-    <div className="bg-card rounded-lg p-3">
+    <div className={cn('bg-card rounded-lg p-3', className)}>
       <div className="relative mb-4 flex flex-col justify-center overflow-hidden">
         <div className="flex flex-col overflow-x-auto">
           <ul className="flex justify-start gap-1 text-xs">
