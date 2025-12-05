@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
 import ProfileImage from './profile-image';
-import CurrentTechStacks from './tech-stack';
 
 const fadeInAnimation = {
   initial: { opacity: 0 },
@@ -81,12 +80,10 @@ const Hero = () => {
             animate={fadeInAnimation.animate}
             transition={fadeInDelayed2}
           >
-            I&apos;m a forth-year Computer Science student at HCMUS with
+            I&apos;m a forth-year Computer Science student at VNUHCM with
             practical experience in building backend systems through academic
             and personal projects.
           </motion.p>
-
-          <CurrentTechStacks />
 
           <motion.div
             className="relative flex justify-center gap-4 lg:justify-start"
