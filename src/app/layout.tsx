@@ -13,7 +13,6 @@ import AppProvider from '@/components/provider/app-provider';
 import {
   Analytics,
   AnalyticsTracker,
-  ConsoleMessage,
   NowPlaying,
   SpeedInsight,
   StarBackground,
@@ -79,12 +78,19 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => (
       {/* DNS prefetch for external resources */}
       <link rel="dns-prefetch" href="https://i.scdn.co" />
       <link rel="dns-prefetch" href="https://avatars.githubusercontent.com" />
+
+      <link
+        rel="preload"
+        as="image"
+        href="/_next/image?url=%2Fmedia%2Frlukas%2Frlukas.jpg&w=1080&q=50"
+        imageSrcSet="/_next/image?url=%2Fmedia%2Frlukas%2Frlukas.jpg&w=640&q=50 1x, /_next/image?url=%2Fmedia%2Frlukas%2Frlukas.jpg&w=1080&q=50 2x"
+      />
     </head>
     <body
       className={cn(fontSans.variable, fontMono.variable, fontCal.variable)}
       suppressHydrationWarning
     >
-      <ConsoleMessage />
+      {/* <ConsoleMessage /> */}
       <AppProvider>
         <AnalyticsTracker />
         <div id="__app" className={cn('flex min-h-screen flex-col')}>
