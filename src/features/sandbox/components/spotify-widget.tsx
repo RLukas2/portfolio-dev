@@ -34,6 +34,8 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
           <Image
             src={track.albumImageUrl}
             alt={track.album ?? 'Album cover'}
+            quality={30}
+            sizes="128px"
             fill
             className="object-cover"
             unoptimized
@@ -47,13 +49,13 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
 
       {/* Track Info */}
       <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-        <span className="text-muted-foreground text-xs">
+        <span className="text-muted-foreground m-0 text-xs">
           {track?.isPlaying ? 'Now Playing' : 'Last Played'}
         </span>
-        <h3 className="truncate text-base font-semibold">
+        <h3 className="m-0 truncate text-base font-semibold">
           {isLoading ? 'Loading...' : (track?.title ?? 'Not Playing')}
         </h3>
-        <p className="text-muted-foreground truncate text-sm">
+        <p className="text-muted-foreground m-0 truncate text-sm">
           {isLoading ? '...' : (track?.artist ?? 'No artist')}
         </p>
       </div>
@@ -61,10 +63,9 @@ export function SpotifyWidget({ className = '' }: SpotifyWidgetProps) {
       {/* Spotify Badge - Top Right */}
       <Badge
         variant="outline"
-        className={cn('absolute top-4 right-4 rounded-full p-1')}
-        asChild
+        className={cn('absolute top-4 right-4 size-7 rounded-full p-1')}
       >
-        <Spotify className="text-foreground size-7 transition-colors group-hover:text-[#1DB954]" />
+        <Spotify className="text-foreground transition-colors group-hover:text-[#1DB954]" />
       </Badge>
     </Link>
   );

@@ -76,6 +76,7 @@ export default function ProfileImage() {
           quality={50}
           width={512}
           height={512}
+          sizes="(max-width: 512px) 100vw, 512px"
         />
       </div>
     </motion.div>
