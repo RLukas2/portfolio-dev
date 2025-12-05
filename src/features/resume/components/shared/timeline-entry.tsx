@@ -15,11 +15,14 @@ export const TimelineEntryAccomplishments = ({
   if (!accomplishments.length) return null;
 
   return (
-    <ul className={cn('mt-4 space-y-2 pl-0', className)}>
+    <ul className={cn('mt-2 mb-0 list-none space-y-2 pl-0', className)}>
       {accomplishments.map((accomplishment, index) => (
         <li
           key={index}
-          className="text-muted-foreground before:bg-primary/50 relative pl-4 text-sm leading-relaxed before:absolute before:top-2 before:left-0 before:size-1.5 before:rounded-full"
+          className={cn(
+            'text-muted-foreground relative pl-4 text-sm leading-relaxed',
+            'before:bg-primary/50 before:absolute before:top-2 before:left-0 before:size-1.5 before:rounded-full',
+          )}
         >
           {accomplishment}
         </li>

@@ -42,7 +42,7 @@ const TimelineCard = ({
         )}
       >
         {/* Header with logo and title */}
-        <div className="mb-3 flex items-start gap-3">
+        <div className="flex items-start gap-3">
           {/* Logo */}
           <div className="shrink-0">
             {logo ? (
