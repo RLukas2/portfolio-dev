@@ -1,4 +1,5 @@
 import { withContentCollections } from '@content-collections/next';
+import bundleAnalyzer from '@next/bundle-analyzer';
 import type { NextConfig } from 'next';
 
 import appHeaders from './src/config/next/headers';
@@ -51,7 +52,7 @@ const nextConfig: NextConfig = {
       { hostname: 'ui-avatars.com' },
     ],
 
-    qualities: [50, 75],
+    qualities: [25, 30, 50, 75],
 
     // Add caching headers for images
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
@@ -98,4 +99,9 @@ const nextConfig: NextConfig = {
   allowedDevOrigins: ['192.168.100.*', '192.168.1.*'],
 };
 
-export default withContentCollections(nextConfig);
+// Bundle Analyzer
+const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === 'true',
+});
+
+export default withContentCollections(withBundleAnalyzer(nextConfig));
