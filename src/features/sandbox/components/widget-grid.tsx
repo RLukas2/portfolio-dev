@@ -5,6 +5,7 @@ import { useRef } from 'react';
 import { Card } from '@/components/common/card';
 import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
 import { GitHubWidget } from '@/features/sandbox/components/github-widget';
+import LocationWidget from '@/features/sandbox/components/location-widget';
 import { SocialWidget } from '@/features/sandbox/components/social-widget';
 import { TechStackWidget } from '@/features/sandbox/components/techstack-widget';
 import { TypingWidget } from '@/features/sandbox/components/typing-widget';
@@ -33,7 +34,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
       aria-label="Personal Information Widgets"
     >
       <Card className="relative col-start-1 col-end-11 row-start-1 row-end-[7] aspect-square max-lg:col-end-3 max-lg:row-end-3">
-        <div>Widget 1</div>
+        <LocationWidget />
       </Card>
 
       <div className="col-start-1 col-end-11 row-start-[7] row-end-[9] grid grid-cols-3 gap-4 max-lg:col-end-4 max-lg:row-start-3 max-lg:row-end-4">
