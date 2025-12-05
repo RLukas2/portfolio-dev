@@ -3,6 +3,7 @@
 import { Sparkles } from 'lucide-react';
 import Image from 'next/image';
 
+import Link from '@/components/common/link';
 import { Badge } from '@/components/ui/badge';
 import { cn } from '@/lib/utils';
 
@@ -12,6 +13,7 @@ interface FeaturedWidgetProps {
   description?: string;
   imageSrc?: string;
   imageAlt?: string;
+  href?: string;
 }
 
 export function FeaturedWidget({
@@ -20,9 +22,11 @@ export function FeaturedWidget({
   description = 'A personal portfolio website showcasing my projects, skills, and experience.',
   imageSrc = '/media/site/og-image.jpg',
   imageAlt = 'Portfolio Website Preview',
+  href = '/projects/rlukas2',
 }: FeaturedWidgetProps) {
   return (
-    <div
+    <Link
+      href={href}
       className={cn(
         'flex size-full flex-col gap-3 p-4',
         'relative overflow-hidden',
@@ -54,7 +58,7 @@ export function FeaturedWidget({
           </div>
         </BrowserMockup>
       </div>
-    </div>
+    </Link>
   );
 }
 
