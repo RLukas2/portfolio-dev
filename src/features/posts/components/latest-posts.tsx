@@ -68,7 +68,7 @@ const LatestPosts = () => {
             ))}
           </motion.div>
           <div className="my-8 flex items-center justify-center">
-            <Button asChild variant="outline">
+            <Button asChild variant="outline" size="xl">
               <Link href={ROUTES.blog}>
                 See all posts <ChevronRightIcon />
               </Link>
