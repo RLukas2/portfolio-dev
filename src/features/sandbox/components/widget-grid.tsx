@@ -5,7 +5,11 @@ import { useRef } from 'react';
 import { Card } from '@/components/common/card';
 import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
 import { SocialWidget } from '@/features/sandbox/components/social-widget';
-import { SOCIAL_LINKS } from '@/features/sandbox/constants/social-links';
+import { TypingWidget } from '@/features/sandbox/components/typing-widget';
+import {
+  MONKEYTYPE_STATS,
+  SOCIAL_LINKS,
+} from '@/features/sandbox/constants/links';
 import { cn } from '@/lib/utils';
 
 interface WidgetGridProps {
@@ -72,20 +76,24 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         mouseEffect
         className="card group col-start-[24] col-end-[37] row-start-4 row-end-[9] rounded-3xl max-lg:col-start-4 max-lg:col-end-7 max-lg:row-start-4 max-lg:row-end-6"
       >
-        <div>Widget 6</div>
+        <TypingWidget
+          wpm={MONKEYTYPE_STATS.wpm}
+          time={MONKEYTYPE_STATS.time}
+          accuracy={MONKEYTYPE_STATS.accuracy}
+        />
       </Card>
 
       <Card
         mouseEffect
         className="card group col-start-1 col-end-[19] row-start-9 row-end-[15] rounded-3xl max-lg:col-start-1 max-lg:col-end-4 max-lg:row-start-6 max-lg:row-end-9"
       >
-        <div>Widget 5</div>
+        <div>Widget 7</div>
       </Card>
       <Card
         mouseEffect
         className="card group col-start-[19] col-end-[37] row-start-9 row-end-[15] rounded-3xl max-lg:col-start-4 max-lg:col-end-7 max-lg:row-start-6 max-lg:row-end-9"
       >
-        <div>Widget 6</div>
+        <div>Widget 8</div>
       </Card>
     </section>
   );
