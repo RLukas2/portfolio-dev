@@ -4,6 +4,7 @@ import { useRef } from 'react';
 
 import { Card } from '@/components/common/card';
 import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
+import { FeaturedWidget } from '@/features/sandbox/components/featured-widget';
 import { GitHubWidget } from '@/features/sandbox/components/github-widget';
 import LocationWidget from '@/features/sandbox/components/location-widget';
 import { SocialWidget } from '@/features/sandbox/components/social-widget';
@@ -58,7 +59,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         mouseEffect
         className="card group col-start-11 col-end-[24] row-start-1 row-end-[7] rounded-3xl max-lg:col-start-3 max-lg:col-end-7 max-lg:row-end-3"
       >
-        <div>Widget 3</div>
+        <FeaturedWidget />
       </Card>
       <Card
         mouseEffect
