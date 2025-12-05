@@ -50,6 +50,8 @@ export function FeaturedWidget({
             <Image
               src={imageSrc}
               alt={imageAlt}
+              quality={50}
+              sizes="(max-width: 200px) 100vw, 200px"
               fill
               priority
               className="object-cover object-top transition-[object-position] duration-[2s] ease-in-out group-hover:object-bottom"

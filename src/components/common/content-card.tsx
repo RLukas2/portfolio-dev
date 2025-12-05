@@ -28,13 +28,17 @@ export const ContentCardImage = ({
 
   return (
     <figure
-      className={cn('bg-card relative aspect-video overflow-hidden', className)}
+      className={cn(
+        'bg-card relative m-0 aspect-video overflow-hidden',
+        className,
+      )}
     >
       <Image
         src={src}
         alt={alt}
         fill
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes="(max-width: 256px) 100vw, 256px"
+        quality={50}
         className={cn(
           'object-cover transition-transform group-hover:scale-105',
           imageClassName,
