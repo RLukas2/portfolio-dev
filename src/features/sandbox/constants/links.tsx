@@ -10,17 +10,17 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     label: 'Facebook',
     url: 'https://www.facebook.com/RickieLukas',
-    icon: <SiFacebook className="size-10" />,
+    icon: <SiFacebook className="size-8" />,
   },
   {
     label: 'Twitter',
     url: 'https://twitter.com/RickieLukas',
-    icon: <SiX className="size-10" />,
+    icon: <SiX className="size-8" />,
   },
   {
     label: 'LinkedIn',
     url: 'https://www.linkedin.com/in/xbrk',
-    icon: <SiLinkedin className="size-10" />,
+    icon: <SiLinkedin className="size-8" />,
   },
 ];
 
