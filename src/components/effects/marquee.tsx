@@ -8,6 +8,7 @@ interface MarqueeProps {
   fade?: boolean;
   className?: string;
   loopSize?: number;
+  speed?: number;
 }
 
 /**
@@ -23,6 +24,7 @@ interface MarqueeProps {
  * @param {boolean} [param0.fade=false] - Whether to apply a fade effect at the edges.
  * @param {string} param0.className - Additional class names to apply to the marquee container.
  * @param {number} [param0.loopSize=2] - The number of times to loop the children for continuous effect.
+ * @param {number} [param0.speed=100] - The duration in seconds for one complete scroll cycle. Lower = faster.
  * @returns {React.ReactNode}
  */
 const Marquee = ({
@@ -33,6 +35,7 @@ const Marquee = ({
   fade = false,
   className,
   loopSize = 2,
+  speed = 100,
 }: MarqueeProps): React.ReactNode => {
   const linearGradientDirectionClass =
     direction === 'left' ? 'to right' : 'to bottom';
@@ -64,6 +67,7 @@ const Marquee = ({
             pauseOnHover && 'group-hover:[animation-play-state:paused]',
             reverse && 'direction-reverse',
           )}
+          style={{ '--duration': `${speed}s` } as React.CSSProperties}
         >
           {children}
         </div>
