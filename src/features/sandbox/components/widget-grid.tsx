@@ -6,6 +6,7 @@ import { Card } from '@/components/common/card';
 import { DiscoverWidget } from '@/features/sandbox/components/discover-widget';
 import { GitHubWidget } from '@/features/sandbox/components/github-widget';
 import { SocialWidget } from '@/features/sandbox/components/social-widget';
+import { TechStackWidget } from '@/features/sandbox/components/techstack-widget';
 import { TypingWidget } from '@/features/sandbox/components/typing-widget';
 import {
   MONKEYTYPE_STATS,
@@ -95,7 +96,7 @@ const WidgetGrid = ({ className }: WidgetGridProps) => {
         mouseEffect
         className="card group col-start-[19] col-end-[37] row-start-9 row-end-[15] rounded-3xl max-lg:col-start-4 max-lg:col-end-7 max-lg:row-start-6 max-lg:row-end-9"
       >
-        <div>Widget 8</div>
+        <TechStackWidget />
       </Card>
     </section>
   );
