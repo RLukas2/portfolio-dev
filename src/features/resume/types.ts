@@ -6,7 +6,7 @@ export interface Company {
   url: string;
   location: string;
   workingArrangement: 'Remote' | 'Hybrid' | 'On-Site';
-  jobType: 'Full-time' | 'Freelance';
+  jobType: 'Full-time' | 'Part-time' | 'Freelance';
 }
 
 export interface Institution {
