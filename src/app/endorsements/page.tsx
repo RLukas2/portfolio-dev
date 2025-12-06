@@ -13,7 +13,8 @@ export const metadata: Metadata = seo({
   url: ROUTES.endorsements,
 });
 
-export const dynamic = 'force-dynamic';
+// Revalidate every 2 minutes - endorsements don't change frequently
+export const revalidate = 120;
 
 const EndorsementsPage = async () => {
   return (

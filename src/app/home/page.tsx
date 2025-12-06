@@ -7,6 +7,9 @@ import Hero from '@/features/home/components/hero';
 import { seo } from '@/lib/meta';
 import { cn } from '@/lib/utils';
 
+// Revalidate every 60 seconds for better TTFB
+export const revalidate = 60;
+
 export const metadata: Metadata = seo({
   title: 'Home',
   url: '/',

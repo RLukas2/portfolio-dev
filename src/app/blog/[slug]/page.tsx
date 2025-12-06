@@ -11,6 +11,15 @@ import { formatDate } from '@/lib/utils';
 import type { Post as PostDB } from '.content-collections/generated';
 import { allPosts } from '.content-collections/generated';
 
+// Generate static pages at build time for all published posts
+export const generateStaticParams = () =>
+  allPosts
+    .filter((post) => post.published)
+    .map((post) => ({ slug: post.slug }));
+
+// Revalidate every hour
+export const revalidate = 3600;
+
 const findPostBySlug = (slug?: string): PostDB | undefined =>
   allPosts.filter((post) => post.published).find((post) => post.slug === slug);
 

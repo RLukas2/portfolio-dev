@@ -11,6 +11,15 @@ import { formatDate } from '@/lib/utils';
 import type { Short as ShortDB } from '.content-collections/generated';
 import { allShorts } from '.content-collections/generated';
 
+// Generate static pages at build time for all published shorts
+export const generateStaticParams = () =>
+  allShorts
+    .filter((short) => short.published)
+    .map((short) => ({ slug: short.slug }));
+
+// Revalidate every hour
+export const revalidate = 3600;
+
 const findShortBySlug = (slug?: string): ShortDB | undefined =>
   allShorts
     .filter((short) => short.published)

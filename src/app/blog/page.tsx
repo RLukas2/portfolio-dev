@@ -7,6 +7,9 @@ import { seo } from '@/lib/meta';
 
 import { allPosts } from '.content-collections/generated';
 
+// Revalidate every hour for better TTFB while keeping content fresh
+export const revalidate = 3600;
+
 export const metadata: Metadata = seo({
   title: 'Blog',
   description:

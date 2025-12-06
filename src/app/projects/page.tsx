@@ -11,6 +11,9 @@ import { cn } from '@/lib/utils';
 
 import allProjects from '.content-collections/generated/allProjects';
 
+// Revalidate every hour - content changes infrequently
+export const revalidate = 3600;
+
 export const metadata: Metadata = seo({
   title: 'Projects',
   description: 'A collection of finest projects that I have built.',

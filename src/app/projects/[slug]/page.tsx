@@ -11,11 +11,15 @@ import { formatDate } from '@/lib/utils';
 import type { Project as ProjectDB } from '.content-collections/generated';
 import { allProjects } from '.content-collections/generated';
 
+// Revalidate every hour
+export const revalidate = 3600;
+
 const findProjectBySlug = (slug?: string): ProjectDB | undefined =>
   allProjects
     .filter((project) => project.published)
     .find((project) => project.slug === slug);
 
+// Generate static pages at build time for all published projects
 export const generateStaticParams = () => {
   return allProjects
     .filter((project) => project.published)

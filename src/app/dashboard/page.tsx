@@ -8,6 +8,9 @@ import Engagements from '@/features/dashboard/components/engagements';
 import GitHubInsights from '@/features/dashboard/components/github-insights';
 import { seo } from '@/lib/meta';
 
+// Revalidate every 5 minutes - dashboard data updates periodically
+export const revalidate = 300;
+
 export const metadata: Metadata = seo({
   title: 'Dashboard',
   description:

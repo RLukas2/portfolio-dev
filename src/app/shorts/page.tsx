@@ -7,6 +7,9 @@ import { seo } from '@/lib/meta';
 
 import { allShorts } from '.content-collections/generated';
 
+// Revalidate every hour - content changes infrequently
+export const revalidate = 3600;
+
 export const metadata: Metadata = seo({
   title: 'Shorts',
   description: 'My personal notes that is not long enough to be a blog post.',
