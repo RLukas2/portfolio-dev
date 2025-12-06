@@ -1,48 +1,63 @@
 'use server';
 
+import { unstable_cache } from 'next/cache';
+
 import db from '@/server/db';
 
-export const countAllViews = async (): Promise<number> => {
-  return await db.view.count({
-    where: { deletedAt: null },
-  });
-};
+export const countAllViews = unstable_cache(
+  async (): Promise<number> => {
+    return await db.view.count({
+      where: { deletedAt: null },
+    });
+  },
+  ['count-all-views'],
+  { revalidate: 60, tags: ['views'] },
+);
 
 /**
  * Get view counts for all content, grouped by slug.
  * Returns a map of slug -> view count.
+ * Cached for 60 seconds to improve TTFB.
  */
-export const getAllViewCounts = async (): Promise<Record<string, number>> => {
-  const results = await db.contentMeta.findMany({
-    where: { deletedAt: null },
-    include: {
-      _count: {
-        select: { views: { where: { deletedAt: null } } },
+export const getAllViewCounts = unstable_cache(
+  async (): Promise<Record<string, number>> => {
+    const results = await db.contentMeta.findMany({
+      where: { deletedAt: null },
+      include: {
+        _count: {
+          select: { views: { where: { deletedAt: null } } },
+        },
       },
-    },
-  });
+    });
 
-  return results.reduce(
-    (acc, item) => {
-      acc[item.slug] = item._count.views;
-      return acc;
-    },
-    {} as Record<string, number>,
-  );
-};
-
-export const countViewsBySlug = async (slug: string): Promise<number> => {
-  const result = await db.contentMeta.findFirst({
-    where: { slug, deletedAt: null },
-    include: {
-      _count: {
-        select: { views: { where: { deletedAt: null } } },
+    return results.reduce(
+      (acc, item) => {
+        acc[item.slug] = item._count.views;
+        return acc;
       },
-    },
-  });
+      {} as Record<string, number>,
+    );
+  },
+  ['all-view-counts'],
+  { revalidate: 60, tags: ['views'] },
+);
 
-  return result?._count.views ?? 0;
-};
+export const countViewsBySlug = unstable_cache(
+  async (slug: string): Promise<number> => {
+    const result = await db.contentMeta.findFirst({
+      where: { slug, deletedAt: null },
+      include: {
+        _count: {
+          select: { views: { where: { deletedAt: null } } },
+        },
+      },
+    });
+
+    return result?._count.views ?? 0;
+  },
+  ['view-count-by-slug'],
+  { revalidate: 60, tags: ['views'] },
+);
 
 export const countViewsBySlugAndSessionId = async (
   slug: string,
@@ -96,6 +111,10 @@ export const addView = async (
         country: analytics?.country,
       },
     });
+
+    // Revalidate views cache after adding a new view
+    const { revalidateViews } = await import('@/lib/cache');
+    revalidateViews();
   } catch (error: any) {
     // Ignore unique constraint errors (view already exists for this session)
     if (!error.code || error.code !== 'P2002') {

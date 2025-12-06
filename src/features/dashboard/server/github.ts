@@ -96,6 +96,7 @@ export const getGitHubUserContributions =
             username: GITHUB_USERNAME,
           },
         }),
+        next: { revalidate: 60 * 10 }, // Cache for 10 minutes
       });
 
       return response.data.user;

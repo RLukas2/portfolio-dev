@@ -1,4 +1,5 @@
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
 import {
@@ -6,21 +7,28 @@ import {
   createEndorsement,
   getEndorsements,
 } from '@/features/endorsements/server/actions';
-import type { SkillCategory } from '@/features/endorsements/types';
 import { authOptions } from '@/lib/auth';
 import { response } from '@/server/server';
 import type {
   APIErrorResponse,
-  APIListResponse,
   APISingleResponse,
 } from '@/types/api';
 
-export const dynamic = 'force-dynamic';
+// Allow caching - data is cached via unstable_cache in server actions
+export const dynamic = 'force-static';
+export const revalidate = 120; // 2 minutes
 
 export const GET = async () => {
   try {
     const endorsements = await getEndorsements();
-    return response<APIListResponse<SkillCategory>>({ data: endorsements });
+    return NextResponse.json(
+      { data: endorsements },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=300',
+        },
+      },
+    );
   } catch (error) {
     return response<APIErrorResponse>({
       message: error instanceof Error ? error.message : 'Internal Server Error',

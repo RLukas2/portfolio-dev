@@ -1,23 +1,29 @@
 import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 import { getServerSession } from 'next-auth';
 
 import {
   createEntry,
   getGuestbookEntries,
 } from '@/features/guestbook/server/actions';
-import type { Guestbook } from '@/features/guestbook/types';
 import { authOptions } from '@/lib/auth';
 import { response } from '@/server/server';
 import type {
   APIErrorResponse,
-  APIListResponse,
   APISingleResponse,
 } from '@/types/api';
 
 export const GET = async () => {
   try {
     const entries = await getGuestbookEntries();
-    return response<APIListResponse<Guestbook>>({ data: entries });
+    return NextResponse.json(
+      { data: entries },
+      {
+        headers: {
+          'Cache-Control': 'public, s-maxage=30, stale-while-revalidate=120',
+        },
+      },
+    );
   } catch (error) {
     return response<APIErrorResponse>({
       message: error instanceof Error ? error.message : 'Internal Server Error',
