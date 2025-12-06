@@ -1,5 +1,59 @@
 # Changelog
 
+## [1.3.0](https://github.com/RLukas2/portfolio-dev/compare/v1.2.0...v1.3.0) (2025-12-06)
+
+
+### Features
+
+* **analytics:** add Google Analytics integration with page tracking ([e0a3376](https://github.com/RLukas2/portfolio-dev/commit/e0a337664c4b23877d85245a905e5486de3de93b))
+* **card:** add Card component ([f5965aa](https://github.com/RLukas2/portfolio-dev/commit/f5965aa3bf4fb2ff14f03d585c5a55796b47e8cb))
+* **content:** restore soft-deleted ContentMeta on engagement actions ([98687d6](https://github.com/RLukas2/portfolio-dev/commit/98687d6daa61376ea62e54a5114884dab5d93412))
+* **contributions:** add className prop for customizable styling ([4091954](https://github.com/RLukas2/portfolio-dev/commit/4091954041a25afe30bf1e0170190e5b09978239))
+* **discover-widget:** add DiscoverWidget component for project discovery links ([ee03e1c](https://github.com/RLukas2/portfolio-dev/commit/ee03e1c9e6dcdb548bfd33b00cfc94c159f6d24c))
+* enhance SEO and PWA configuration with improved metadata ([336bcea](https://github.com/RLukas2/portfolio-dev/commit/336bcead4a8b15d42025b07d389a5cfa3f538783))
+* **featured-widget:** replace div with Link component for improved navigation ([920a6ed](https://github.com/RLukas2/portfolio-dev/commit/920a6ed7b31c4359866b392ee520e5f45f5d45dd))
+* **home:** integrate WidgetGrid component and update navigation anchors ([9948dd0](https://github.com/RLukas2/portfolio-dev/commit/9948dd007adc1c3f1a60ae937f0596c85f1e520f))
+* **location-widget:** add LocationWidget component with dynamic map loading ([de82efd](https://github.com/RLukas2/portfolio-dev/commit/de82efd0e3f37e82bc221be639d72632625e2b07))
+* **now-playing:** add dedicated API endpoint for last-played track fallback ([1eca219](https://github.com/RLukas2/portfolio-dev/commit/1eca2197bbe775d6a3e3869326f99ddf15370a46))
+* **now-playing:** add recently played track fallback when nothing is currently playing ([569450d](https://github.com/RLukas2/portfolio-dev/commit/569450d530e8e834cdfbe360c8f088d733efb848))
+* **posts:** implement smart related posts ([67fb8b1](https://github.com/RLukas2/portfolio-dev/commit/67fb8b1364cc919cad8c3997266d856223736805))
+* **resume:** add experience entry for Le Hong Phong Online Judge and update jobType options ([c5e0ec0](https://github.com/RLukas2/portfolio-dev/commit/c5e0ec04292048a981a43b15e4291eb8e81fe454))
+* **resume:** modularize resume page with dedicated component sections ([6a1536a](https://github.com/RLukas2/portfolio-dev/commit/6a1536a64e7fa0b9af24d355b79bf1e077722fea))
+* **sandbox:** add WidgetGrid component and integrate into SandboxPage ([285ee04](https://github.com/RLukas2/portfolio-dev/commit/285ee04e435d3680f36275df050262f8b486a675))
+* **security:** allow connections from all origins in Content Security Policy ([742bfdf](https://github.com/RLukas2/portfolio-dev/commit/742bfdfaa9492357262e1176ba811d548e8c5470))
+* **seo:** move og and twitter images to home page metadata ([1e5f704](https://github.com/RLukas2/portfolio-dev/commit/1e5f704f609c5b179adbd84a5a3b3d5fd447b471))
+* **social-widget:** add SocialWidget component for external links with icons ([d9a62e2](https://github.com/RLukas2/portfolio-dev/commit/d9a62e26c757e65461acb7d560af9b826652fd9d))
+* **spotify-widget:** add SpotifyWidget component to WidgetGrid ([6cc08c5](https://github.com/RLukas2/portfolio-dev/commit/6cc08c5a562c585a07c15986e128db1c194cdfc1))
+* **techstack-widget:** add TechStackWidget component with marquee effect for displaying skills ([af3ee07](https://github.com/RLukas2/portfolio-dev/commit/af3ee076d9ab2e90eff4a7d7bdc2b77777c15fff))
+* **ui:** add 'wide' variant to Badge and 'xl' size to Button components ([573ba78](https://github.com/RLukas2/portfolio-dev/commit/573ba784be0f7bc308fb3151dbf4752c360e8b50))
+* **widget-grid:** add FeaturedWidget to WidgetGrid for enhanced portfolio display ([2d95e07](https://github.com/RLukas2/portfolio-dev/commit/2d95e076ce3dad3a6f7ca77280c70c21ce699b92))
+* **widget-grid:** integrate DiscoverWidget and SocialWidget ([b8f220c](https://github.com/RLukas2/portfolio-dev/commit/b8f220c3503c6dcdbbb36b74efb01a2f5d2ab822))
+* **widget-grid:** integrate GitHubWidget into the WidgetGrid component ([243fa79](https://github.com/RLukas2/portfolio-dev/commit/243fa79a867061581a74f9b5ad9edb81a58b0221))
+* **widget-grid:** integrate LocationWidget into WidgetGrid component ([fc6ca41](https://github.com/RLukas2/portfolio-dev/commit/fc6ca411c318b4292803d8a8cbf2e1d9c652561e))
+* **widget-grid:** integrate TypingWidget and update widget labels ([2dc2f8d](https://github.com/RLukas2/portfolio-dev/commit/2dc2f8d49dc0f9551abcfc28e180b0506b8480ff))
+* **widget:** add TypingWidget component and constants for social links ([4841df9](https://github.com/RLukas2/portfolio-dev/commit/4841df94b7d773a093220faeef1749ff01839887))
+
+
+### Bug Fixes
+
+* **card:** add overflow hidden to card content for better layout handling ([7adbfe4](https://github.com/RLukas2/portfolio-dev/commit/7adbfe4ece7d5851860f97d757a7f337c5d19a92))
+* **header:** update z-index value for header to improve stacking context ([1aa4380](https://github.com/RLukas2/portfolio-dev/commit/1aa4380693bd2decc58760e11891f3ba22341333))
+* **sitemap:** handle absolute URLs in image paths ([2ddaad3](https://github.com/RLukas2/portfolio-dev/commit/2ddaad3b7f527ec77456ec27d2534fbde281aed1))
+* **sitemap:** remove image entries from sitemap routes ([8de2be4](https://github.com/RLukas2/portfolio-dev/commit/8de2be4148c84ee5bc9ebb16ba61a0a4dadc4b3b))
+* **social-links:** update icon size for Facebook, Twitter, and LinkedIn for consistency ([a8aef8d](https://github.com/RLukas2/portfolio-dev/commit/a8aef8d7551f069ecfb7ee818937e514166389cd))
+* **typing-widget:** adjust WPM display size for better readability ([2a96db8](https://github.com/RLukas2/portfolio-dev/commit/2a96db8bc52075f45531158a006daa2b85528c07))
+* **widget-grid:** replace Card with div for LocationWidget to improve layout structure ([e2b6960](https://github.com/RLukas2/portfolio-dev/commit/e2b696043195b6b89fabed3def78672f67906f75))
+
+
+### Performance Improvements
+
+* **analytics:** defer analytics loading with lazyOnload strategy ([8cce6d0](https://github.com/RLukas2/portfolio-dev/commit/8cce6d0e7d7cb65cc189f7e0784298505ebc5187))
+* **content-card:** add responsive image sizes for optimized loading ([785a1f4](https://github.com/RLukas2/portfolio-dev/commit/785a1f4faa9c328b97bb829ce7db57887242b03d))
+* **home:** optimize hero animations and replace motion.div with CSS animation ([cd48458](https://github.com/RLukas2/portfolio-dev/commit/cd484587e231e1a5bc0021b6b8896eadd33db56b))
+* **image-optimization:** reduce profile image quality and add responsive qualities ([ac3a924](https://github.com/RLukas2/portfolio-dev/commit/ac3a9248573f898efa634cbfc63b47df22a1b4c7))
+* optimize image loading ([b98aaee](https://github.com/RLukas2/portfolio-dev/commit/b98aaee9fa916586a9ef24eecfcddf425edc211e))
+* **profile-image:** optimize image loading and quality settings ([501d7c7](https://github.com/RLukas2/portfolio-dev/commit/501d7c7a8034ee1b2441d3f4629acf5710a51a55))
+
 ## [1.2.0](https://github.com/RLukas2/portfolio-dev/compare/v1.1.0...v1.2.0) (2025-12-02)
 
 ### Features
