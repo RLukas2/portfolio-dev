@@ -65,10 +65,23 @@ const imageCacheHeaders = [
   },
 ];
 
+// Cache control for HTML pages (ISR/SSG pages)
+const pageCacheHeaders = [
+  {
+    key: 'Cache-Control',
+    value: 'public, s-maxage=60, stale-while-revalidate=300',
+  },
+];
+
 module.exports = [
   {
     source: '/(.*)',
     headers: securityHeaders,
+  },
+  // Cache HTML pages for better TTFB (excludes API routes and static assets)
+  {
+    source: '/((?!api|_next/static|_next/image|favicon.ico|feed.xml).*)',
+    headers: pageCacheHeaders,
   },
   {
     source: '/feed.xml',
@@ -76,6 +89,10 @@ module.exports = [
       {
         key: 'Content-Type',
         value: 'application/rss+xml;charset=utf-8',
+      },
+      {
+        key: 'Cache-Control',
+        value: 'public, s-maxage=3600, stale-while-revalidate=86400',
       },
     ],
   },
