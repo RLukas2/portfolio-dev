@@ -1,0 +1,22 @@
+{
+  "name": "@xbrk/auth",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "git clean -xdf .cache dist node_modules",
+    "generate": "",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "catalog:",
+    "@xbrk/db": "workspace:*",
+    "better-auth": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@better-auth/cli": "catalog:",
+    "@xbrk/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
