@@ -1,0 +1,8 @@
+{
+  "name": "@xbrk/tsconfig",
+  "private": true,
+  "main": "base.json",
+  "files": [
+    "*.json"
+  ]
+}

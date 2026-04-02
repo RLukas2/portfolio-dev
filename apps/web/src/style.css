@@ -1,0 +1,29 @@
+@import "tailwindcss";
+@import "@xbrk/tailwind/theme";
+
+@import "tw-animate-css";
+
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/roboto-mono";
+@import "@fontsource/cal-sans";
+
+@source "../../../packages/ui/src/*.{ts,tsx}";
+@source "../../../packages/shared/src/*.{ts,tsx}";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant light (&:where(.light, .light *));
+@custom-variant auto (&:where(.auto, .auto *));
+
+@layer base {
+  :root {
+    --font-sans: "Inter Variable", sans-serif;
+    --font-mono: "Roboto Mono Variable", monospace;
+    --font-heading: "Cal Sans", sans-serif;
+  }
+  * {
+    @apply border-border;
+  }
+  body {
+    letter-spacing: var(--tracking-normal);
+  }
+}

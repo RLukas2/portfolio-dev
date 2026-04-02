@@ -1,0 +1,34 @@
+{
+  "name": "@xbrk/shared",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "exports": {
+    "./create-router": "./src/create-router.tsx",
+    "./dev-tools": "./src/dev-tools.tsx",
+    "./theme-provider": "./src/theme-provider.tsx"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache dist node_modules",
+    "dev": "tsc",
+    "typecheck": "tsc --noEmit --emitDeclarationOnly false"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "catalog:",
+    "@tanstack/react-router": "catalog:",
+    "@tanstack/react-router-ssr-query": "catalog:",
+    "@tanstack/react-start": "catalog:",
+    "@xbrk/ui": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@tanstack/react-devtools": "catalog:",
+    "@tanstack/react-query-devtools": "catalog:",
+    "@tanstack/react-router-devtools": "catalog:",
+    "@types/react": "catalog:",
+    "@xbrk/tsconfig": "workspace:*",
+    "react": "catalog:",
+    "typescript": "catalog:"
+  }
+}

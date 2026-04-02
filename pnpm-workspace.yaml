@@ -1,0 +1,55 @@
+packages:
+  - apps/*
+  - packages/*
+  - tooling/*
+
+allowBuilds:
+  core-js: true
+  es5-ext: true
+  esbuild: true
+  msw: true
+  protobufjs: true
+
+catalog:
+  # React 19
+
+  # Database (Drizzle + Neon)
+
+  # Better Auth
+  "@better-auth/cli": "1.4.21"
+  "@tailwindcss/postcss": "^4.2.1"
+  "@tailwindcss/vite": "^4.2.2"
+
+  # Tanstack (latest)
+  "@tanstack/devtools-a11y": latest
+  "@tanstack/devtools-vite": ^0.6.0
+  "@tanstack/react-devtools": ^0.10.1
+  "@tanstack/react-form": "^1.28.6"
+  "@tanstack/react-form-devtools": latest
+  "@tanstack/react-form-start": latest
+  "@tanstack/react-query": "^5.96.1"
+  "@tanstack/react-query-devtools": ^5.96.1
+  "@tanstack/react-router": "^1.168.10"
+  "@tanstack/react-router-devtools": "^1.166.11"
+  "@tanstack/react-router-ssr-query": ^1.166.10
+  "@tanstack/react-start": "^1.167.16"
+
+  # Types
+  "@types/node": "^25.5.0"
+  "@types/react": "^19.2.14"
+  "@types/react-dom": "^19.2.3"
+  "autoprefixer": "^10.4.27"
+  "better-auth": "1.5.5"
+  "react": "^19.2.4"
+  "react-dom": "^19.2.4"
+  "simple-icons": "^13.21.0"
+
+  # Tailwind CSS + UI
+  "tailwindcss": "^4.2.1"
+
+  # Testing (Vitest + Testing Library)
+
+  # Utilities (Zod, Prettier,...)
+  "typescript": "^5.9.3"
+  "vite": "^8.0.3"
+  "zod": "^4.3.6"
