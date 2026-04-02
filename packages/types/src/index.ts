@@ -1,7 +1,17 @@
-/// === Site Configuration ===
-
+import {
+  type articles,
+  type commentReactions,
+  type comments,
+  type Experience,
+  type guestbook,
+  type Project,
+  Service,
+  type Snippet,
+  type user,
+} from '@xbrk/db/schema';
 import type { SimpleIcon } from 'simple-icons';
 
+/// === Site Configuration ===
 export interface SiteConfig {
   author: {
     name: string;
@@ -42,4 +52,95 @@ export interface NavItem {
 
 export interface ContentNavItem extends NavItem {
   href: string;
+}
+
+/// === Auth ===
+
+export interface AuthProvider {
+  icon: SimpleIcon;
+  label: string;
+  provider: string;
+}
+
+/// === Schemas from DB ===
+
+export type ProjectType = typeof Project.$inferSelect;
+export type ExperienceType = typeof Experience.$inferSelect;
+export type SnippetType = typeof Snippet.$inferSelect;
+export type ArticleType = typeof articles.$inferSelect;
+export type CommentType = typeof comments.$inferSelect;
+export type UserType = typeof user.$inferSelect;
+export type CommentReactionType = typeof commentReactions.$inferSelect;
+export type GuestbookType = typeof guestbook.$inferSelect;
+export type ServiceType = typeof Service.$inferSelect;
+
+/// === Articles ===
+
+export interface CommentWithRelations {
+  comment: CommentType;
+  dislikesCount: number;
+  likesCount: number;
+  repliesCount: number;
+  user: UserType | null;
+  userReaction: CommentReactionType | null;
+}
+
+/// === Contributions Dashboard ===
+
+export interface ContributionCalender {
+  weeks: ContributionWeeks[];
+}
+
+export interface ContributionWeeks {
+  contributionDays: ContributionDay[];
+}
+
+export interface ContributionDay {
+  contributionCount: number;
+  date: string;
+}
+
+export interface ContributionsCollection {
+  contributionCalendar: ContributionCalender;
+}
+
+export interface GitHubUser {
+  avatar_url: string;
+  bio: string;
+
+  created_at: string;
+
+  followers: number;
+  following: number;
+
+  html_url: string;
+  login: string;
+  name: string;
+  public_repos: number;
+  updated_at: string;
+}
+
+/// === Uses Data ===
+
+export interface UseData {
+  description: string;
+  icon: SimpleIcon;
+  link: string;
+  name: string;
+}
+
+/// === Misc ===
+
+export interface TOC {
+  depth: number;
+  title: string;
+  url: string;
+}
+
+export interface Collection {
+  _id: string;
+  count: number;
+  description: string;
+  slug: string;
+  title: string;
 }
