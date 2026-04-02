@@ -1,7 +1,7 @@
 import { cn } from '@xbrk/ui';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { CheckIcon, ChevronDown, WandSparkles, X, XCircle } from 'lucide-react';
-import { type ComponentProps, useOptimistic, useState } from 'react';
+import { type ComponentProps, useState } from 'react';
 import { Badge } from './badge';
 import { Button } from './button';
 import {
@@ -113,18 +113,12 @@ export const MultiSelect = ({
   const [isPopoverOpen, setIsPopoverOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);
 
-  const [optimisticSelectedValues, updateSelectedValues] = useOptimistic(
-    selectedValues,
-    (_, newValues: string[]) => newValues,
-  );
-
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       setIsPopoverOpen(true);
     } else if (event.key === 'Backspace' && !event.currentTarget.value) {
       const newSelectedValues = [...selectedValues];
       newSelectedValues.pop();
-      updateSelectedValues(newSelectedValues);
       setSelectedValues(newSelectedValues);
       onValueChange(newSelectedValues);
     }
@@ -134,13 +128,11 @@ export const MultiSelect = ({
     const newSelectedValues = selectedValues.includes(option)
       ? selectedValues.filter((value) => value !== option)
       : [...selectedValues, option];
-    updateSelectedValues(newSelectedValues);
     setSelectedValues(newSelectedValues);
     onValueChange(newSelectedValues);
   };
 
   const handleClear = () => {
-    updateSelectedValues([]);
     setSelectedValues([]);
     onValueChange([]);
   };
@@ -151,7 +143,6 @@ export const MultiSelect = ({
 
   const clearExtraOptions = () => {
     const newSelectedValues = selectedValues.slice(0, maxCount);
-    updateSelectedValues(newSelectedValues);
     setSelectedValues(newSelectedValues);
     onValueChange(newSelectedValues);
   };
@@ -161,7 +152,6 @@ export const MultiSelect = ({
       handleClear();
     } else {
       const allValues = options.map((option) => option.value);
-      updateSelectedValues(allValues);
       setSelectedValues(allValues);
       onValueChange(allValues);
     }
@@ -179,10 +169,10 @@ export const MultiSelect = ({
           )}
           onClick={handleTogglePopover}
         >
-          {optimisticSelectedValues.length > 0 ? (
+          {selectedValues.length > 0 ? (
             <div className="flex w-full items-center justify-between">
               <div className="flex flex-wrap items-center">
-                {optimisticSelectedValues.slice(0, maxCount).map((value) => {
+                {selectedValues.slice(0, maxCount).map((value) => {
                   const option = options.find((o) => o.value === value);
                   return (
                     <Badge
@@ -202,7 +192,7 @@ export const MultiSelect = ({
                     </Badge>
                   );
                 })}
-                {optimisticSelectedValues.length > maxCount && (
+                {selectedValues.length > maxCount && (
                   <Badge
                     className={cn(
                       'border-foreground/1 bg-transparent text-foreground hover:bg-transparent',
@@ -211,7 +201,7 @@ export const MultiSelect = ({
                     )}
                     style={{ animationDuration: `${animation}s` }}
                   >
-                    {`+ ${optimisticSelectedValues.length - maxCount} more`}
+                    {`+ ${selectedValues.length - maxCount} more`}
                     <XCircle
                       className="ml-2 h-4 w-4 cursor-pointer"
                       onClick={(event) => {
@@ -252,7 +242,7 @@ export const MultiSelect = ({
                 <div
                   className={cn(
                     'mr-2 flex h-4 w-4 items-center justify-center rounded-sm border border-primary',
-                    optimisticSelectedValues.length === options.length
+                    selectedValues.length === options.length
                       ? 'bg-primary text-primary-foreground'
                       : 'opacity-50 [&_svg]:invisible',
                   )}
@@ -262,7 +252,7 @@ export const MultiSelect = ({
                 <span>(Select All)</span>
               </CommandItem>
               {options.map((option) => {
-                const isSelected = optimisticSelectedValues.includes(option.value);
+                const isSelected = selectedValues.includes(option.value);
                 return (
                   <CommandItem
                     className="cursor-pointer"
@@ -288,7 +278,7 @@ export const MultiSelect = ({
             <CommandSeparator />
             <CommandGroup>
               <div className="flex items-center justify-between">
-                {optimisticSelectedValues.length > 0 && (
+                {selectedValues.length > 0 && (
                   <>
                     <CommandItem className="flex-1 cursor-pointer justify-center" onSelect={handleClear}>
                       Clear
@@ -307,7 +297,7 @@ export const MultiSelect = ({
           </CommandList>
         </Command>
       </PopoverContent>
-      {animation > 0 && optimisticSelectedValues.length > 0 && (
+      {animation > 0 && selectedValues.length > 0 && (
         <WandSparkles
           className={cn(
             'my-2 h-3 w-3 cursor-pointer bg-background text-foreground',
