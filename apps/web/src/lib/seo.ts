@@ -41,12 +41,12 @@ export function seo({
     { name: 'twitter:url', content: url },
 
     // Open Graph tags
-    { name: 'og:type', content: type },
-    { name: 'og:site_name', content: siteConfig.title },
-    { name: 'og:title', content: title },
-    ...(description ? [{ name: 'og:description', content: description }] : []),
-    { name: 'og:locale', content: OG_LOCALE },
-    { name: 'og:url', content: url },
+    { property: 'og:type', content: type },
+    { property: 'og:site_name', content: siteConfig.title },
+    { property: 'og:title', content: title },
+    ...(description ? [{ property: 'og:description', content: description }] : []),
+    { property: 'og:locale', content: OG_LOCALE },
+    { property: 'og:url', content: url },
 
     // Image tags (if image is provided)
     ...(image
@@ -57,10 +57,10 @@ export function seo({
             content: `${title} - ${siteConfig.title}`,
           },
           { name: 'twitter:card', content: 'summary_large_image' },
-          { name: 'og:image', content: image },
-          { name: 'og:image:alt', content: `${title} - ${siteConfig.title}` },
-          { name: 'og:image:width', content: 1200 },
-          { name: 'og:image:height', content: 630 },
+          { property: 'og:image', content: image },
+          { property: 'og:image:alt', content: `${title} - ${siteConfig.title}` },
+          { property: 'og:image:width', content: 1200 },
+          { property: 'og:image:height', content: 630 },
         ]
       : []),
   ];
