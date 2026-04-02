@@ -79,7 +79,15 @@ export const commentRelations = relations(comments, (t) => ({
 }));
 
 export const articleLikes = pgTable('article_likes', (t) => ({
-  id: t.text().notNull().primaryKey(),
+  id: t.uuid().notNull().primaryKey().defaultRandom(),
+  articleId: t
+    .uuid()
+    .references(() => articles.id, { onDelete: 'cascade' })
+    .notNull(),
+  userId: t
+    .text()
+    .references(() => user.id, { onDelete: 'cascade' })
+    .notNull(),
   createdAt: t.timestamp().defaultNow().notNull(),
 }));
 
@@ -90,6 +98,17 @@ export const articleViews = pgTable('article_views', (t) => ({
     .references(() => articles.id, { onDelete: 'cascade' })
     .notNull(),
   createdAt: t.timestamp().defaultNow().notNull(),
+}));
+
+export const articleLikeRelations = relations(articleLikes, (t) => ({
+  article: t.one(articles, {
+    fields: [articleLikes.articleId],
+    references: [articles.id],
+  }),
+  user: t.one(user, {
+    fields: [articleLikes.userId],
+    references: [user.id],
+  }),
 }));
 
 export const articleViewRelations = relations(articleViews, (t) => ({
