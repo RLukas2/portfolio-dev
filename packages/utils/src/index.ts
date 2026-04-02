@@ -1,6 +1,10 @@
 import { type TOC } from '@xbrk/types';
 import { marked, type Tokens } from 'marked';
 
+/**
+ * Formats a date value into a human-readable string (e.g. "January 1, 2025").
+ * Uses `en-US` locale with long month, numeric day and year.
+ */
 export function formatDate(input: string | number | Date): string {
   const date = new Date(input);
   return date.toLocaleDateString('en-US', {
@@ -10,6 +14,12 @@ export function formatDate(input: string | number | Date): string {
   });
 }
 
+/**
+ * Generates a URL-safe slug from a title string.
+ * Removes special characters, replaces spaces with hyphens,
+ * collapses consecutive hyphens, and trims whitespace.
+ * @example generateSlug("Hello, World!") // "hello-world"
+ */
 export const generateSlug = (title: string): string => {
   return title
     .toLowerCase()
@@ -19,12 +29,21 @@ export const generateSlug = (title: string): string => {
     .trim();
 };
 
+/**
+ * Estimates reading time for a given content string.
+ * Assumes an average reading speed of 200 words per minute.
+ * Returns the result rounded up to the nearest minute.
+ */
 export const calculateReadingTime = (content: string) => {
   const wordsPerMinute = 200;
   const numberOfWords = content.split(/\s/g).length;
   return Math.ceil(numberOfWords / wordsPerMinute);
 };
 
+/**
+ * Strips common Markdown syntax from a string, returning plain text.
+ * Handles: links, inline code, bold/italic, strikethrough, and HTML tags.
+ */
 export const stripMarkdown = (text: string): string => {
   return (
     text
@@ -44,6 +63,11 @@ export const stripMarkdown = (text: string): string => {
   );
 };
 
+/**
+ * Parses markdown content and extracts a table of contents from heading tokens.
+ * Each heading is converted to a `TOC` entry with its depth, plain-text title,
+ * and a slug-based URL anchor generated via `generateSlug`.
+ */
 export const getTOC = (content: string): TOC[] => {
   const toc: TOC[] = [];
 
