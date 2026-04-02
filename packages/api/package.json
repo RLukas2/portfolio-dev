@@ -1,0 +1,32 @@
+{
+  "name": "@xbrk/api",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./env": "./env.ts"
+  },
+  "scripts": {
+    "build": "tsc",
+    "clean": "git clean -xdf .cache dist node_modules",
+    "dev": "tsc --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@t3-oss/env-core": "catalog:",
+    "@vercel/blob": "^2.3.2",
+    "@xbrk/auth": "workspace:*",
+    "@xbrk/db": "workspace:*",
+    "@xbrk/utils": "workspace:*",
+    "drizzle-orm": "^0.45.2",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@xbrk/tsconfig": "workspace:*",
+    "typescript": "catalog:"
+  }
+}
