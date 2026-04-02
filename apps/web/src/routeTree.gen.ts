@@ -9,12 +9,17 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from "./routes/__root";
+import { Route as publicLayoutRouteImport } from "./routes/(public)/layout";
 import { Route as publicIndexRouteImport } from "./routes/(public)/index";
 
-const publicIndexRoute = publicIndexRouteImport.update({
-  id: "/(public)/",
-  path: "/",
+const publicLayoutRoute = publicLayoutRouteImport.update({
+  id: "/(public)",
   getParentRoute: () => rootRouteImport,
+} as any);
+const publicIndexRoute = publicIndexRouteImport.update({
+  id: "/",
+  path: "/",
+  getParentRoute: () => publicLayoutRoute,
 } as any);
 
 export interface FileRoutesByFullPath {
@@ -25,6 +30,7 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport;
+  "/(public)": typeof publicLayoutRouteWithChildren;
   "/(public)/": typeof publicIndexRoute;
 }
 export interface FileRouteTypes {
@@ -32,27 +38,46 @@ export interface FileRouteTypes {
   fullPaths: "/";
   fileRoutesByTo: FileRoutesByTo;
   to: "/";
-  id: "__root__" | "/(public)/";
+  id: "__root__" | "/(public)" | "/(public)/";
   fileRoutesById: FileRoutesById;
 }
 export interface RootRouteChildren {
-  publicIndexRoute: typeof publicIndexRoute;
+  publicLayoutRoute: typeof publicLayoutRouteWithChildren;
 }
 
 declare module "@tanstack/react-router" {
   interface FileRoutesByPath {
+    "/(public)": {
+      id: "/(public)";
+      path: "";
+      fullPath: "";
+      preLoaderRoute: typeof publicLayoutRouteImport;
+      parentRoute: typeof rootRouteImport;
+    };
     "/(public)/": {
       id: "/(public)/";
       path: "/";
       fullPath: "/";
       preLoaderRoute: typeof publicIndexRouteImport;
-      parentRoute: typeof rootRouteImport;
+      parentRoute: typeof publicLayoutRoute;
     };
   }
 }
 
-const rootRouteChildren: RootRouteChildren = {
+interface publicLayoutRouteChildren {
+  publicIndexRoute: typeof publicIndexRoute;
+}
+
+const publicLayoutRouteChildren: publicLayoutRouteChildren = {
   publicIndexRoute: publicIndexRoute,
+};
+
+const publicLayoutRouteWithChildren = publicLayoutRoute._addFileChildren(
+  publicLayoutRouteChildren,
+);
+
+const rootRouteChildren: RootRouteChildren = {
+  publicLayoutRoute: publicLayoutRouteWithChildren,
 };
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

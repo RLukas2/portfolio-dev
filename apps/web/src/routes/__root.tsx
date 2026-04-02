@@ -43,7 +43,6 @@ export const Route = createRootRouteWithContext<{
 
 /// === PostHog ===
 
-// TODO: Add env vars for these and remove the hardcoded values
 const VITE_POSTHOG_KEY = env.VITE_POSTHOG_KEY;
 const VITE_POSTHOG_HOST = env.VITE_POSTHOG_HOST;
 
