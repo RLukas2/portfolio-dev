@@ -3,7 +3,7 @@ import { CreateProjectSchema, project, UpdateProjectSchema } from '@xbrk/db/sche
 import { getTOC } from '@xbrk/utils';
 import { desc, eq } from 'drizzle-orm';
 import type { z } from 'zod/v4';
-import { deleteFile, uploadImage } from '../s3';
+import { deleteFile, uploadImage } from '../storage';
 
 type DbClient = typeof DB;
 

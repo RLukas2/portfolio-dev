@@ -15,7 +15,7 @@ import { user } from './auth.schema';
  * articles   → author  : many-to-one  (articles.authorId → user.id)
  * articles   → comments: one-to-many
  * articles   → views   : one-to-many  (articleViews, one row per visit)
- * articles   → likes   : one-to-many  (articleLikes, keyed by hashed IP)
+ * articles   → likes   : one-to-many  (articleLikes, keyed by hashed IP as visitorId)
  * comments   → parent  : self-ref     (comments.parentId → comments.id)
  * comments   → reactions: one-to-many (commentReactions)
  */
@@ -99,10 +99,7 @@ export const articleLikes = pgTable('article_likes', (t) => ({
     .uuid()
     .references(() => articles.id, { onDelete: 'cascade' })
     .notNull(),
-  userId: t
-    .text()
-    .references(() => user.id, { onDelete: 'cascade' })
-    .notNull(),
+  visitorId: t.text().notNull(),
   createdAt: t.timestamp().defaultNow().notNull(),
 }));
 
@@ -119,10 +116,6 @@ export const articleLikeRelations = relations(articleLikes, (t) => ({
   article: t.one(articles, {
     fields: [articleLikes.articleId],
     references: [articles.id],
-  }),
-  user: t.one(user, {
-    fields: [articleLikes.userId],
-    references: [user.id],
   }),
 }));
 

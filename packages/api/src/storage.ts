@@ -1,7 +1,6 @@
 import { del, put } from '@vercel/blob';
 
 export const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
-export const VALID_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif'];
 const allowedDomains = ['vercel-blob.com', 'blob.vercel-storage.com'];
 const BASE64_REGEX = /^[A-Za-z0-9+/=]+$/;
 

@@ -1,6 +1,5 @@
 /** biome-ignore-all lint/performance/noBarrelFile: This is a barrel file */
 
-export { deleteFile, uploadImage } from './s3';
 export {
   blogService,
   commentService,
@@ -13,3 +12,4 @@ export {
   statsService,
   userService,
 } from './services';
+export { deleteFile, uploadImage } from './storage';

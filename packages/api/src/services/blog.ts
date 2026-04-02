@@ -8,10 +8,10 @@ import {
   type UpdateArticleSchema,
 } from '@xbrk/db/schema';
 import { getTOC } from '@xbrk/utils';
-import { desc, eq, sql } from 'drizzle-orm';
+import { and, desc, eq, sql } from 'drizzle-orm';
 import type { z } from 'zod/v4';
 import { env } from '../../env';
-import { deleteFile, uploadImage } from '../s3';
+import { deleteFile, uploadImage } from '../storage';
 
 type DbClient = typeof DB;
 
@@ -191,22 +191,22 @@ export async function like(
       .update(ipAddress + env.IP_ADDRESS_SALT, 'utf8')
       .digest('hex');
 
-  const sessionId = `${input.slug}_${currentUserId}`;
-
   const existingLike = await db.query.articleLikes.findFirst({
-    where: eq(articleLikes.id, sessionId),
+    where: and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)),
   });
 
   // if like exists, delete it
   if (existingLike) {
-    await db.delete(articleLikes).where(eq(articleLikes.id, sessionId));
+    await db
+      .delete(articleLikes)
+      .where(and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)));
     return;
   }
 
   // if like does not exist, insert it
   return db.insert(articleLikes).values({
     articleId: article.id,
-    userId: currentUserId,
+    visitorId: currentUserId,
   });
 }
 
@@ -215,6 +215,14 @@ export async function like(
  * Uses the same IP hashing logic as `like()`.
  */
 export async function isLiked(db: DbClient, input: { slug: string }, headers: Headers) {
+  const article = await db.query.articles.findFirst({
+    where: eq(articles.slug, input.slug),
+  });
+
+  if (!article) {
+    return false;
+  }
+
   // Extract IP address from headers (same logic as in like mutation)
   const ipAddress =
     headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
@@ -223,13 +231,11 @@ export async function isLiked(db: DbClient, input: { slug: string }, headers: He
     '0.0.0.0';
 
   const currentUserId = createHash('sha512')
-    .update(ipAddress + (env.IP_ADDRESS_SALT || 'fallback-salt'), 'utf8')
+    .update(ipAddress + env.IP_ADDRESS_SALT, 'utf8')
     .digest('hex');
 
-  const sessionId = `${input.slug}_${currentUserId}`;
-
   const existingLike = await db.query.articleLikes.findFirst({
-    where: eq(articleLikes.id, sessionId),
+    where: and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)),
   });
 
   return Boolean(existingLike);
