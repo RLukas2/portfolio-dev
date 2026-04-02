@@ -7,14 +7,16 @@ const DEFAULT_PORT = 3000 as const;
  * @returns {string} The base URL as a string.
  */
 export const getBaseUrl = (): string => {
-  if (process.env.VITE_APP_URL) {
-    return process.env.VITE_APP_URL;
+  // VITE_APP_URL is available on both client and server via import.meta.env
+  if (import.meta.env.VITE_APP_URL) {
+    return import.meta.env.VITE_APP_URL as string;
   }
 
   if (typeof window !== 'undefined') {
     return window.location.origin;
   }
 
+  // Server-side only: Vercel injects VERCEL_URL as a process.env variable
   if (process.env.VERCEL_URL) {
     return `https://${process.env.VERCEL_URL}`;
   }
