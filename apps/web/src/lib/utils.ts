@@ -1,6 +1,12 @@
 const DEFAULT_PORT = 3000 as const;
 
-export const getBaseUrl = () => {
+/**
+ * Get the base URL of the application.
+ * It checks for environment variables and falls back to defaults based on the execution context (browser or server).
+ *
+ * @returns {string} The base URL as a string.
+ */
+export const getBaseUrl = (): string => {
   if (process.env.VITE_APP_URL) {
     return process.env.VITE_APP_URL;
   }
