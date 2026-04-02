@@ -3,6 +3,15 @@
   "license": "MIT",
   "private": true,
   "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./middleware": "./src/middleware.ts",
+    "./client": "./src/client.ts",
+    "./env": "./env.ts"
+  },
   "scripts": {
     "clean": "git clean -xdf .cache dist node_modules",
     "generate": "dotenv -e ../../.env -- pnpm dlx @better-auth/cli generate --config script/auth-cli.ts --output ../db/src/auth-schema.ts",
