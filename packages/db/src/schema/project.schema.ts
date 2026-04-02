@@ -2,7 +2,7 @@ import { pgTable } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { z } from 'zod/v4';
 
-export const Project = pgTable('project', (t) => ({
+export const project = pgTable('project', (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   title: t.varchar({ length: 255 }).notNull(),
   slug: t.varchar({ length: 255 }).notNull().unique(),
@@ -37,7 +37,7 @@ export const ProjectBaseSchema = z.object({
   stacks: z.array(z.string()),
 });
 
-export const CreateProjectSchema = createInsertSchema(Project, {
+export const CreateProjectSchema = createInsertSchema(project, {
   title: ProjectBaseSchema.shape.title,
   slug: ProjectBaseSchema.shape.slug,
   description: ProjectBaseSchema.shape.description,
@@ -58,8 +58,8 @@ export const CreateProjectSchema = createInsertSchema(Project, {
     }),
   );
 
-export const UpdateProjectSchema = createUpdateSchema(Project, {
-  id: z.string().uuid(),
+export const UpdateProjectSchema = createUpdateSchema(project, {
+  id: z.uuid(),
   title: ProjectBaseSchema.shape.title,
   slug: ProjectBaseSchema.shape.slug,
   description: ProjectBaseSchema.shape.description,

@@ -12,7 +12,7 @@ export enum ExperienceType {
 
 export const experienceTypeEnum = pgEnum('experience_type', ExperienceType);
 
-export const Experience = pgTable('experience', (t) => ({
+export const experience = pgTable('experience', (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   title: t.varchar({ length: 255 }).notNull(),
   description: t.varchar({ length: 255 }),
@@ -41,7 +41,7 @@ export const ExperienceBaseSchema = z.object({
   thumbnail: z.string().describe('File upload for experience thumbnail'),
 });
 
-export const CreateExperienceSchema = createInsertSchema(Experience, {
+export const CreateExperienceSchema = createInsertSchema(experience, {
   title: ExperienceBaseSchema.shape.title,
   description: ExperienceBaseSchema.shape.description,
   startDate: ExperienceBaseSchema.shape.startDate,
@@ -63,8 +63,8 @@ export const CreateExperienceSchema = createInsertSchema(Experience, {
     }),
   );
 
-export const UpdateExperienceSchema = createUpdateSchema(Experience, {
-  id: z.string().uuid(),
+export const UpdateExperienceSchema = createUpdateSchema(experience, {
+  id: z.uuid(),
   title: ExperienceBaseSchema.shape.title,
   description: ExperienceBaseSchema.shape.description,
   startDate: ExperienceBaseSchema.shape.startDate,

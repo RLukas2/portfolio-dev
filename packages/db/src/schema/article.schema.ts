@@ -17,7 +17,6 @@ export const articles = pgTable('articles', (t) => ({
     .text()
     .references(() => user.id, { onDelete: 'cascade' })
     .notNull(),
-  likes: t.integer().notNull().default(0),
   createdAt: t.timestamp().defaultNow().notNull(),
   updatedAt: t.timestamp({ mode: 'date', withTimezone: true }).$onUpdate(() => new Date()),
 }));

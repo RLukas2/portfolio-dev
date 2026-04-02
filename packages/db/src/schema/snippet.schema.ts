@@ -2,7 +2,7 @@ import { pgTable } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { z } from 'zod/v4';
 
-export const Snippet = pgTable('snippet', (t) => ({
+export const snippet = pgTable('snippet', (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   title: t.varchar({ length: 255 }).notNull(),
   slug: t.varchar({ length: 255 }).notNull().unique(),
@@ -29,7 +29,7 @@ export const SnippetBaseSchema = z.object({
   isDraft: z.boolean().or(z.literal(false)),
 });
 
-export const CreateSnippetSchema = createInsertSchema(Snippet, {
+export const CreateSnippetSchema = createInsertSchema(snippet, {
   title: SnippetBaseSchema.shape.title,
   slug: SnippetBaseSchema.shape.slug,
   description: SnippetBaseSchema.shape.description,
@@ -42,7 +42,7 @@ export const CreateSnippetSchema = createInsertSchema(Snippet, {
   updatedAt: true,
 });
 
-export const UpdateSnippetSchema = createUpdateSchema(Snippet, {
+export const UpdateSnippetSchema = createUpdateSchema(snippet, {
   id: z.uuid(),
   title: SnippetBaseSchema.shape.title,
   slug: SnippetBaseSchema.shape.slug,

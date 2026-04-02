@@ -2,7 +2,7 @@ import { pgTable } from 'drizzle-orm/pg-core';
 import { createInsertSchema, createUpdateSchema } from 'drizzle-zod';
 import { z } from 'zod/v4';
 
-export const Service = pgTable('service', (t) => ({
+export const service = pgTable('service', (t) => ({
   id: t.uuid().notNull().primaryKey().defaultRandom(),
   title: t.varchar({ length: 255 }).notNull(),
   slug: t.varchar({ length: 255 }).notNull().unique(),
@@ -31,7 +31,7 @@ export const ServiceBaseSchema = z.object({
   stacks: z.array(z.string()),
 });
 
-export const CreateServiceSchema = createInsertSchema(Service, {
+export const CreateServiceSchema = createInsertSchema(service, {
   title: ServiceBaseSchema.shape.title,
   slug: ServiceBaseSchema.shape.slug,
   description: ServiceBaseSchema.shape.description,
@@ -49,7 +49,7 @@ export const CreateServiceSchema = createInsertSchema(Service, {
     }),
   );
 
-export const UpdateServiceSchema = createUpdateSchema(Service, {
+export const UpdateServiceSchema = createUpdateSchema(service, {
   id: z.uuid(),
   title: ServiceBaseSchema.shape.title,
   slug: ServiceBaseSchema.shape.slug,
