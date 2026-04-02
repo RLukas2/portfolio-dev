@@ -1,5 +1,5 @@
 import type { SiteConfig, Social } from '@xbrk/types';
-import { siGithub, siX } from 'simple-icons';
+import { siGithub, siLinkedin, siX } from 'simple-icons';
 
 export const siteConfig: SiteConfig = {
   title: 'Tuan Ngo-Hoang',
@@ -38,6 +38,6 @@ export const socialConfig: Social[] = [
     name: 'LinkedIn',
     url: 'https://www.linkedin.com/in/xbrk',
     username: 'xbrk',
-    icon: siX,
+    icon: siLinkedin,
   },
 ];
