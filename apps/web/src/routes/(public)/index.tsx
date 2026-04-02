@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { siteConfig } from '@xbrk/config';
 import { seo } from '@/lib/seo';
+import { generateStructuredDataGraph, getHomepageSchemas } from '@/lib/structured-data';
 
 export const Route = createFileRoute('/(public)/')({
   component: Home,
@@ -10,10 +11,17 @@ export const Route = createFileRoute('/(public)/')({
       description: siteConfig.description,
       keywords: siteConfig.keywords,
     });
+    const structuredData = generateStructuredDataGraph(getHomepageSchemas());
 
     return {
       meta: seoData.meta,
       links: seoData.links,
+      scripts: [
+        {
+          type: 'application/ld+json',
+          children: structuredData,
+        },
+      ],
     };
   },
 });
