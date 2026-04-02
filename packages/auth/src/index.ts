@@ -6,6 +6,16 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin, oAuthProxy } from 'better-auth/plugins';
 import { tanstackStartCookies } from 'better-auth/tanstack-start';
 
+/**
+ * Initializes a Better Auth instance with Drizzle adapter and optional social providers.
+ *
+ * Social providers (GitHub, Twitter, Google, Facebook) are only registered when
+ * their respective client ID and secret are provided — omitting them disables that provider
+ * without throwing an error.
+ *
+ * Includes the `admin` plugin for user management and `oAuthProxy` for redirect handling
+ * in non-production environments.
+ */
 export function initAuth(options: {
   baseUrl: string;
   productionUrl: string;
