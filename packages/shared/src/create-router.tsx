@@ -38,10 +38,5 @@ export function createRouter<TRouteTree extends AnyRoute>({ routeTree }: CreateR
     wrapQueryClient: true,
   });
 
-  if (!router.isServer) {
-    // Client-side initialization
-    // TODO: Maybe integrate Sentry
-  }
-
   return router;
 }
