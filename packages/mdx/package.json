@@ -1,0 +1,37 @@
+{
+  "name": "@xbrk/mdx",
+  "license": "MIT",
+  "private": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./src/index.ts"
+    },
+    "./streamdown": "./src/streamdown/index.tsx"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "git clean -xdf .cache dist node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@xbrk/types": "workspace:*",
+    "@xbrk/ui": "workspace:*",
+    "@xbrk/utils": "workspace:*",
+    "@shikijs/core": "^4.0.2",
+    "@shikijs/engine-javascript": "^4.0.2",
+    "@shikijs/langs": "^4.0.2",
+    "@shikijs/themes": "^4.0.2",
+    "@unpic/react": "^1.0.2",
+    "html-react-parser": "^5.2.17",
+    "marked": "^17.0.4"
+  },
+  "devDependencies": {
+    "@xbrk/tsconfig": "workspace:*",
+    "@types/react": "catalog:",
+    "react": "catalog:",
+    "shiki": "^4.0.2",
+    "typescript": "catalog:"
+  }
+}
