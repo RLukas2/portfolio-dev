@@ -9,6 +9,18 @@
       "cache": false,
       "persistent": true
     },
+    "clean": {
+      "cache": false
+    },
+    "generate": {
+      "cache": false
+    },
+    "db:push": {
+      "cache": false
+    },
+    "db:studio": {
+      "cache": false
+    },
     "lint": {
       "inputs": ["**/*.{ts,tsx,js,jsx,json,css}"]
     },
