@@ -4,6 +4,9 @@ packages:
   - tooling/*
 
 allowBuilds:
+  '@prisma/client': true
+  '@sentry/cli': true
+  better-sqlite3: true
   core-js: true
   es5-ext: true
   esbuild: true
@@ -17,6 +20,12 @@ catalog:
 
   # Better Auth
   "@better-auth/cli": "1.4.21"
+
+  # Testing (Vitest + Testing Library)
+
+  # Utilities (Zod, Prettier,...)
+  "@sentry/node": "^10.19.0"
+  "@t3-oss/env-core": "^0.13.11"
   "@tailwindcss/postcss": "^4.2.1"
   "@tailwindcss/vite": "^4.2.2"
 
@@ -40,7 +49,6 @@ catalog:
   "@types/react-dom": "^19.2.3"
   "autoprefixer": "^10.4.27"
   "better-auth": "1.5.5"
-  "@t3-oss/env-core": "^0.13.11"
   "lucide-react": "^1.7.0"
   "react": "^19.2.4"
   "react-dom": "^19.2.4"
@@ -48,10 +56,6 @@ catalog:
 
   # Tailwind CSS + UI
   "tailwindcss": "^4.2.1"
-
-  # Testing (Vitest + Testing Library)
-
-  # Utilities (Zod, Prettier,...)
   "typescript": "^5.9.3"
   "vite": "^8.0.3"
   "zod": "^4.3.6"

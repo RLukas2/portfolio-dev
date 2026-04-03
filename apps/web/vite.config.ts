@@ -35,9 +35,9 @@ const config = defineConfig({
       start: {
         entry: './start.tsx',
       },
-      // server: {
-      //   entry: "./server.ts",
-      // },
+      server: {
+        entry: './server.ts',
+      },
       router: {
         quoteStyle: 'double',
         semicolons: true,
