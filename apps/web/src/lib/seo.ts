@@ -58,9 +58,12 @@ export function seo({
           },
           { name: 'twitter:card', content: 'summary_large_image' },
           { property: 'og:image', content: image },
-          { property: 'og:image:alt', content: `${title} - ${siteConfig.title}` },
-          { property: 'og:image:width', content: 1200 },
-          { property: 'og:image:height', content: 630 },
+          {
+            property: 'og:image:alt',
+            content: `${title} - ${siteConfig.title}`,
+          },
+          { property: 'og:image:width', content: '1200' },
+          { property: 'og:image:height', content: '630' },
         ]
       : []),
   ];

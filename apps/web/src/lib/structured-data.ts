@@ -3,6 +3,7 @@ import { getBaseUrl } from './utils';
 
 // Cached once at module load — avoids repeated env lookups per SSR request
 const BASE_URL = getBaseUrl();
+const COPYRIGHT_YEAR = new Date().getFullYear();
 
 const DEFAULT_LANGUAGE = 'en-US';
 
@@ -198,7 +199,7 @@ function createWebSiteSchema(options?: { includeId?: boolean; useRefs?: boolean 
     author: options?.useRefs ? { '@id': schemaIds.person() } : createPersonSchema(),
     publisher: options?.useRefs ? { '@id': schemaIds.organization() } : createOrganizationSchema(),
     inLanguage: DEFAULT_LANGUAGE,
-    copyrightYear: new Date().getFullYear(),
+    copyrightYear: COPYRIGHT_YEAR,
     copyrightHolder: options?.useRefs ? { '@id': schemaIds.person() } : createPersonSchema(),
     potentialAction: {
       '@type': 'SearchAction',
