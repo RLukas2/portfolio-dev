@@ -9,30 +9,43 @@ import { deleteFile, uploadImage } from '../storage';
 type DbClient = typeof DB;
 
 /** Returns all experiences including drafts. For admin use only. */
-export function getAll(db: DbClient) {
-  return db.query.experience.findMany({
-    orderBy: desc(experience.id),
-  });
+export async function getAll(db: DbClient) {
+  try {
+    return await db.query.experience.findMany({
+      orderBy: desc(experience.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[experience.getAll] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns only published (non-draft) experiences. */
-export function getAllPublic(db: DbClient) {
-  return db.query.experience
-    .findMany({
+export async function getAllPublic(db: DbClient) {
+  try {
+    return await db.query.experience.findMany({
       orderBy: desc(experience.id),
       where: eq(experience.isDraft, false),
-    })
-    .catch((error) => {
-      Sentry.captureException(error);
-      return [];
     });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[experience.getAllPublic] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns a single experience by ID. Returns `undefined` if not found. */
-export function getById(db: DbClient, input: { id: string }) {
-  return db.query.experience.findFirst({
-    where: eq(experience.id, input.id),
-  });
+export async function getById(db: DbClient, input: { id: string }) {
+  try {
+    return await db.query.experience.findFirst({
+      where: eq(experience.id, input.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[experience.getById] Database error:', error);
+    return undefined;
+  }
 }
 
 /**

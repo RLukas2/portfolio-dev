@@ -9,17 +9,29 @@ import { deleteFile, uploadImage } from '../storage';
 type DbClient = typeof DB;
 
 /** Returns all services including drafts. For admin use only. */
-export function getAll(db: DbClient) {
-  return db.query.service.findMany({
-    orderBy: desc(service.id),
-  });
+export async function getAll(db: DbClient) {
+  try {
+    return await db.query.service.findMany({
+      orderBy: desc(service.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[service.getAll] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns only published (non-draft) services. */
-export function getAllPublic(db: DbClient) {
-  return db.query.service.findMany({
-    where: eq(service.isDraft, false),
-  });
+export async function getAllPublic(db: DbClient) {
+  try {
+    return await db.query.service.findMany({
+      where: eq(service.isDraft, false),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[service.getAllPublic] Database error:', error);
+    return [];
+  }
 }
 
 /**
@@ -28,27 +40,45 @@ export function getAllPublic(db: DbClient) {
  * @throws {Error} If service not found or is a draft and requester is not admin.
  */
 export async function getBySlug(db: DbClient, input: { slug: string }, session?: { user: { role: string } } | null) {
-  const serviceResult = await db.query.service.findFirst({
-    where: eq(service.slug, input.slug),
-  });
+  try {
+    const serviceResult = await db.query.service.findFirst({
+      where: eq(service.slug, input.slug),
+    });
 
-  if (!serviceResult) {
-    throw new Error('Service not found');
+    if (!serviceResult) {
+      throw new Error('Service not found');
+    }
+
+    // if service is draft, throw an error unless user is admin
+    if (serviceResult.isDraft && session?.user.role !== 'admin') {
+      throw new Error('Service is not public');
+    }
+
+    return serviceResult;
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Service not found' || error.message === 'Service is not public')
+    ) {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[service.getBySlug] Database error:', error);
+    throw new Error('Failed to fetch service');
   }
-
-  // if service is draft, throw an error unless user is admin
-  if (serviceResult.isDraft && session?.user.role !== 'admin') {
-    throw new Error('Service is not public');
-  }
-
-  return serviceResult;
 }
 
 /** Returns a single service by ID. Returns `undefined` if not found. */
-export function getById(db: DbClient, input: { id: string }) {
-  return db.query.service.findFirst({
-    where: eq(service.id, input.id),
-  });
+export async function getById(db: DbClient, input: { id: string }) {
+  try {
+    return await db.query.service.findFirst({
+      where: eq(service.id, input.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[service.getById] Database error:', error);
+    return undefined;
+  }
 }
 
 /**

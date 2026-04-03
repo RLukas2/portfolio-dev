@@ -10,23 +10,30 @@ import { deleteFile, uploadImage } from '../storage';
 type DbClient = typeof DB;
 
 /** Returns all projects including drafts. For admin use only. */
-export function getAll(db: DbClient) {
-  return db.query.project.findMany({
-    orderBy: desc(project.id),
-  });
+export async function getAll(db: DbClient) {
+  try {
+    return await db.query.project.findMany({
+      orderBy: desc(project.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[project.getAll] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns only published projects, ordered by featured status. */
-export function getAllPublic(db: DbClient) {
-  return db.query.project
-    .findMany({
+export async function getAllPublic(db: DbClient) {
+  try {
+    return await db.query.project.findMany({
       orderBy: desc(project.isFeatured),
       where: eq(project.isDraft, false),
-    })
-    .catch((error) => {
-      Sentry.captureException(error);
-      return [];
     });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[project.getAllPublic] Database error:', error);
+    return [];
+  }
 }
 
 /**
@@ -35,28 +42,46 @@ export function getAllPublic(db: DbClient) {
  * @throws {Error} If project not found or is a draft and requester is not admin.
  */
 export async function getBySlug(db: DbClient, input: { slug: string }, session?: { user: { role: string } } | null) {
-  const result = await db.query.project.findFirst({
-    where: eq(project.slug, input.slug),
-  });
+  try {
+    const result = await db.query.project.findFirst({
+      where: eq(project.slug, input.slug),
+    });
 
-  if (!result) {
-    throw new Error('Project not found');
+    if (!result) {
+      throw new Error('Project not found');
+    }
+
+    if (result.isDraft && session?.user.role !== 'admin') {
+      throw new Error('Project is not public');
+    }
+
+    const toc = getTOC(result.content ?? '');
+
+    return { ...result, toc };
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Project not found' || error.message === 'Project is not public')
+    ) {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[project.getBySlug] Database error:', error);
+    throw new Error('Failed to fetch project');
   }
-
-  if (result.isDraft && session?.user.role !== 'admin') {
-    throw new Error('Project is not public');
-  }
-
-  const toc = getTOC(result.content ?? '');
-
-  return { ...result, toc };
 }
 
 /** Returns a single project by ID. Returns `undefined` if not found. */
-export function getById(db: DbClient, input: { id: string }) {
-  return db.query.project.findFirst({
-    where: eq(project.id, input.id),
-  });
+export async function getById(db: DbClient, input: { id: string }) {
+  try {
+    return await db.query.project.findFirst({
+      where: eq(project.id, input.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[project.getById] Database error:', error);
+    return undefined;
+  }
 }
 
 /**

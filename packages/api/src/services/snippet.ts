@@ -8,30 +8,43 @@ import type { z } from 'zod/v4';
 type DbClient = typeof DB;
 
 /** Returns all snippets including drafts. For admin use only. */
-export function getAll(db: DbClient) {
-  return db.query.snippet.findMany({
-    orderBy: desc(snippet.id),
-  });
+export async function getAll(db: DbClient) {
+  try {
+    return await db.query.snippet.findMany({
+      orderBy: desc(snippet.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[snippet.getAll] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns only published (non-draft) snippets. */
-export function getAllPublic(db: DbClient) {
-  return db.query.snippet
-    .findMany({
+export async function getAllPublic(db: DbClient) {
+  try {
+    return await db.query.snippet.findMany({
       orderBy: desc(snippet.id),
       where: eq(snippet.isDraft, false),
-    })
-    .catch((error) => {
-      Sentry.captureException(error);
-      return [];
     });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[snippet.getAllPublic] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns a single snippet by ID. Returns `undefined` if not found. */
-export function getById(db: DbClient, input: { id: string }) {
-  return db.query.snippet.findFirst({
-    where: eq(snippet.id, input.id),
-  });
+export async function getById(db: DbClient, input: { id: string }) {
+  try {
+    return await db.query.snippet.findFirst({
+      where: eq(snippet.id, input.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[snippet.getById] Database error:', error);
+    return undefined;
+  }
 }
 
 /**
@@ -40,19 +53,31 @@ export function getById(db: DbClient, input: { id: string }) {
  * @throws {Error} If snippet not found or is a draft and requester is not admin.
  */
 export async function getBySlug(db: DbClient, input: { slug: string }, session?: { user: { role: string } } | null) {
-  const result = await db.query.snippet.findFirst({
-    where: eq(snippet.slug, input.slug),
-  });
+  try {
+    const result = await db.query.snippet.findFirst({
+      where: eq(snippet.slug, input.slug),
+    });
 
-  if (!result) {
-    throw new Error('Snippet not found');
+    if (!result) {
+      throw new Error('Snippet not found');
+    }
+
+    if (result.isDraft && session?.user.role !== 'admin') {
+      throw new Error('Snippet is not public');
+    }
+
+    return result;
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Snippet not found' || error.message === 'Snippet is not public')
+    ) {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[snippet.getBySlug] Database error:', error);
+    throw new Error('Failed to fetch snippet');
   }
-
-  if (result.isDraft && session?.user.role !== 'admin') {
-    throw new Error('Snippet is not public');
-  }
-
-  return result;
 }
 
 export function create(db: DbClient, input: z.infer<typeof CreateSnippetSchema>) {
