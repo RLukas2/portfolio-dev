@@ -6,14 +6,11 @@ export const user = pgTable('user', (t) => ({
   email: t.text().notNull().unique(),
   emailVerified: t.boolean().notNull().default(false),
   image: t.text(),
-
   role: t.text(),
   banned: t.boolean(),
   banReason: t.text(),
   banExpires: t.timestamp(),
-
   twitterHandle: t.text(),
-
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
 }));
@@ -22,7 +19,6 @@ export const session = pgTable('session', (t) => ({
   id: t.text().primaryKey(),
   token: t.text().notNull().unique(),
   expiresAt: t.timestamp().notNull(),
-
   ipAddress: t.text(),
   userAgent: t.text(),
   userId: t
@@ -30,7 +26,6 @@ export const session = pgTable('session', (t) => ({
     .references(() => user.id, { onDelete: 'cascade' })
     .notNull(),
   impersonatedBy: t.text(),
-
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
 }));
@@ -43,16 +38,13 @@ export const account = pgTable('account', (t) => ({
     .text()
     .references(() => user.id, { onDelete: 'cascade' })
     .notNull(),
-
   accessToken: t.text(),
   refreshToken: t.text(),
   idToken: t.text(),
   accessTokenExpiresAt: t.timestamp(),
   refreshTokenExpiresAt: t.timestamp(),
-
   scope: t.text(),
   password: t.text(),
-
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
 }));
@@ -62,7 +54,6 @@ export const verification = pgTable('verification', (t) => ({
   identifier: t.text().notNull(),
   value: t.text().notNull(),
   expiresAt: t.timestamp().notNull(),
-
   createdAt: t.timestamp().notNull(),
   updatedAt: t.timestamp().notNull(),
 }));

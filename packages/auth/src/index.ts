@@ -1,7 +1,6 @@
 import { db } from '@xbrk/db/client';
 import type { BetterAuthOptions } from 'better-auth';
 import { betterAuth } from 'better-auth';
-
 import { drizzleAdapter } from 'better-auth/adapters/drizzle';
 import { admin, oAuthProxy } from 'better-auth/plugins';
 import { tanstackStartCookies } from 'better-auth/tanstack-start';
@@ -30,7 +29,7 @@ export function initAuth(options: {
   facebookClientId?: string;
   facebookClientSecret?: string;
 }) {
-  const config: BetterAuthOptions = {
+  const config = {
     database: drizzleAdapter(db, {
       provider: 'pg',
     }),
@@ -68,7 +67,7 @@ export function initAuth(options: {
           google: {
             clientId: options.googleClientId,
             clientSecret: options.googleClientSecret,
-            prompt: 'select_account consent',
+            prompt: 'select_account consent' as const,
             redirectURI: `${options.productionUrl}/api/auth/callback/google`,
           },
         }),
@@ -82,8 +81,8 @@ export function initAuth(options: {
         }),
     },
     onAPIError: {
-      onError(error, ctx) {
-        console.error('Auth API Error:', error, ctx);
+      onError(error: unknown, ctx: unknown) {
+        console.error('Better Auth API Error:', error, ctx);
       },
     },
     user: {
@@ -92,12 +91,12 @@ export function initAuth(options: {
       },
       additionalFields: {
         twitterHandle: {
-          type: 'string',
+          type: 'string' as const,
           required: false,
         },
       },
     },
-  };
+  } satisfies BetterAuthOptions;
 
   return betterAuth(config);
 }
