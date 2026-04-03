@@ -7,7 +7,7 @@ function ThemeToggle({ setTheme }: { setTheme: (theme: 'light' | 'dark' | 'auto'
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button className="h-8 w-8 px-0" size="sm" variant="ghost">
+        <Button className="h-8 w-8 cursor-pointer px-0" size="sm" variant="ghost">
           <Sun className="size-5 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
           <Moon className="absolute size-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
           <span className="sr-only">Toggle theme</span>

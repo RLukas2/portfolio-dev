@@ -40,7 +40,6 @@ function BreadcrumbLink({
 
 function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
   return (
-    // @sonar-ignore
     // biome-ignore lint/a11y/useFocusableInteractive: fix later
     // biome-ignore lint/a11y/useSemanticElements: fix later
     <span
@@ -51,7 +50,6 @@ function BreadcrumbPage({ className, ...props }: ComponentProps<'span'>) {
       role="link"
       {...props}
     />
-    // @end
   );
 }
 

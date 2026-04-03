@@ -1,6 +1,6 @@
 import { cn } from '@xbrk/ui';
 import { type ComponentProps } from 'react';
-import { SimpleIcon } from 'simple-icons';
+import type { SimpleIcon } from 'simple-icons';
 import { Button } from './button';
 import Icon from './icon';
 
