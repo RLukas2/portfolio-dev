@@ -6,6 +6,10 @@
   "exports": {
     "./create-router": "./src/create-router.tsx",
     "./dev-tools": "./src/dev-tools.tsx",
+    "./logo": "./src/logo.tsx",
+    "./link": "./src/link.tsx",
+    "./signin": "./src/signin.tsx",
+    "./stack": "./src/stack.ts",
     "./theme-provider": "./src/theme-provider.tsx"
   },
   "scripts": {
