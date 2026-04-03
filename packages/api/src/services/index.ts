@@ -1,4 +1,3 @@
-// biome-ignore lint/performance/noBarrelFile: central re-export for service modules
 export * as blogService from './blog';
 export * as commentService from './comment';
 export * as experienceService from './experience';

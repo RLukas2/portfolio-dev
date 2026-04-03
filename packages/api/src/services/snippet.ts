@@ -34,7 +34,7 @@ export async function getAllPublic(db: DbClient) {
   }
 }
 
-/** Returns a single snippet by ID. Returns `undefined` if not found. */
+/** Returns a single snippet by ID. */
 export async function getById(db: DbClient, input: { id: string }) {
   try {
     return await db.query.snippet.findFirst({
@@ -80,14 +80,32 @@ export async function getBySlug(db: DbClient, input: { slug: string }, session?:
   }
 }
 
-export function create(db: DbClient, input: z.infer<typeof CreateSnippetSchema>) {
-  return db.insert(snippet).values(input);
+export async function create(db: DbClient, input: z.infer<typeof CreateSnippetSchema>) {
+  try {
+    await db.insert(snippet).values(input);
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[snippet.create] Database error:', error);
+    throw new Error('Failed to create snippet');
+  }
 }
 
-export function update(db: DbClient, input: z.infer<typeof UpdateSnippetSchema>) {
-  return db.update(snippet).set(input).where(eq(snippet.id, input.id));
+export async function update(db: DbClient, input: z.infer<typeof UpdateSnippetSchema>) {
+  try {
+    await db.update(snippet).set(input).where(eq(snippet.id, input.id));
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[snippet.update] Database error:', error);
+    throw new Error('Failed to update snippet');
+  }
 }
 
-export function remove(db: DbClient, id: string) {
-  return db.delete(snippet).where(eq(snippet.id, id));
+export async function remove(db: DbClient, id: string) {
+  try {
+    await db.delete(snippet).where(eq(snippet.id, id));
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[snippet.remove] Database error:', error);
+    throw new Error('Failed to delete snippet');
+  }
 }

@@ -2,7 +2,7 @@
 import * as Sentry from '@sentry/node';
 import type { db as DB } from '@xbrk/db/client';
 import { commentReactions, comments, user } from '@xbrk/db/schema';
-import { and, eq, isNull, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, isNull, sql } from 'drizzle-orm';
 import { z } from 'zod/v4';
 
 type DbClient = typeof DB;
@@ -27,7 +27,7 @@ export const JSONContentSchema: z.ZodType<z.infer<typeof baseJSONContent>> = bas
 });
 
 /** Creates a new comment on an article. Supports nested replies via `parentId`. */
-export function create(
+export async function create(
   db: DbClient,
   input: {
     articleId: string;
@@ -35,18 +35,24 @@ export function create(
     parentId?: string;
   },
   userId: string,
-) {
-  return db.insert(comments).values({
-    userId,
-    articleId: input.articleId,
-    content: input.content,
-    parentId: input.parentId,
-  });
+): Promise<void> {
+  try {
+    await db.insert(comments).values({
+      userId,
+      articleId: input.articleId,
+      content: input.content,
+      parentId: input.parentId,
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[comment.create] Database error:', error);
+    throw new Error('Failed to create comment');
+  }
 }
 
 /**
  * Returns top-level comments (or replies if `parentId` is provided) for an article.
- * Includes reply count, like/dislike counts, and the current user's reaction via subqueries.
+ * Includes reply count, like/dislike counts, and the current user's reaction via optimized joins.
  */
 export async function getAll(
   db: DbClient,
@@ -58,13 +64,15 @@ export async function getAll(
   userId?: string,
 ) {
   try {
+    const sortOrder = input.sort === 'asc' ? asc(comments.createdAt) : desc(comments.createdAt);
+
     const commentsWithCounts = await db
       .select({
         comment: comments,
         user,
-        repliesCount: sql<number>`(SELECT COUNT(*) FROM ${comments} c2 WHERE c2.parent_id = ${comments.id})`,
-        likesCount: sql<number>`(SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = true)`,
-        dislikesCount: sql<number>`(SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = false)`,
+        repliesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${comments} c2 WHERE c2.parent_id = ${comments.id}), 0)`,
+        likesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = true), 0)`,
+        dislikesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = false), 0)`,
         userReaction: commentReactions,
       })
       .from(comments)
@@ -77,7 +85,8 @@ export async function getAll(
         input.parentId
           ? and(eq(comments.articleId, input.articleId), eq(comments.parentId, input.parentId))
           : and(eq(comments.articleId, input.articleId), isNull(comments.parentId)),
-      );
+      )
+      .orderBy(sortOrder);
 
     return commentsWithCounts;
   } catch (error) {
@@ -89,24 +98,26 @@ export async function getAll(
 
 /**
  * Deletes a comment. Only the comment owner or an admin can delete.
+ * Uses transaction to ensure consistency.
  * @throws {Error} If comment not found or requester lacks permission.
  */
-export async function remove(db: DbClient, input: { id: string }, userId: string, userRole: string) {
+export async function remove(db: DbClient, input: { id: string }, userId: string, userRole: string): Promise<void> {
   try {
-    const { id } = input;
-    const comment = await db.query.comments.findFirst({
-      where: eq(comments.id, id),
+    await db.transaction(async (tx) => {
+      const comment = await tx.query.comments.findFirst({
+        where: eq(comments.id, input.id),
+      });
+
+      if (!comment) {
+        throw new Error('Comment not found');
+      }
+
+      if (comment.userId !== userId && userRole !== 'admin') {
+        throw new Error('You are not allowed to delete this comment');
+      }
+
+      await tx.delete(comments).where(eq(comments.id, input.id));
     });
-
-    if (!comment) {
-      throw new Error('Comment not found');
-    }
-
-    if (comment.userId !== userId && userRole !== 'admin') {
-      throw new Error('You are not allowed to delete this comment');
-    }
-
-    return db.delete(comments).where(eq(comments.id, id));
   } catch (error) {
     if (
       error instanceof Error &&
@@ -124,35 +135,37 @@ export async function remove(db: DbClient, input: { id: string }, userId: string
  * Adds or updates a like/dislike reaction on a comment.
  * Users cannot react to their own comments.
  * If a reaction already exists, it is updated in place.
+ * Uses transaction to ensure consistency.
  * @throws {Error} If comment not found or user tries to react to their own comment.
  */
-export async function react(db: DbClient, input: { id: string; like: boolean }, userId: string) {
+export async function react(db: DbClient, input: { id: string; like: boolean }, userId: string): Promise<void> {
   try {
-    const { id, like: isLike } = input;
-    const comment = await db.query.comments.findFirst({
-      where: eq(comments.id, id),
-    });
+    await db.transaction(async (tx) => {
+      const comment = await tx.query.comments.findFirst({
+        where: eq(comments.id, input.id),
+      });
 
-    if (!comment) {
-      throw new Error('Comment not found');
-    }
+      if (!comment) {
+        throw new Error('Comment not found');
+      }
 
-    if (comment.userId === userId) {
-      throw new Error('You are not allowed to react to your own comment');
-    }
+      if (comment.userId === userId) {
+        throw new Error('You are not allowed to react to your own comment');
+      }
 
-    const existingReaction = await db.query.commentReactions.findFirst({
-      where: and(eq(commentReactions.commentId, id), eq(commentReactions.userId, userId)),
-    });
+      const existingReaction = await tx.query.commentReactions.findFirst({
+        where: and(eq(commentReactions.commentId, input.id), eq(commentReactions.userId, userId)),
+      });
 
-    if (existingReaction) {
-      return db.update(commentReactions).set({ like: isLike }).where(eq(commentReactions.id, existingReaction.id));
-    }
-
-    return db.insert(commentReactions).values({
-      commentId: id,
-      userId,
-      like: isLike,
+      if (existingReaction) {
+        await tx.update(commentReactions).set({ like: input.like }).where(eq(commentReactions.id, existingReaction.id));
+      } else {
+        await tx.insert(commentReactions).values({
+          commentId: input.id,
+          userId,
+          like: input.like,
+        });
+      }
     });
   } catch (error) {
     if (

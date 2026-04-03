@@ -4,7 +4,8 @@ import type { db as DB } from '@xbrk/db/client';
 import { CreateServiceSchema, service, UpdateServiceSchema } from '@xbrk/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import type { z } from 'zod/v4';
-import { deleteFile, uploadImage } from '../storage';
+import { handleImageUpdate, handleImageUpload } from '../lib/base-service';
+import { deleteFile } from '../storage';
 
 type DbClient = typeof DB;
 
@@ -68,7 +69,7 @@ export async function getBySlug(db: DbClient, input: { slug: string }, session?:
   }
 }
 
-/** Returns a single service by ID. Returns `undefined` if not found. */
+/** Returns a single service by ID. */
 export async function getById(db: DbClient, input: { id: string }) {
   try {
     return await db.query.service.findFirst({
@@ -85,58 +86,90 @@ export async function getById(db: DbClient, input: { id: string }) {
  * Creates a new service. If a thumbnail is provided, it is uploaded to storage
  * and saved as `imageUrl`.
  */
-export async function create(db: DbClient, input: z.infer<typeof CreateServiceSchema>) {
-  const { thumbnail, ...serviceData } = input;
-
-  if (thumbnail) {
+export function create(db: DbClient, input: z.infer<typeof CreateServiceSchema>) {
+  return (async () => {
     try {
-      const imageUrl = await uploadImage('projects', thumbnail, input.slug);
-      serviceData.imageUrl = imageUrl;
+      const { thumbnail, ...serviceData } = input;
+
+      const imageUrl = await handleImageUpload('services', thumbnail, input.slug, 'service');
+      if (imageUrl) {
+        serviceData.imageUrl = imageUrl;
+      }
+
+      return db.insert(service).values(serviceData);
     } catch (error) {
       Sentry.captureException(error);
+      console.error('[service.create] Database error:', error);
+      throw new Error('Failed to create service');
     }
-  }
-
-  return db.insert(service).values(serviceData);
+  })();
 }
 
 /**
  * Updates a service. If a new thumbnail is provided, uploads it and deletes the old one.
  * Old image is only deleted after the new upload succeeds.
  */
-export async function update(db: DbClient, input: z.infer<typeof UpdateServiceSchema>) {
-  const { thumbnail, id, ...serviceData } = input;
-
-  if (thumbnail) {
+export function update(db: DbClient, input: z.infer<typeof UpdateServiceSchema>) {
+  return db.transaction(async (tx) => {
     try {
-      const existingService = await db.query.service.findFirst({
-        where: eq(service.id, id),
-      });
-      const oldImageUrl = existingService?.imageUrl;
+      const { thumbnail, id, ...serviceData } = input;
 
-      const imageUrl = await uploadImage('services', thumbnail, input.slug ?? id);
-      serviceData.imageUrl = imageUrl;
+      if (thumbnail) {
+        const existingService = await tx.query.service.findFirst({
+          where: eq(service.id, id),
+        });
 
-      if (oldImageUrl) {
-        await deleteFile(oldImageUrl);
+        const imageUrl = await handleImageUpdate(
+          'services',
+          thumbnail,
+          input.slug ?? id,
+          existingService?.imageUrl,
+          'service',
+        );
+
+        if (imageUrl) {
+          serviceData.imageUrl = imageUrl;
+        }
       }
+
+      return tx.update(service).set(serviceData).where(eq(service.id, id));
     } catch (error) {
       Sentry.captureException(error);
+      console.error('[service.update] Database error:', error);
+      throw new Error('Failed to update service');
     }
-  }
-
-  return db.update(service).set(serviceData).where(eq(service.id, id));
+  });
 }
 
 /** Deletes a service and its associated image from storage if present. */
-export async function remove(db: DbClient, id: string) {
-  const serviceToDelete = await db.query.service.findFirst({
-    where: eq(service.id, id),
+export function remove(db: DbClient, id: string) {
+  return db.transaction(async (tx) => {
+    try {
+      const serviceToDelete = await tx.query.service.findFirst({
+        where: eq(service.id, id),
+      });
+
+      if (!serviceToDelete) {
+        throw new Error('Service not found');
+      }
+
+      await tx.delete(service).where(eq(service.id, id));
+
+      if (serviceToDelete.imageUrl) {
+        try {
+          await deleteFile(serviceToDelete.imageUrl);
+        } catch (error) {
+          Sentry.captureException(error);
+          console.error('[service.remove] Image deletion failed:', error);
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Service not found') {
+        throw error;
+      }
+      Sentry.captureException(error);
+      console.error('[service.remove] Database error:', error);
+      throw new Error('Failed to delete service');
+    }
   });
-
-  if (serviceToDelete?.imageUrl) {
-    await deleteFile(serviceToDelete.imageUrl);
-  }
-
-  return db.delete(service).where(eq(service.id, id));
 }

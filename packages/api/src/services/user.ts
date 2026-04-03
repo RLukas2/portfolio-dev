@@ -4,6 +4,9 @@ import type { db as DB } from '@xbrk/db/client';
 
 type DbClient = typeof DB;
 
+/**
+ * Returns all users.
+ */
 export async function getAll(db: DbClient) {
   try {
     return await db.query.user.findMany();

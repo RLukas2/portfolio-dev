@@ -5,7 +5,8 @@ import { CreateProjectSchema, project, UpdateProjectSchema } from '@xbrk/db/sche
 import { getTOC } from '@xbrk/utils';
 import { desc, eq } from 'drizzle-orm';
 import type { z } from 'zod/v4';
-import { deleteFile, uploadImage } from '../storage';
+import { handleImageUpdate, handleImageUpload } from '../lib/base-service';
+import { deleteFile } from '../storage';
 
 type DbClient = typeof DB;
 
@@ -71,16 +72,28 @@ export async function getBySlug(db: DbClient, input: { slug: string }, session?:
   }
 }
 
-/** Returns a single project by ID. Returns `undefined` if not found. */
+/**
+ * Returns a single project by ID.
+ * @throws {Error} If project not found.
+ */
 export async function getById(db: DbClient, input: { id: string }) {
   try {
-    return await db.query.project.findFirst({
+    const result = await db.query.project.findFirst({
       where: eq(project.id, input.id),
     });
+
+    if (!result) {
+      throw new Error('Project not found');
+    }
+
+    return result;
   } catch (error) {
+    if (error instanceof Error && error.message === 'Project not found') {
+      throw error;
+    }
     Sentry.captureException(error);
     console.error('[project.getById] Database error:', error);
-    return undefined;
+    throw new Error('Failed to fetch project');
   }
 }
 
@@ -89,18 +102,20 @@ export async function getById(db: DbClient, input: { id: string }) {
  * and saved as `imageUrl`.
  */
 export async function create(db: DbClient, input: z.infer<typeof CreateProjectSchema>) {
-  const { thumbnail, ...projectData } = input;
+  try {
+    const { thumbnail, ...projectData } = input;
 
-  if (thumbnail) {
-    try {
-      const imageUrl = await uploadImage('projects', thumbnail, input.slug);
+    const imageUrl = await handleImageUpload('projects', thumbnail, input.slug, 'project');
+    if (imageUrl) {
       projectData.imageUrl = imageUrl;
-    } catch (error) {
-      Sentry.captureException(error);
     }
-  }
 
-  return db.insert(project).values(projectData);
+    return db.insert(project).values(projectData);
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[project.create] Database error:', error);
+    throw new Error('Failed to create project');
+  }
 }
 
 /**
@@ -108,38 +123,69 @@ export async function create(db: DbClient, input: z.infer<typeof CreateProjectSc
  * Old image is only deleted after the new upload succeeds.
  */
 export async function update(db: DbClient, input: z.infer<typeof UpdateProjectSchema>) {
-  const { thumbnail, id, ...projectData } = input;
+  try {
+    const { thumbnail, id, ...projectData } = input;
 
-  if (thumbnail) {
-    try {
-      const existingProject = await db.query.project.findFirst({
-        where: eq(project.id, id),
-      });
-      const oldImageUrl = existingProject?.imageUrl;
+    await db.transaction(async (tx) => {
+      if (thumbnail) {
+        const existingProject = await tx.query.project.findFirst({
+          where: eq(project.id, id),
+        });
 
-      const imageUrl = await uploadImage('projects', thumbnail, input.slug ?? id);
-      projectData.imageUrl = imageUrl;
+        const imageUrl = await handleImageUpdate(
+          'projects',
+          thumbnail,
+          input.slug ?? id,
+          existingProject?.imageUrl,
+          'project',
+        );
 
-      if (oldImageUrl) {
-        await deleteFile(oldImageUrl);
+        if (imageUrl) {
+          projectData.imageUrl = imageUrl;
+        }
       }
-    } catch (error) {
-      Sentry.captureException(error);
-    }
-  }
 
-  return db.update(project).set(projectData).where(eq(project.id, id));
+      await tx.update(project).set(projectData).where(eq(project.id, id));
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[project.update] Database error:', error);
+    throw new Error('Failed to update project');
+  }
 }
 
-/** Deletes a project and its associated image from storage if present. */
+/**
+ * Deletes a project and its associated image from storage if present.
+ * @throws {Error} If project not found.
+ */
 export async function remove(db: DbClient, id: string) {
-  const projectToDelete = await db.query.project.findFirst({
-    where: eq(project.id, id),
-  });
+  try {
+    await db.transaction(async (tx) => {
+      const projectToDelete = await tx.query.project.findFirst({
+        where: eq(project.id, id),
+      });
 
-  if (projectToDelete?.imageUrl) {
-    await deleteFile(projectToDelete.imageUrl);
+      if (!projectToDelete) {
+        throw new Error('Project not found');
+      }
+
+      await tx.delete(project).where(eq(project.id, id));
+
+      if (projectToDelete.imageUrl) {
+        try {
+          await deleteFile(projectToDelete.imageUrl);
+        } catch (error) {
+          Sentry.captureException(error);
+          console.error('[project.remove] Image deletion failed:', error);
+        }
+      }
+    });
+  } catch (error) {
+    if (error instanceof Error && error.message === 'Project not found') {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[project.remove] Database error:', error);
+    throw new Error('Failed to delete project');
   }
-
-  return db.delete(project).where(eq(project.id, id));
 }

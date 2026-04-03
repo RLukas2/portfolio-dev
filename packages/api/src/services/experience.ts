@@ -4,7 +4,9 @@ import type { db as DB } from '@xbrk/db/client';
 import { CreateExperienceSchema, experience, UpdateExperienceSchema } from '@xbrk/db/schema';
 import { desc, eq } from 'drizzle-orm';
 import type { z } from 'zod/v4';
-import { deleteFile, uploadImage } from '../storage';
+import { handleImageUpdate, handleImageUpload } from '../lib/base-service';
+import { createSlug } from '../lib/validation';
+import { deleteFile } from '../storage';
 
 type DbClient = typeof DB;
 
@@ -35,7 +37,7 @@ export async function getAllPublic(db: DbClient) {
   }
 }
 
-/** Returns a single experience by ID. Returns `undefined` if not found. */
+/** Returns a single experience by ID. */
 export async function getById(db: DbClient, input: { id: string }) {
   try {
     return await db.query.experience.findFirst({
@@ -52,70 +54,108 @@ export async function getById(db: DbClient, input: { id: string }) {
  * Creates a new experience entry. Empty `startDate`/`endDate` strings are coerced to `null`.
  * If a thumbnail is provided, it is uploaded to storage and saved as `imageUrl`.
  */
-export async function create(db: DbClient, input: z.infer<typeof CreateExperienceSchema>) {
-  const { thumbnail, ...experienceData } = input;
-
-  const dataToInsert = {
-    ...experienceData,
-    startDate: experienceData.startDate || null,
-    endDate: experienceData.endDate || null,
-  };
-
-  if (thumbnail) {
+export function create(db: DbClient, input: z.infer<typeof CreateExperienceSchema>) {
+  return (async () => {
     try {
-      const imageUrl = await uploadImage('experiences', thumbnail, input.title);
-      dataToInsert.imageUrl = imageUrl;
+      const { thumbnail, ...experienceData } = input;
+
+      // Create URL-safe slug from title
+      const slug = createSlug(experienceData.title);
+
+      const dataToInsert = {
+        ...experienceData,
+        startDate: experienceData.startDate || null,
+        endDate: experienceData.endDate || null,
+      };
+
+      const imageUrl = await handleImageUpload('experiences', thumbnail, slug, 'experience');
+      if (imageUrl) {
+        dataToInsert.imageUrl = imageUrl;
+      }
+
+      return db.insert(experience).values(dataToInsert);
     } catch (error) {
       Sentry.captureException(error);
+      console.error('[experience.create] Error:', error);
+      throw new Error('Failed to create experience');
     }
-  }
-
-  return db.insert(experience).values(dataToInsert);
+  })();
 }
 
 /**
  * Updates an experience entry. If a new thumbnail is provided, uploads it and deletes the old one.
  * Empty `startDate`/`endDate` strings are coerced to `null`.
  */
-export async function update(db: DbClient, input: z.infer<typeof UpdateExperienceSchema>) {
-  const { thumbnail, id, ...experienceData } = input;
-
-  const dataToUpdate = {
-    ...experienceData,
-    startDate: experienceData.startDate || null,
-    endDate: experienceData.endDate || null,
-  };
-
-  if (thumbnail) {
+export function update(db: DbClient, input: z.infer<typeof UpdateExperienceSchema>) {
+  return db.transaction(async (tx) => {
     try {
-      const existingExperience = await db.query.experience.findFirst({
-        where: eq(experience.id, id),
-      });
-      const oldImageUrl = existingExperience?.imageUrl;
+      const { thumbnail, id, ...experienceData } = input;
 
-      const imageUrl = await uploadImage('experiences', thumbnail, id);
-      dataToUpdate.imageUrl = imageUrl;
+      // Create URL-safe slug from title if title is being updated
+      const slug = experienceData.title ? createSlug(experienceData.title) : undefined;
 
-      if (oldImageUrl) {
-        await deleteFile(oldImageUrl);
+      const dataToUpdate = {
+        ...experienceData,
+        startDate: experienceData.startDate || null,
+        endDate: experienceData.endDate || null,
+      };
+
+      if (thumbnail) {
+        const existingExperience = await tx.query.experience.findFirst({
+          where: eq(experience.id, id),
+        });
+
+        const imageUrl = await handleImageUpdate(
+          'experiences',
+          thumbnail,
+          slug ?? id,
+          existingExperience?.imageUrl,
+          'experience',
+        );
+
+        if (imageUrl) {
+          dataToUpdate.imageUrl = imageUrl;
+        }
       }
+
+      return tx.update(experience).set(dataToUpdate).where(eq(experience.id, id));
     } catch (error) {
       Sentry.captureException(error);
+      console.error('[experience.update] Error:', error);
+      throw new Error('Failed to update experience');
     }
-  }
-
-  return db.update(experience).set(dataToUpdate).where(eq(experience.id, id));
+  });
 }
 
 /** Deletes an experience entry and its associated image from storage if present. */
-export async function remove(db: DbClient, id: string) {
-  const experienceToDelete = await db.query.experience.findFirst({
-    where: eq(experience.id, id),
+export function remove(db: DbClient, id: string) {
+  return db.transaction(async (tx) => {
+    try {
+      const experienceToDelete = await tx.query.experience.findFirst({
+        where: eq(experience.id, id),
+      });
+
+      if (!experienceToDelete) {
+        throw new Error('Experience not found');
+      }
+
+      await tx.delete(experience).where(eq(experience.id, id));
+
+      if (experienceToDelete.imageUrl) {
+        try {
+          await deleteFile(experienceToDelete.imageUrl);
+        } catch (error) {
+          Sentry.captureException(error);
+          console.error('[experience.remove] Image deletion failed:', error);
+        }
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message === 'Experience not found') {
+        throw error;
+      }
+      Sentry.captureException(error);
+      console.error('[experience.remove] Error:', error);
+      throw new Error('Failed to delete experience');
+    }
   });
-
-  if (experienceToDelete?.imageUrl) {
-    await deleteFile(experienceToDelete.imageUrl);
-  }
-
-  return db.delete(experience).where(eq(experience.id, id));
 }

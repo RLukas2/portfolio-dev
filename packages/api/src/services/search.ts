@@ -3,20 +3,37 @@ import * as Sentry from '@sentry/node';
 import type { db as DB } from '@xbrk/db/client';
 import { articles, project, snippet } from '@xbrk/db/schema';
 import { and, eq, ilike, or } from 'drizzle-orm';
+import { escapeSearchTerm, validateSearchQuery } from '../lib/validation';
 
 type DbClient = typeof DB;
 
-function escapeSearchTerm(term: string): string {
-  return term.replace(/[%_\\]/g, (char) => `\\${char}`);
+interface SearchResult {
+  description: string | null;
+  id: string;
+  slug: string;
+  title: string;
+}
+
+interface SearchResults {
+  articles: SearchResult[];
+  projects: SearchResult[];
+  snippets: SearchResult[];
 }
 
 /**
  * Searches across articles, projects, and snippets using case-insensitive ILIKE.
  * Only published (non-draft) records are included. Returns up to 5 results per entity type.
  * Special SQL characters (`%`, `_`, `\`) in the query are escaped before matching.
+ * @throws {Error} If query validation fails
  */
-export async function query(db: DbClient, input: { query: string }) {
+export async function query(db: DbClient, input: { query: string }): Promise<SearchResults> {
   try {
+    // Validate search query
+    const validation = validateSearchQuery(input.query);
+    if (!validation.valid) {
+      throw new Error(validation.error);
+    }
+
     const searchTerm = `%${escapeSearchTerm(input.query)}%`;
 
     const [articlesResult, projectsResult, snippetsResult] = await Promise.all([
@@ -67,6 +84,9 @@ export async function query(db: DbClient, input: { query: string }) {
       snippets: snippetsResult,
     };
   } catch (error) {
+    if (error instanceof Error && error.message.includes('Search query')) {
+      throw error;
+    }
     Sentry.captureException(error);
     console.error('[search.query] Database error:', error);
     return {

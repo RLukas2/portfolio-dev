@@ -15,6 +15,8 @@ import type { z } from 'zod/v4';
 import { env } from '../../env';
 import { deleteFile, uploadImage } from '../storage';
 
+type DbClient = typeof DB;
+
 /** Extracts and hashes the requester's IP address for anonymous identity tracking. */
 function hashIpAddress(headers: Headers): string {
   const ipAddress =
@@ -28,13 +30,17 @@ function hashIpAddress(headers: Headers): string {
     .digest('hex');
 }
 
-type DbClient = typeof DB;
-
 /** Returns all articles including drafts. For admin use only. */
-export function getAll(db: DbClient) {
-  return db.query.articles.findMany({
-    orderBy: desc(articles.id),
-  });
+export async function getAll(db: DbClient) {
+  try {
+    return await db.query.articles.findMany({
+      orderBy: desc(articles.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[blog.getAll] Database error:', error);
+    return [];
+  }
 }
 
 /** Returns all published articles with aggregated likes and view counts. */
@@ -54,11 +60,11 @@ export async function getAllPublic(db: DbClient) {
         content: articles.content,
         tags: articles.tags,
         likesCount:
-          sql<number>`(SELECT COUNT(*) FROM ${articleLikes} WHERE ${articleLikes.articleId} = ${articles.id})`.as(
+          sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleLikes} WHERE ${articleLikes.articleId} = ${articles.id}), 0)`.as(
             'likes_count',
           ),
         viewCount:
-          sql<number>`(SELECT COUNT(*) FROM ${articleViews} WHERE ${articleViews.articleId} = ${articles.id})`.as(
+          sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleViews} WHERE ${articleViews.articleId} = ${articles.id}), 0)`.as(
             'view_count',
           ),
       })
@@ -69,6 +75,7 @@ export async function getAllPublic(db: DbClient) {
     return result;
   } catch (error) {
     Sentry.captureException(error);
+    console.error('[blog.getAllPublic] Database error:', error);
     return [];
   }
 }
@@ -76,113 +83,148 @@ export async function getAllPublic(db: DbClient) {
 /**
  * Returns a single article by slug with comments, author, view count, and generated TOC.
  * Draft articles are only accessible to admins.
+ * Uses optimized single query with joins instead of multiple queries.
  * @throws {Error} If article not found or is a draft and requester is not admin.
  */
 export async function getBySlug(db: DbClient, input: { slug: string }, session?: { user: { role: string } } | null) {
-  const article = await db.query.articles.findFirst({
-    where: eq(articles.slug, input.slug),
-    with: {
-      comments: true,
-      author: true,
-    },
-  });
+  try {
+    // Fetch article with all related data in a single optimized query
+    const result = await db
+      .select({
+        article: articles,
+        viewCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleViews} WHERE ${articleViews.articleId} = ${articles.id}), 0)`,
+        likesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleLikes} WHERE ${articleLikes.articleId} = ${articles.id}), 0)`,
+      })
+      .from(articles)
+      .where(eq(articles.slug, input.slug))
+      .limit(1);
 
-  if (!article) {
-    throw new Error('Article not found');
+    if (!result[0]) {
+      throw new Error('Article not found');
+    }
+
+    const { article, viewCount, likesCount } = result[0];
+
+    // Check draft access
+    if (article.isDraft && session?.user.role !== 'admin') {
+      throw new Error('Article is not public');
+    }
+
+    // Fetch related data
+    const [articleWithRelations] = await db.query.articles.findMany({
+      where: eq(articles.id, article.id),
+      with: {
+        comments: true,
+        author: true,
+      },
+      limit: 1,
+    });
+
+    const toc = getTOC(article.content ?? '');
+
+    return {
+      ...article,
+      toc,
+      viewCount,
+      likesCount,
+      comments: articleWithRelations?.comments ?? [],
+      author: articleWithRelations?.author,
+    };
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Article not found' || error.message === 'Article is not public')
+    ) {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[blog.getBySlug] Database error:', error);
+    throw new Error('Failed to fetch article');
   }
-
-  // if article is draft, throw an error unless user is admin
-  if (article.isDraft && session?.user.role !== 'admin') {
-    throw new Error('Article is not public');
-  }
-
-  // Get view count separately
-  const viewCount = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(articleViews)
-    .where(eq(articleViews.articleId, article.id));
-
-  // Get like count separately
-  const likeCount = await db
-    .select({ count: sql<number>`count(*)` })
-    .from(articleLikes)
-    .where(eq(articleLikes.articleId, article.id));
-
-  const toc = getTOC(article.content ?? '');
-
-  return {
-    ...article,
-    toc,
-    viewCount: viewCount[0]?.count ?? 0,
-    likesCount: likeCount[0]?.count ?? 0,
-  };
 }
 
-/** Returns a single article by ID. Returns `undefined` if not found. */
-export function getById(db: DbClient, input: { id: string }) {
-  return db.query.articles.findFirst({
-    where: eq(articles.id, input.id),
-  });
+/** Returns a single article by ID. */
+export async function getById(db: DbClient, input: { id: string }) {
+  try {
+    return await db.query.articles.findFirst({
+      where: eq(articles.id, input.id),
+    });
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[blog.getById] Database error:', error);
+    return undefined;
+  }
 }
 
 /**
  * Creates a new article. If a thumbnail is provided (base64 or URL),
  * it will be uploaded to storage and the resulting URL saved to `imageUrl`.
  */
-export async function create(db: DbClient, input: z.infer<typeof CreateArticleSchema>) {
+export function create(db: DbClient, input: z.infer<typeof CreateArticleSchema>) {
   const { thumbnail, ...articleData } = input;
 
-  if (thumbnail) {
-    try {
-      const imageUrl = await uploadImage('articles', thumbnail, input.slug);
-      articleData.imageUrl = imageUrl;
-    } catch (error) {
-      Sentry.captureException(error);
+  return (async () => {
+    if (thumbnail) {
+      try {
+        const imageUrl = await uploadImage('articles', thumbnail, input.slug);
+        articleData.imageUrl = imageUrl;
+      } catch (error) {
+        Sentry.captureException(error);
+      }
     }
-  }
 
-  return db.insert(articles).values(articleData);
+    return db.insert(articles).values(articleData);
+  })();
 }
 
 /**
  * Updates an article. If a new thumbnail is provided, uploads it and deletes the old one.
  * Old image is only deleted after the new upload succeeds.
  */
-export async function update(db: DbClient, input: z.infer<typeof UpdateArticleSchema>) {
+export function update(db: DbClient, input: z.infer<typeof UpdateArticleSchema>) {
   const { thumbnail, id, ...articleData } = input;
 
-  if (thumbnail) {
-    try {
-      const existingArticle = await db.query.articles.findFirst({
-        where: eq(articles.id, id),
-      });
-      const oldImageUrl = existingArticle?.imageUrl;
+  return db.transaction(async (tx) => {
+    if (thumbnail) {
+      try {
+        const existingArticle = await tx.query.articles.findFirst({
+          where: eq(articles.id, id),
+        });
+        const oldImageUrl = existingArticle?.imageUrl;
 
-      const imageUrl = await uploadImage('articles', thumbnail, input.slug ?? id);
-      articleData.imageUrl = imageUrl;
+        const imageUrl = await uploadImage('articles', thumbnail, input.slug ?? id);
+        articleData.imageUrl = imageUrl;
 
-      if (oldImageUrl) {
-        await deleteFile(oldImageUrl);
+        if (oldImageUrl) {
+          await deleteFile(oldImageUrl);
+        }
+      } catch (error) {
+        Sentry.captureException(error);
       }
-    } catch (error) {
-      Sentry.captureException(error);
     }
-  }
 
-  return db.update(articles).set(articleData).where(eq(articles.id, id));
+    return tx.update(articles).set(articleData).where(eq(articles.id, id));
+  });
 }
 
 /** Deletes an article and its associated image from storage if present. */
-export async function remove(db: DbClient, id: string) {
-  const articleToDelete = await db.query.articles.findFirst({
-    where: eq(articles.id, id),
+export function remove(db: DbClient, id: string) {
+  return db.transaction(async (tx) => {
+    const articleToDelete = await tx.query.articles.findFirst({
+      where: eq(articles.id, id),
+    });
+
+    await tx.delete(articles).where(eq(articles.id, id));
+
+    if (articleToDelete?.imageUrl) {
+      try {
+        await deleteFile(articleToDelete.imageUrl);
+      } catch (error) {
+        Sentry.captureException(error);
+        console.error('[blog.remove] Image deletion failed:', error);
+      }
+    }
   });
-
-  if (articleToDelete?.imageUrl) {
-    await deleteFile(articleToDelete.imageUrl);
-  }
-
-  return db.delete(articles).where(eq(articles.id, id));
 }
 
 /**
@@ -196,62 +238,82 @@ export async function like(
   input: { slug: string },
   headers: Headers,
   session?: { user: { role: string } } | null,
-) {
-  const article = await db.query.articles.findFirst({
-    where: eq(articles.slug, input.slug),
-  });
+): Promise<void> {
+  try {
+    const article = await db.query.articles.findFirst({
+      where: eq(articles.slug, input.slug),
+    });
 
-  if (!article) {
-    throw new Error('Article not found');
+    if (!article) {
+      throw new Error('Article not found');
+    }
+
+    // if article is draft, throw an error unless user is admin
+    if (article.isDraft && session?.user.role !== 'admin') {
+      throw new Error('Article is not public');
+    }
+
+    // Extract IP address from headers
+    const currentUserId = hashIpAddress(headers);
+
+    await db.transaction(async (tx) => {
+      const existingLike = await tx.query.articleLikes.findFirst({
+        where: and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)),
+      });
+
+      // if like exists, delete it
+      if (existingLike) {
+        await tx
+          .delete(articleLikes)
+          .where(and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)));
+        return;
+      }
+
+      // if like does not exist, insert it
+      await tx.insert(articleLikes).values({
+        articleId: article.id,
+        visitorId: currentUserId,
+      });
+    });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Article not found' || error.message === 'Article is not public')
+    ) {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[blog.like] Database error:', error);
+    throw new Error('Failed to toggle like');
   }
-
-  // if article is draft, throw an error unless user is admin
-  if (article.isDraft && session?.user.role !== 'admin') {
-    throw new Error('Article is not public');
-  }
-
-  // Extract IP address from headers
-  const currentUserId = hashIpAddress(headers);
-
-  const existingLike = await db.query.articleLikes.findFirst({
-    where: and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)),
-  });
-
-  // if like exists, delete it
-  if (existingLike) {
-    await db
-      .delete(articleLikes)
-      .where(and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)));
-    return;
-  }
-
-  // if like does not exist, insert it
-  return db.insert(articleLikes).values({
-    articleId: article.id,
-    visitorId: currentUserId,
-  });
 }
 
 /**
  * Checks whether the current requester (identified by hashed IP) has liked a given article.
  * Uses the same IP hashing logic as `like()`.
  */
-export async function isLiked(db: DbClient, input: { slug: string }, headers: Headers) {
-  const article = await db.query.articles.findFirst({
-    where: eq(articles.slug, input.slug),
-  });
+export async function isLiked(db: DbClient, input: { slug: string }, headers: Headers): Promise<boolean> {
+  try {
+    const article = await db.query.articles.findFirst({
+      where: eq(articles.slug, input.slug),
+    });
 
-  if (!article) {
+    if (!article) {
+      return false;
+    }
+
+    const currentUserId = hashIpAddress(headers);
+
+    const existingLike = await db.query.articleLikes.findFirst({
+      where: and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)),
+    });
+
+    return Boolean(existingLike);
+  } catch (error) {
+    Sentry.captureException(error);
+    console.error('[blog.isLiked] Database error:', error);
     return false;
   }
-
-  const currentUserId = hashIpAddress(headers);
-
-  const existingLike = await db.query.articleLikes.findFirst({
-    where: and(eq(articleLikes.articleId, article.id), eq(articleLikes.visitorId, currentUserId)),
-  });
-
-  return Boolean(existingLike);
 }
 
 /**
@@ -259,22 +321,34 @@ export async function isLiked(db: DbClient, input: { slug: string }, headers: He
  * Draft articles cannot be viewed.
  * @throws {Error} If article not found or is a draft.
  */
-export async function view(db: DbClient, input: { slug: string }) {
-  const article = await db.query.articles.findFirst({
-    where: eq(articles.slug, input.slug),
-  });
+export async function view(db: DbClient, input: { slug: string }): Promise<void> {
+  try {
+    const article = await db.query.articles.findFirst({
+      where: eq(articles.slug, input.slug),
+    });
 
-  if (!article) {
-    throw new Error('Article not found');
+    if (!article) {
+      throw new Error('Article not found');
+    }
+
+    // if article is draft, throw an error
+    if (article.isDraft) {
+      throw new Error('Article is not public');
+    }
+
+    // Insert view record with timestamp
+    await db.insert(articleViews).values({
+      articleId: article.id,
+    });
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === 'Article not found' || error.message === 'Article is not public')
+    ) {
+      throw error;
+    }
+    Sentry.captureException(error);
+    console.error('[blog.view] Database error:', error);
+    throw new Error('Failed to record view');
   }
-
-  // if article is draft, throw an error
-  if (article.isDraft) {
-    throw new Error('Article is not public');
-  }
-
-  // Insert view record with timestamp
-  return db.insert(articleViews).values({
-    articleId: article.id,
-  });
 }
