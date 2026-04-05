@@ -1,3 +1,32 @@
+/**
+ * React Query Key Factory
+ *
+ * Centralized query key management for TanStack Query.
+ * Provides type-safe, hierarchical query keys for all data entities.
+ *
+ * Benefits:
+ * - Consistent key structure across the app
+ * - Easy cache invalidation (e.g., invalidate all blog queries)
+ * - Type safety with const assertions
+ * - Prevents key collisions
+ *
+ * @example
+ * ```ts
+ * // Invalidate all blog queries
+ * queryClient.invalidateQueries({ queryKey: queryKeys.blog.all });
+ *
+ * // Invalidate specific blog post
+ * queryClient.invalidateQueries({ queryKey: queryKeys.blog.byId('post-123') });
+ *
+ * // Use in query
+ * useQuery({
+ *   queryKey: queryKeys.blog.listAll(),
+ *   queryFn: fetchAllBlogs
+ * });
+ * ```
+ *
+ * @see {@link https://tanstack.com/query/latest/docs/framework/react/guides/query-keys TanStack Query Keys}
+ */
 export const queryKeys = {
   blog: {
     all: ['blog'] as const,

@@ -2,6 +2,22 @@ import { initAuth } from '@xbrk/auth';
 import { env } from '@/lib/env/server';
 import { getBaseUrl } from '@/lib/utils';
 
+/**
+ * Better Auth Server Configuration
+ *
+ * Initializes the authentication system with OAuth providers and session management.
+ * This is the server-side auth instance used for session validation and user management.
+ *
+ * Supported OAuth providers:
+ * - GitHub
+ * - Twitter
+ * - Google
+ * - Facebook
+ *
+ * Configuration is loaded from environment variables defined in env/server.ts
+ *
+ * @see {@link https://www.better-auth.com/docs Better Auth Documentation}
+ */
 export const auth = initAuth({
   baseUrl: getBaseUrl(),
   productionUrl: getBaseUrl(),
