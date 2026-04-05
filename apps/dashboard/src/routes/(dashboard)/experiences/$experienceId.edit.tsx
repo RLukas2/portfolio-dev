@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient, useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, ErrorComponent, useRouter } from '@tanstack/react-router';
-import { ExperienceBaseSchema, ExperienceType } from '@xbrk/db/schema';
+import { ExperienceBaseSchema, ExperienceType, type ExperienceTypeValue } from '@xbrk/db/schema';
 import { useAppForm } from '@xbrk/ui/form';
 import { NotFound } from '@xbrk/ui/not-found';
 import { toast } from 'sonner';
@@ -75,7 +75,7 @@ function ExperiencesEditPage() {
       endDate: experience.data?.endDate ?? '',
       institution: experience.data?.institution ?? '',
       url: experience.data?.url ?? '',
-      type: experience.data?.type ?? ExperienceType.WORK,
+      type: (experience.data?.type ?? ExperienceType.WORK) as ExperienceTypeValue,
       thumbnail: '',
       isDraft: experience.data?.isDraft ?? false,
       isOnGoing: experience.data?.isOnGoing ?? false,

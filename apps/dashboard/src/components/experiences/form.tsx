@@ -1,5 +1,5 @@
 import { formOptions, type ValidationErrorMap } from '@tanstack/react-form';
-import { ExperienceType as ExperienceTypeEnum } from '@xbrk/db/schema';
+import { ExperienceType as ExperienceTypeEnum, type ExperienceTypeValue } from '@xbrk/db/schema';
 import type { ExperienceType } from '@xbrk/types';
 import { withForm } from '@xbrk/ui/form';
 import {
@@ -21,7 +21,7 @@ export const experienceFormOpts = formOptions({
     startDate: '',
     endDate: '',
     url: '',
-    type: ExperienceTypeEnum.WORK,
+    type: ExperienceTypeEnum.WORK as ExperienceTypeValue,
     isDraft: false,
     isOnGoing: false,
   },
