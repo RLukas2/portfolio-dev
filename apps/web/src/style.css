@@ -19,7 +19,7 @@
 @custom-variant auto (&:where(.auto, .auto *));
 
 /* ========================================
-   BASE LAYER - Core Improvements
+   BASE LAYER
    ======================================== */
 @layer base {
   :root {
