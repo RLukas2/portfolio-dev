@@ -2,7 +2,7 @@ import { ErrorBoundary } from '@sentry/tanstackstart-react';
 import { createFileRoute } from '@tanstack/react-router';
 import { createServerFn } from '@tanstack/react-start';
 import { getRequest } from '@tanstack/react-start/server';
-import { UserType } from '@xbrk/types';
+import type { UserType } from '@xbrk/types';
 import { Card } from '@xbrk/ui/card';
 import { Skeleton } from '@xbrk/ui/skeleton';
 import { Suspense } from 'react';

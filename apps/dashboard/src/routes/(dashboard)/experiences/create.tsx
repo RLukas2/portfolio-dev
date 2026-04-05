@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createFileRoute, useRouter } from '@tanstack/react-router';
-import { ExperienceBaseSchema, ExperienceType } from '@xbrk/db/schema';
+import { ExperienceBaseSchema, ExperienceType, type ExperienceTypeValue } from '@xbrk/db/schema';
 import { useAppForm } from '@xbrk/ui/form';
 import { toast } from 'sonner';
 import { z } from 'zod/v4';
@@ -47,7 +47,7 @@ function ExperiencesCreatePage() {
       startDate: '',
       endDate: '',
       url: '',
-      type: ExperienceType.WORK,
+      type: ExperienceType.WORK as ExperienceTypeValue,
       isDraft: false,
       isOnGoing: false,
     },
