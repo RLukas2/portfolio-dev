@@ -2,11 +2,37 @@ import { createMiddleware } from '@tanstack/react-start';
 import { getRequest, setResponseStatus } from '@tanstack/react-start/server';
 import { auth } from '@/lib/auth/server';
 
-// https://tanstack.com/start/latest/docs/framework/react/middleware
-// This is a sample middleware that you can use in your server functions.
-
 /**
- * Middleware to force authentication on a server function, and add the user to the context.
+ * Authentication Middleware
+ *
+ * Enforces authentication on server functions and API routes.
+ * Validates the user session and adds the authenticated user to the request context.
+ *
+ * If no valid session exists:
+ * - Sets HTTP 401 status
+ * - Throws an error to halt execution
+ *
+ * Session caching is disabled to ensure fresh session data on every request,
+ * which is important for admin operations.
+ *
+ * @example
+ * ```ts
+ * export const Route = createFileRoute('/api/admin/users')({
+ *   server: {
+ *     middleware: [authMiddleware],
+ *     handlers: {
+ *       GET: async ({ context }) => {
+ *         // context.user is guaranteed to exist here
+ *         console.log(context.user.id);
+ *       }
+ *     }
+ *   }
+ * });
+ * ```
+ *
+ * @throws {Error} Throws "Unauthorized" if no valid session exists
+ * @see {@link https://tanstack.com/start/latest/docs/framework/react/middleware TanStack Middleware Docs}
+ * @see {@link https://www.better-auth.com/docs/concepts/session-management Better Auth Session Management}
  */
 export const authMiddleware = createMiddleware().server(async ({ next }) => {
   const session = await auth.api.getSession({
