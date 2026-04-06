@@ -59,14 +59,16 @@ export async function getAllPublic(db: DbClient) {
         authorId: articles.authorId,
         content: articles.content,
         tags: articles.tags,
-        likesCount:
-          sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleLikes} WHERE ${articleLikes.articleId} = ${articles.id}), 0)`.as(
-            'likes_count',
-          ),
-        viewCount:
-          sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleViews} WHERE ${articleViews.articleId} = ${articles.id}), 0)`.as(
-            'view_count',
-          ),
+        likesCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM article_likes 
+          WHERE article_likes.article_id = articles.id
+        )`,
+        viewCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM article_views 
+          WHERE article_views.article_id = articles.id
+        )`,
       })
       .from(articles)
       .where(eq(articles.isDraft, false))
@@ -92,8 +94,16 @@ export async function getBySlug(db: DbClient, input: { slug: string }, session?:
     const result = await db
       .select({
         article: articles,
-        viewCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleViews} WHERE ${articleViews.articleId} = ${articles.id}), 0)`,
-        likesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${articleLikes} WHERE ${articleLikes.articleId} = ${articles.id}), 0)`,
+        viewCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM article_views 
+          WHERE article_views.article_id = articles.id
+        )`,
+        likesCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM article_likes 
+          WHERE article_likes.article_id = articles.id
+        )`,
       })
       .from(articles)
       .where(eq(articles.slug, input.slug))

@@ -70,9 +70,21 @@ export async function getAll(
       .select({
         comment: comments,
         user,
-        repliesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${comments} c2 WHERE c2.parent_id = ${comments.id}), 0)`,
-        likesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = true), 0)`,
-        dislikesCount: sql<number>`COALESCE((SELECT COUNT(*) FROM ${commentReactions} cr WHERE cr.comment_id = ${comments.id} AND cr.like = false), 0)`,
+        repliesCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM comments c2 
+          WHERE c2.parent_id = comments.id
+        )`,
+        likesCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM comment_reactions cr 
+          WHERE cr.comment_id = comments.id AND cr.like = true
+        )`,
+        dislikesCount: sql<number>`(
+          SELECT COUNT(*)::int 
+          FROM comment_reactions cr 
+          WHERE cr.comment_id = comments.id AND cr.like = false
+        )`,
         userReaction: commentReactions,
       })
       .from(comments)
@@ -133,7 +145,7 @@ export async function remove(db: DbClient, input: { id: string }, userId: string
 
 /**
  * Adds or updates a like/dislike reaction on a comment.
- * Users cannot react to their own comments.
+ * (Optional) Users cannot react to their own comments.
  * If a reaction already exists, it is updated in place.
  * Uses transaction to ensure consistency.
  * @throws {Error} If comment not found or user tries to react to their own comment.
@@ -149,9 +161,9 @@ export async function react(db: DbClient, input: { id: string; like: boolean }, 
         throw new Error('Comment not found');
       }
 
-      if (comment.userId === userId) {
-        throw new Error('You are not allowed to react to your own comment');
-      }
+      // if (comment.userId === userId) {
+      //   throw new Error('You are not allowed to react to your own comment');
+      // }
 
       const existingReaction = await tx.query.commentReactions.findFirst({
         where: and(eq(commentReactions.commentId, input.id), eq(commentReactions.userId, userId)),
