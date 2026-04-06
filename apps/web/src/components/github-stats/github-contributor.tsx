@@ -12,6 +12,7 @@ export default function GithubContributor() {
   const githubUsername = env.VITE_GITHUB_USERNAME;
 
   if (!githubUsername) {
+    console.warn('No GitHub username found, skipping contributors');
     return null;
   }
 

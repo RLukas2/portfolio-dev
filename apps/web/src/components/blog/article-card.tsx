@@ -1,8 +1,8 @@
-import { Link } from '@tanstack/react-router';
 import { type ArticleType } from '@xbrk/types';
 import { LazyImage } from '@xbrk/ui/lazy-image';
 import { formatDate } from '@xbrk/utils';
 import { ArrowUpRight, Calendar, Eye, ThumbsUp } from 'lucide-react';
+import Link from '@/components/shared/link';
 
 interface ArticleCardProps {
   article: ArticleType & { viewCount: number; likesCount: number };

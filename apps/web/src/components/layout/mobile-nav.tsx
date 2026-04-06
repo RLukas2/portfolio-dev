@@ -1,8 +1,8 @@
-import { Link } from '@tanstack/react-router';
 import type { NavItem } from '@xbrk/types';
 import { cn } from '@xbrk/ui';
 import { ChevronRight } from 'lucide-react';
-import type { ReactNode } from 'react';
+import { forwardRef, type ReactNode } from 'react';
+import Link from '@/components/shared/link';
 
 interface MobileNavProps {
   children?: ReactNode;
@@ -10,10 +10,14 @@ interface MobileNavProps {
   onItemClick?: () => void;
 }
 
-const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => (
-  <div className="slide-in-from-top-8 fixed inset-0 top-20 z-50 animate-in overflow-auto bg-background/95 p-4 backdrop-blur-md">
+const MobileNav = forwardRef<HTMLDivElement, MobileNavProps>(({ items, children, onItemClick }, ref) => (
+  <div
+    className="slide-in-from-top-8 fixed inset-0 top-20 z-50 animate-in overflow-auto bg-background/95 p-4 backdrop-blur-md"
+    id="mobile-menu"
+    ref={ref}
+  >
     <div className="rounded-2xl border bg-card p-2 shadow-xl">
-      <nav className="flex flex-col gap-1">
+      <nav aria-label="Mobile" className="flex flex-col gap-1">
         {items.map((item) =>
           item.content ? (
             <div key={item.title}>
@@ -31,7 +35,7 @@ const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => (
                   to={subItem.disabled ? '#' : subItem.href}
                 >
                   <span>{subItem.title}</span>
-                  <ChevronRight className="h-4 w-4 text-muted-foreground" />
+                  <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
                 </Link>
               ))}
             </div>
@@ -46,7 +50,7 @@ const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => (
               to={item.disabled ? '#' : (item.href ?? '#')}
             >
               <span>{item.title}</span>
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
+              <ChevronRight aria-hidden="true" className="h-4 w-4 text-muted-foreground" />
             </Link>
           ),
         )}
@@ -54,6 +58,8 @@ const MobileNav = ({ items, children, onItemClick }: MobileNavProps) => (
       {children}
     </div>
   </div>
-);
+));
+
+MobileNav.displayName = 'MobileNav';
 
 export default MobileNav;

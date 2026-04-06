@@ -36,6 +36,10 @@ export const Route = createRootRouteWithContext<{
         name: 'viewport',
         content: 'width=device-width, initial-scale=1',
       },
+      {
+        name: 'theme-color',
+        content: '#ffffff',
+      },
     ],
     links: [
       {
@@ -43,6 +47,43 @@ export const Route = createRootRouteWithContext<{
         href: appCss,
         as: 'style',
         type: 'text/css',
+      },
+      // Favicon links
+      {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/favicon.svg',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '32x32',
+        href: '/favicon-32x32.png',
+      },
+      {
+        rel: 'icon',
+        type: 'image/png',
+        sizes: '16x16',
+        href: '/favicon-16x16.png',
+      },
+      {
+        rel: 'apple-touch-icon',
+        sizes: '180x180',
+        href: '/apple-touch-icon.png',
+      },
+      // Web App Manifest
+      {
+        rel: 'manifest',
+        href: '/site.webmanifest',
+      },
+      // Preconnect to external domains for better performance
+      {
+        rel: 'preconnect',
+        href: 'https://api.github.com',
+      },
+      {
+        rel: 'dns-prefetch',
+        href: 'https://api.raindrop.io',
       },
     ],
   }),

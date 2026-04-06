@@ -1,7 +1,7 @@
-import { Link } from '@tanstack/react-router';
 import { motion } from 'framer-motion';
 import { Layers } from 'lucide-react';
 import type { SimpleIcon } from 'simple-icons';
+import Link from '@/components/shared/link';
 import { software } from '@/lib/data/uses-data';
 
 const createIconComponent = (icon: SimpleIcon) => (props: React.ComponentProps<'svg'>) => (

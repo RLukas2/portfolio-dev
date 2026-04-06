@@ -28,7 +28,7 @@ const PersonalHero = () => (
       <div
         className="absolute inset-0"
         style={{
-          background: 'radial-gradient(ellipse 70% 60% at 45% 50%, rgba(139, 92, 246, 0.1) 0%, transparent 70%)',
+          background: 'radial-gradient(ellipse 70% 60% at 45% 50%, rgba(151, 92, 246, 0.1) 0%, transparent 70%)',
         }}
       />
       <div
@@ -112,7 +112,7 @@ const PersonalHero = () => (
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         {/* Glow effect - Optional decorative gradient glow behind avatar */}
-        <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/10 to-amber-500/15 blur-2xl" />
+        <div className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-blue-500/20 via-cyan-500/15 to-sky-400/10 blur-2xl" />
 
         {/* Main image container - Avatar with border and backdrop blur */}
         <div className="relative rounded-full border border-black/10 bg-gradient-to-br from-white/10 to-white/5 p-2.5 shadow-2xl backdrop-blur-sm dark:border-white/10 dark:from-white/5 dark:to-white/[0.02]">

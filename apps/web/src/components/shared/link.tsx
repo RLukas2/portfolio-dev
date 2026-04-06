@@ -1,4 +1,4 @@
-import { Link as TanStackLink } from '@tanstack/react-router';
+import { Link as TanStackLink, useLocation } from '@tanstack/react-router';
 import { cn } from '@xbrk/ui';
 import type { VariantProps } from 'class-variance-authority';
 import { cva } from 'class-variance-authority';
@@ -21,12 +21,21 @@ const linkVariants = cva('transition-colors', {
 interface LinkProps
   extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>,
     VariantProps<typeof linkVariants> {
+  hash?: string;
   href?: string;
+  // TanStack Router specific props
+  params?: Record<string, string | number>;
+  preload?: false | 'intent' | 'viewport' | 'render';
+  search?: Record<string, unknown>;
+  state?: true | Record<string, unknown>;
   to?: string;
 }
 
 // Props that are safe to pass to TanStack Router Link
-type TanStackLinkSafeProps = Omit<LinkProps, 'href' | 'to' | 'className' | 'children' | 'variant' | 'onClick' | 'ref'>;
+type TanStackLinkSafeProps = Omit<
+  LinkProps,
+  'href' | 'to' | 'className' | 'children' | 'variant' | 'onClick' | 'ref' | 'params' | 'search' | 'hash' | 'state'
+>;
 
 /**
  * Scrolls to an element with the given hash ID
@@ -49,8 +58,20 @@ const scrollToHash = (hash: string) => {
 };
 
 /**
+ * Scrolls to the top of the page smoothly
+ */
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+};
+
+/**
  * Link Component
  * This component handles internal and external links with appropriate attributes.
+ *
+ * Supports both simple links and TanStack Router's type-safe routing with params.
  *
  * Variants:
  * - default: Basic link with hover effect (no bold)
@@ -58,23 +79,52 @@ const scrollToHash = (hash: string) => {
  * - muted: Muted color link (for secondary links)
  * - nav: Medium weight link (for navigation menus)
  *
+ * TanStack Router Features:
+ * - params: Route parameters (e.g., { projectId: 'my-project' })
+ * - search: Query parameters (e.g., { page: 1, filter: 'active' })
+ * - hash: Hash fragment (e.g., 'section-1')
+ * - state: Location state
+ * - preload: Preload behavior ('intent' or boolean)
+ *
+ * Same-Page Navigation:
+ * - Clicking a link to the current page scrolls to top smoothly
+ * - Clicking a link to the current page with hash scrolls to that section
+ * - Handles repeated clicks properly
+ *
  * Hash Navigation:
  * - Uses TanStack Router for proper integration
  * - Adds manual scroll handling for repeated clicks (TanStack Router limitation)
  * - Supports both /#section and #section formats
  *
- * @type {React.ForwardRefExoticComponent<LinkProps & React.RefAttributes<HTMLAnchorElement>>}
- * @param {LinkProps} param0
- * @param {string} param0.href - The URL the link points to.
- * @param {string} param0.to - href fallback from Tanstack Router
- * @param {string} [param0.className] - Additional class names to apply to the link.
- * @param {React.ReactNode} param0.children - The content of the link.
- * @param {string} [param0.variant] - The variant style of the link (default, bold, muted, nav).
- * @param {React.Ref<HTMLAnchorElement>} ref - The ref to be forwarded to the anchor element.
- * @returns {React.ReactNode} The rendered Link component.
+ * @example
+ * // Simple internal link
+ * <Link href="/about">About</Link>
+ *
+ * @example
+ * // Type-safe routing with params
+ * <Link to="/projects/$projectId" params={{ projectId: 'my-project' }}>
+ *   View Project
+ * </Link>
+ *
+ * @example
+ * // External link (automatic security attributes)
+ * <Link href="https://github.com">GitHub</Link>
+ *
+ * @example
+ * // Hash navigation with smooth scroll
+ * <Link href="#features">Jump to Features</Link>
+ *
+ * @example
+ * // Same page link - scrolls to top
+ * <Link href="/blog">Blog</Link> (when already on /blog)
  */
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ href: hrefProp, className, children, variant, to, onClick, ...props }, ref) => {
+  (
+    { href: hrefProp, className, children, variant, to, params, search, hash, state, preload, onClick, ...props },
+    ref,
+  ) => {
+    const location = useLocation();
+
     // Use 'to' if provided, otherwise use 'href'
     const href = to || hrefProp;
 
@@ -82,14 +132,28 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       throw new Error('Link must have either href or to prop');
     }
 
-    // Internal route with hash (e.g., /#featured-projects)
-    // Use TanStack Router Link with hash prop + manual scroll for repeated clicks
-    if (href.startsWith('/#')) {
-      const hash = href.split('#')[1];
+    // If using TanStack Router features (params, search, state, preload), use TanStack Link
+    const hasTanStackFeatures = params || search || state || preload !== undefined;
+
+    // Type-safe routing with TanStack Router features
+    if (hasTanStackFeatures && to) {
+      // Check if navigating to the same page
+      const isSamePage =
+        location.pathname ===
+        to.replace(/\/\$[^/]+/g, (match) => {
+          const paramKey = match.slice(2); // Remove '/$'
+          return params?.[paramKey] ? `/${params[paramKey]}` : match;
+        });
 
       const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-        // Always scroll to hash (handles repeated clicks)
-        scrollToHash(`#${hash}`);
+        if (isSamePage) {
+          e.preventDefault();
+          if (hash) {
+            scrollToHash(`#${hash}`);
+          } else {
+            scrollToTop();
+          }
+        }
 
         // Call original onClick if provided
         if (onClick) {
@@ -101,6 +165,39 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         <TanStackLink
           className={cn(linkVariants({ variant, className }))}
           hash={hash}
+          onClick={handleClick}
+          params={params}
+          preload={preload}
+          ref={ref}
+          search={search}
+          state={state}
+          to={to}
+          {...(props as TanStackLinkSafeProps)}
+        >
+          {children}
+        </TanStackLink>
+      );
+    }
+
+    // Internal route with hash (e.g., /#featured-projects)
+    // Use TanStack Router Link with hash prop + manual scroll for repeated clicks
+    if (href.startsWith('/#')) {
+      const hashValue = href.split('#')[1];
+
+      const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        // Always scroll to hash (handles repeated clicks)
+        scrollToHash(`#${hashValue}`);
+
+        // Call original onClick if provided
+        if (onClick) {
+          onClick(e);
+        }
+      };
+
+      return (
+        <TanStackLink
+          className={cn(linkVariants({ variant, className }))}
+          hash={hashValue}
           onClick={handleClick}
           ref={ref}
           to="/"
@@ -113,10 +210,25 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
 
     // Internal route - use TanStack Router Link
     if (href.startsWith('/')) {
+      // Check if navigating to the same page
+      const isSamePage = location.pathname === href;
+
+      const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (isSamePage) {
+          e.preventDefault();
+          scrollToTop();
+        }
+
+        // Call original onClick if provided
+        if (onClick) {
+          onClick(e);
+        }
+      };
+
       return (
         <TanStackLink
           className={cn(linkVariants({ variant, className }))}
-          onClick={onClick}
+          onClick={handleClick}
           ref={ref}
           to={href}
           {...(props as TanStackLinkSafeProps)}
@@ -129,11 +241,11 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
     // Hash link on same page (e.g., #section)
     // Use TanStack Router Link with hash prop + manual scroll for repeated clicks
     if (href.startsWith('#')) {
-      const hash = href.replace('#', '');
+      const hashValue = href.replace('#', '');
 
       const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
         // Always scroll to hash (handles repeated clicks)
-        scrollToHash(`#${hash}`);
+        scrollToHash(`#${hashValue}`);
 
         // Call original onClick if provided
         if (onClick) {
@@ -144,10 +256,10 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
       return (
         <TanStackLink
           className={cn(linkVariants({ variant, className }))}
-          hash={hash}
+          hash={hashValue}
           onClick={handleClick}
           ref={ref}
-          to="/"
+          to={location.pathname}
           {...(props as TanStackLinkSafeProps)}
         >
           {children}

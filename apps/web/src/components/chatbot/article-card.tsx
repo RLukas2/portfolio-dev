@@ -1,8 +1,8 @@
-import { Link } from '@tanstack/react-router';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@xbrk/ui/card';
 import { TagList } from '@xbrk/ui/tag-list';
 import { formatDate } from '@xbrk/utils';
 import { CalendarIcon, EyeIcon, ThumbsUpIcon } from 'lucide-react';
+import Link from '@/components/shared/link';
 import { type ToolArticle } from '@/lib/ai';
 
 export function ArticleCard({ article }: Readonly<{ article: ToolArticle }>) {
