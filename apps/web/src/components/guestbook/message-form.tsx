@@ -4,7 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@xbrk/ui/avatar';
 import { Button } from '@xbrk/ui/button';
 import { Input } from '@xbrk/ui/input';
 import { Send } from 'lucide-react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { toast } from 'sonner';
 import { queryKeys } from '@/lib/query-keys';
 import { $createGuestbookEntry } from '@/lib/server';
@@ -16,10 +16,13 @@ interface MessageFormProps {
 export default function MessageForm({ user }: Readonly<MessageFormProps>) {
   const formRef = useRef<HTMLFormElement>(null);
   const queryClient = useQueryClient();
+  const [error, setError] = useState<string>('');
+
   const { mutateAsync, isPending } = useMutation({
     mutationFn: (data: { message: string }) => $createGuestbookEntry({ data }),
     onSuccess: () => {
       formRef.current?.reset();
+      setError('');
       toast.success('Message posted');
     },
     onError: (error) => {
@@ -36,10 +39,24 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
   const createMessageHandler = async (formData: FormData) => {
     const raw = (formData.get('message') as string) ?? '';
     const message = raw.trim();
+
+    // Validation
     if (!message) {
-      toast.error('Please enter a message.');
+      setError('Please enter a message.');
       return;
     }
+
+    if (message.length < 3) {
+      setError('Message must be at least 3 characters long.');
+      return;
+    }
+
+    if (message.length > 500) {
+      setError('Message must be less than 500 characters.');
+      return;
+    }
+
+    setError('');
     const toastId = toast.loading('Sending your message ...');
     try {
       await mutateAsync({ message });
@@ -58,9 +75,12 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
           </Avatar>
           <div className="relative flex-1">
             <Input
+              aria-describedby={error ? 'message-error' : undefined}
+              aria-invalid={!!error}
               aria-label="Your message"
               className="h-12 rounded-xl border-none bg-muted pr-24 focus-visible:ring-1"
               name="message"
+              onChange={() => setError('')}
               placeholder="Leave a message..."
               required
             />
@@ -75,6 +95,11 @@ export default function MessageForm({ user }: Readonly<MessageFormProps>) {
             </Button>
           </div>
         </div>
+        {error && (
+          <p className="mt-2 text-destructive text-sm" id="message-error" role="alert">
+            {error}
+          </p>
+        )}
       </form>
     </div>
   );
