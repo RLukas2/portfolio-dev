@@ -21,7 +21,7 @@ export default defineNitroConfig({
           "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net",
           "img-src 'self' data: https: blob:",
           "font-src 'self' data: https://cdn.jsdelivr.net",
-          "connect-src 'self' https://api.github.com https://api.raindrop.io https://*.sentry.io https://us.i.posthog.com wss://vercel.live",
+          "connect-src 'self' https://api.github.com https://api.raindrop.io https://*.sentry.io https://us.i.posthog.com wss://vercel.live https://github-contributions-api.jogruber.de",
           "frame-src 'self' https://vercel.live",
           "media-src 'self' https:",
           "object-src 'none'",
@@ -44,7 +44,7 @@ export default defineNitroConfig({
         'Referrer-Policy': 'strict-origin-when-cross-origin',
 
         // Permissions Policy (formerly Feature Policy)
-        'Permissions-Policy': ['camera=()', 'microphone=()', 'geolocation=()', 'interest-cohort=()'].join(', '),
+        'Permissions-Policy': ['camera=()', 'microphone=()', 'geolocation=()'].join(', '),
       },
     },
 
