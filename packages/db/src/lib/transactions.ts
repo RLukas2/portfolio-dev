@@ -1,5 +1,5 @@
 import type { ExtractTablesWithRelations } from 'drizzle-orm';
-import type { NeonHttpQueryResultHKT } from 'drizzle-orm/neon-http';
+import type { NeonQueryResultHKT } from 'drizzle-orm/neon-serverless';
 import type { PgTransaction } from 'drizzle-orm/pg-core';
 import { db } from '../client';
 import type * as schema from '../schema';
@@ -9,7 +9,7 @@ import type * as schema from '../schema';
  */
 
 type Schema = typeof schema;
-type TransactionClient = PgTransaction<NeonHttpQueryResultHKT, Schema, ExtractTablesWithRelations<Schema>>;
+type TransactionClient = PgTransaction<NeonQueryResultHKT, Schema, ExtractTablesWithRelations<Schema>>;
 
 type TransactionCallback<T> = (tx: TransactionClient) => Promise<T>;
 
