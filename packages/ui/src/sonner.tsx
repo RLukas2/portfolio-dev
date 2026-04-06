@@ -23,6 +23,11 @@ const Toaster = ({ resolvedTheme, ...props }: ToasterProps & { readonly resolved
         } as CSSProperties
       }
       theme={sonnerTheme as ToasterProps['theme']}
+      toastOptions={{
+        classNames: {
+          toast: 'cn-toast',
+        },
+      }}
       {...props}
     />
   );
