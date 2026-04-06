@@ -1,9 +1,9 @@
-import { Link } from '@tanstack/react-router';
 import type { SnippetType } from '@xbrk/types';
 import { Badge } from '@xbrk/ui/badge';
 import { formatDate } from '@xbrk/utils';
 import { motion } from 'framer-motion';
 import { ArrowUpRight, Calendar, Code2 } from 'lucide-react';
+import Link from '@/components/shared/link';
 import { containerVariants, itemVariants } from '@/lib/constants/framer-motion-variants';
 
 interface SnippetsProps {

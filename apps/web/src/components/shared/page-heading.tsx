@@ -50,7 +50,7 @@ const PageHeading = ({
         {/* Decorative gradient */}
         <div
           className={cn(
-            'pointer-events-none absolute -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-violet-500/20 to-pink-500/20 blur-2xl',
+            'pointer-events-none absolute -top-4 h-24 w-24 rounded-full bg-gradient-to-br from-blue-500/20 to-cyan-500/20 blur-2xl',
             centered ? '-left-1/2' : '-left-4',
           )}
         />

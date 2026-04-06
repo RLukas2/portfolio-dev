@@ -1,7 +1,7 @@
-import { Link } from '@tanstack/react-router';
 import { type ProjectType } from '@xbrk/types';
 import { LazyImage } from '@xbrk/ui/lazy-image';
 import { ArrowUpRight, Sparkles } from 'lucide-react';
+import Link from '@/components/shared/link';
 import TechStacks from '../shared/tech-stacks';
 
 interface ProjectCardProps {

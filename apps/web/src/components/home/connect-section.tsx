@@ -1,9 +1,9 @@
-import { Link } from '@tanstack/react-router';
 import { siteConfig, socialConfig } from '@xbrk/config';
 import Icon from '@xbrk/ui/icon';
 import { motion, useInView } from 'framer-motion';
 import { Mail } from 'lucide-react';
 import { useRef } from 'react';
+import Link from '@/components/shared/link';
 
 const sectionVariants = {
   hidden: { opacity: 0, y: 40 },

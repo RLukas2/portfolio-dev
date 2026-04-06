@@ -106,7 +106,14 @@ export default function CommandMenu({ ...props }: Readonly<DialogProps>) {
 
   return (
     <>
-      <Button className="size-8 cursor-pointer px-0" onClick={() => setOpen(true)} size="sm" variant="ghost" {...props}>
+      <Button
+        aria-label="Open menu (Ctrl+K)"
+        className="size-8 cursor-pointer px-0"
+        onClick={() => setOpen(true)}
+        size="sm"
+        variant="ghost"
+        {...props}
+      >
         <CommandIcon className="size-5" strokeWidth="1.5" />
       </Button>
 

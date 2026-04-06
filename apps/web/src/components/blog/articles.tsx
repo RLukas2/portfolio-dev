@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
-import { Link } from '@tanstack/react-router';
 import { cn } from '@xbrk/ui';
 import { buttonVariants } from '@xbrk/ui/button';
+import Link from '@/components/shared/link';
 import { queryKeys } from '@/lib/query-keys';
 import { $getAllPublicArticles } from '@/lib/server';
 import SectionHeading from '../shared/section-heading';

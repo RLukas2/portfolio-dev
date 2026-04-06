@@ -10,7 +10,10 @@ const CURRENT_YEAR = () => new Date().getFullYear();
 const Footer = () => (
   <footer className="relative mt-20 border-t bg-grid print:hidden">
     {/* Decorative gradient */}
-    <div className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent" />
+    <div
+      aria-hidden="true"
+      className="pointer-events-none absolute inset-x-0 -top-px h-px bg-gradient-to-r from-transparent via-foreground/20 to-transparent"
+    />
 
     <div className="container py-12 lg:max-w-4xl xl:max-w-6xl 2xl:max-w-7xl">
       <motion.div
@@ -29,20 +32,22 @@ const Footer = () => (
         </div>
 
         {/* Link Sections */}
-        {FOOTER_LINKS.map((group) => (
-          <div className="flex flex-col items-start gap-2" key={group.header}>
-            <h3 className="font-semibold text-foreground text-sm">{group.header}</h3>
-            {group.links.map(({ title, path }) => (
-              <Link className="text-muted-foreground text-sm" href={path} key={path} variant="muted">
-                {title}
-              </Link>
-            ))}
-          </div>
-        ))}
+        <nav aria-label="Footer" className="col-span-2 contents md:col-span-3">
+          {FOOTER_LINKS.map((group) => (
+            <div className="flex flex-col items-start gap-2" key={group.header}>
+              <h3 className="font-semibold text-foreground text-sm">{group.header}</h3>
+              {group.links.map(({ title, path }) => (
+                <Link className="text-muted-foreground text-sm" href={path} key={path} variant="muted">
+                  {title}
+                </Link>
+              ))}
+            </div>
+          ))}
+        </nav>
       </motion.div>
 
       {/* Horizontal divider */}
-      <div className="my-8 border-border/50 border-t" />
+      <div aria-hidden="true" className="my-8 border-border/50 border-t" />
 
       {/* Bottom Footer */}
       <div className="flex flex-col items-center gap-6 sm:flex-row sm:justify-between">
@@ -53,7 +58,9 @@ const Footer = () => (
               {siteConfig.author.name}
             </Link>
           </p>
-          <span className="hidden text-muted-foreground sm:inline">•</span>
+          <span aria-hidden="true" className="hidden text-muted-foreground sm:inline">
+            •
+          </span>
           <p className="text-muted-foreground">
             <Link
               className="text-muted-foreground"
@@ -66,9 +73,10 @@ const Footer = () => (
         </div>
 
         {/* Social Icons */}
-        <div className="flex items-center gap-3">
+        <nav aria-label="Social media links" className="flex items-center gap-3">
           {socialConfig.map((social) => (
             <a
+              aria-label={`Follow on ${social.name}`}
               className={cn(
                 'text-lg text-muted-foreground transition-colors hover:text-foreground',
                 social.name === 'LinkedIn' && 'hover:text-[#0A66C2]',
@@ -84,7 +92,7 @@ const Footer = () => (
               <Icon className="h-4 w-4" icon={social.icon} />
             </a>
           ))}
-        </div>
+        </nav>
       </div>
     </div>
   </footer>

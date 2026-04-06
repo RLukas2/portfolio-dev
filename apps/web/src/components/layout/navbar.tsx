@@ -1,4 +1,4 @@
-import { Link, useLocation } from '@tanstack/react-router';
+import { useLocation } from '@tanstack/react-router';
 import { useTheme } from '@xbrk/shared/theme-provider';
 import { type NavItem, type UserType } from '@xbrk/types';
 import { cn } from '@xbrk/ui';
@@ -14,12 +14,10 @@ import {
 } from '@xbrk/ui/navigation-menu';
 import { Spinner } from '@xbrk/ui/spinner';
 import { ThemeToggle } from '@xbrk/ui/theme';
-import { Menu, X } from 'lucide-react';
-import { Suspense, useState } from 'react';
-import { navbarLinks } from '@/lib/constants/navbar';
+import { Suspense } from 'react';
+import Link from '@/components/shared/link';
 import { AvatarDropdown } from './avatar-dropdown';
 import SearchCommand from './command-menu';
-import MobileNav from './mobile-nav';
 
 interface MainNavbarProps {
   links: NavItem[];
@@ -27,7 +25,6 @@ interface MainNavbarProps {
 }
 
 const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
-  const [showMobileMenu, setShowMobileMenu] = useState<boolean>(false);
   const isMobile = useIsMobile();
   const { setTheme } = useTheme();
 
@@ -37,7 +34,7 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
 
   return (
     <div className="flex flex-1 items-center justify-end gap-4 md:gap-6 lg:justify-between">
-      <NavigationMenu className="hidden lg:flex" viewport={isMobile}>
+      <NavigationMenu aria-label="Main" className="hidden lg:flex" viewport={isMobile}>
         <NavigationMenuList className="gap-1">
           {links.map((link) => (
             <NavigationMenuItem key={link.title.trim()}>
@@ -82,34 +79,20 @@ const NavBar = ({ links, user }: Readonly<MainNavbarProps>) => {
           <Suspense fallback={<Spinner className="size-5" />}>
             <SearchCommand />
           </Suspense>
-          <div className="h-4 w-px bg-border/50" />
+          <div aria-hidden="true" className="h-4 w-px bg-border/50" />
           <Suspense fallback={<Spinner className="size-5" />}>
             <ThemeToggle setTheme={setTheme} />
           </Suspense>
         </div>
       </div>
 
-      {/* Mobile menu button */}
-      <button
-        aria-label={showMobileMenu ? 'Close menu' : 'Open menu'}
-        className={cn(
-          'relative flex size-10 items-center justify-center rounded-xl border border-border/50 bg-muted/30 backdrop-blur-sm transition-all lg:hidden',
-          'hover:border-border hover:bg-muted/50',
-          'active:scale-95',
-          showMobileMenu && 'border-border bg-muted',
-        )}
-        onClick={() => setShowMobileMenu(!showMobileMenu)}
-        type="button"
-      >
-        <span className="sr-only">{showMobileMenu ? 'Close menu' : 'Open menu'}</span>
-        {showMobileMenu ? (
-          <X className="size-5 transition-transform" />
-        ) : (
-          <Menu className="size-5 transition-transform" />
-        )}
-      </button>
-
-      {showMobileMenu && <MobileNav items={navbarLinks} onItemClick={() => setShowMobileMenu(false)} />}
+      {/* Mobile actions - just command menu */}
+      <div className="flex items-center gap-2 lg:hidden">
+        {user && <AvatarDropdown user={user as UserType} />}
+        <Suspense fallback={<Spinner className="size-5" />}>
+          <SearchCommand />
+        </Suspense>
+      </div>
     </div>
   );
 };
