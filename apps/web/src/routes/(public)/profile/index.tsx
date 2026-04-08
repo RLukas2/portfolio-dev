@@ -47,7 +47,14 @@ export const Route = createFileRoute('/(public)/profile/')({
   component: ProfilePage,
   beforeLoad: ({ context }) => {
     if (!context.user) {
-      throw redirect({ to: '/signin' });
+      throw redirect({
+        to: '/signin',
+        search: {
+          error: undefined,
+          error_description: undefined,
+          message: undefined,
+        },
+      });
     }
   },
   head: () => ({
@@ -99,7 +106,16 @@ function ProfilePage() {
           <h1 className="font-semibold text-2xl">Access Denied</h1>
           <p className="text-muted-foreground">You need to be logged in to view your profile.</p>
         </div>
-        <Button onClick={() => router.navigate({ to: '/signin' })}>Sign In</Button>
+        <Button
+          onClick={() =>
+            router.navigate({
+              to: '/signin',
+              search: { error: undefined, error_description: undefined, message: undefined },
+            })
+          }
+        >
+          Sign In
+        </Button>
       </div>
     );
   }
