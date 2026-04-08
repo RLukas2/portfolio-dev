@@ -1,13 +1,16 @@
 import { chat, toServerSentEventsResponse } from '@tanstack/ai';
 import { openaiText } from '@tanstack/ai-openai';
 import { createFileRoute } from '@tanstack/react-router';
+import { siteConfig } from '@xbrk/config';
 import getTools from '@/lib/ai';
+import { chatAbuseConfig, validateChatRequest } from '@/lib/ai/abuse-guard';
+import { createRateLimitResponse, getClientIp, rateLimiters } from '@/lib/server/rate-limit';
 
 /**
  * AI Chat API Route
  *
- * Provides an AI-powered chatbot that can answer questions about Nauris Linde's
- * portfolio, services, projects, articles, and experience.
+ * Provides an AI-powered chatbot that can answer questions about the portfolio owner's
+ * projects, services, articles, and experience.
  *
  * Features:
  * - Natural language conversation
@@ -34,13 +37,27 @@ export const Route = createFileRoute('/api/chat/')({
     handlers: {
       POST: async ({ request }) => {
         try {
+          // Rate limiting check
+          const clientIp = getClientIp(request);
+          if (rateLimiters.chat.isRateLimited(clientIp)) {
+            console.warn(`[Chat API] Rate limit exceeded for IP: ${clientIp}`);
+            return createRateLimitResponse(rateLimiters.chat, clientIp, 'Too many chat requests. Please slow down.');
+          }
+
           const { messages } = await request.json();
 
-          // Validate messages
-          if (!(messages && Array.isArray(messages))) {
+          // Validate and sanitize messages
+          const validation = validateChatRequest(messages, chatAbuseConfig, {
+            checkSuspiciousPatterns: true,
+            sanitize: true,
+          });
+
+          if (!validation.valid) {
+            console.warn(`[Chat API] Validation failed for IP ${clientIp}:`, validation.error);
             return new Response(
               JSON.stringify({
-                error: 'Invalid request: messages array is required',
+                error: validation.error,
+                details: process.env.NODE_ENV === 'development' ? validation.details : undefined,
               }),
               {
                 status: 400,
@@ -49,38 +66,35 @@ export const Route = createFileRoute('/api/chat/')({
             );
           }
 
-          const calendlyUrl = process.env.CALENDLY_URL ?? 'https://calendly.com/naurislinde/30min';
+          // Use sanitized messages
+          const sanitizedMessages = validation.sanitizedMessages || messages;
+
+          const calendlyUrl = process.env.CALENDLY_URL || siteConfig.calendlyUrl || '';
 
           const serviceKnowledge = `
-You are Nauris Linde's AI assistant. Here's information about Nauris's services and background:
+You are ${siteConfig.author.name}'s AI assistant. Here's information about ${siteConfig.author.name}'s services and background:
 
-**About Nauris Linde:**
-- Full-Stack Software Engineer
-- Email: naurislinde@gmail.com
-- Portfolio: https://naurislinde.dev
-- GitHub: https://github.com/fazers
-- LinkedIn: https://www.linkedin.com/in/naurislinde/
-- Twitter: https://twitter.com/naurislinde
+**About ${siteConfig.author.name}:**
+- ${siteConfig.author.jobTitle}
+- Email: ${siteConfig.author.email}
+- Portfolio: ${siteConfig.url}
+- GitHub: ${siteConfig.links.github}
+- LinkedIn: ${siteConfig.links.linkedin}
+- Twitter: ${siteConfig.links.twitter}
+- Location: ${siteConfig.author.location}
 
 **Technical Expertise:**
-- Frontend: React, TypeScript, Next.js, Tanstack Router, Tailwind CSS
-- Backend: Node.js, tRPC, PostgreSQL, Drizzle ORM
-- Full-Stack: Modern web applications, API development, database design
-- DevOps: Deployment, CI/CD, performance optimization
+${siteConfig.author.knowsAbout?.map((skill) => `- ${skill}`).join('\n') || '- Full-stack Development'}
 
 **Services Offered:**
 1. **Web Application Development**: Custom full-stack web applications using modern technologies
 2. **Frontend Development**: React-based user interfaces with TypeScript and modern styling
 3. **Backend API Development**: RESTful APIs, GraphQL, tRPC implementations
-4. **Desktop Application Development**: Desktop applications using C++ and Qt
-5. **Mobile Application Development**: Mobile applications using Expo
-6. **Technical Consulting**: Architecture review, code optimization, best practices
-7. **Performance Optimization**: Web performance auditing and improvements
-8. **Database Design**: PostgreSQL, schema design, optimization
+4. **Technical Consulting**: Architecture review, code optimization, best practices
+5. **Performance Optimization**: Web performance auditing and improvements
+6. **Database Design**: PostgreSQL, schema design, optimization
 
-**Meeting Booking:**
-When someone wants to schedule a meeting or consultation, use Calendly at ${calendlyUrl}.
-
+${calendlyUrl ? `**Meeting Booking:**\nWhen someone wants to schedule a meeting or consultation, use Calendly at ${calendlyUrl}.\n` : ''}
 **Available Tools and When to Use Them:**
 
 **Project Tools:**
@@ -104,7 +118,7 @@ When someone wants to schedule a meeting or consultation, use Calendly at ${cale
 3. If users want to browse everything, use the get tools
 4. Always provide context and explanations when showing results
 
-Always be helpful, professional, and enthusiastic about Nauris's work. Provide specific examples from his projects and articles when relevant. Direct users to specific URLs for more detailed information.
+Always be helpful, professional, and enthusiastic about ${siteConfig.author.name}'s work. Provide specific examples from their projects and articles when relevant. Direct users to specific URLs for more detailed information.
 `;
 
           const tools = getTools();
@@ -112,7 +126,7 @@ Always be helpful, professional, and enthusiastic about Nauris's work. Provide s
           const stream = chat({
             adapter: openaiText('gpt-5-nano'),
             systemPrompts: [serviceKnowledge],
-            messages,
+            messages: sanitizedMessages,
             tools,
           });
 
