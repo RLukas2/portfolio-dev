@@ -51,7 +51,16 @@ function AuthErrorPage() {
             {message && <p className="mt-2 text-muted-foreground text-sm">Details: {message}</p>}
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            <Button className="w-full" onClick={() => navigate({ to: '/signin' })} variant="default">
+            <Button
+              className="w-full"
+              onClick={() =>
+                navigate({
+                  to: '/signin',
+                  search: { error: undefined, error_description: undefined, message: undefined },
+                })
+              }
+              variant="default"
+            >
               <ArrowLeft className="mr-2 h-4 w-4" />
               Back to Sign In
             </Button>
