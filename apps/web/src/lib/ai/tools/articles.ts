@@ -1,6 +1,7 @@
 import { toolDefinition } from '@tanstack/ai';
 import { db } from '@xbrk/db/client';
 import { articles } from '@xbrk/db/schema';
+import { NotFoundError } from '@xbrk/errors';
 import { and, desc, eq, ilike, or } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -69,7 +70,7 @@ export const recommendArticle = recommendArticleDef.server(async ({ id }) => {
   });
 
   if (!article) {
-    throw new Error(`Article with ID ${id} not found`);
+    throw new NotFoundError(`Article ${id}`);
   }
 
   return article;

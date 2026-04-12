@@ -1,6 +1,7 @@
 import { toolDefinition } from '@tanstack/ai';
 import { db } from '@xbrk/db/client';
 import { project } from '@xbrk/db/schema';
+import { NotFoundError } from '@xbrk/errors';
 import { and, desc, eq, ilike, or } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -71,7 +72,7 @@ export const recommendProject = recommendProjectDef.server(async ({ id }) => {
   });
 
   if (!proj) {
-    throw new Error(`Project with ID ${id} not found`);
+    throw new NotFoundError(`Project ${id}`);
   }
 
   return proj;

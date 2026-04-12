@@ -15,7 +15,8 @@ export const Route = createFileRoute('/(public)/changelog/')({
   loader: async () => {
     const response = await fetch(`${getBaseUrl()}/api/changelog`);
     if (!response.ok) {
-      throw new Error('Failed to load changelog');
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData?.error?.message || 'Failed to load changelog');
     }
     const result = (await response.json()) as { data: { content: string; toc: TOC[] } };
     return { content: result.data.content, toc: result.data.toc ?? [] };
