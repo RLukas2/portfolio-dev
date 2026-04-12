@@ -414,6 +414,9 @@ importers:
       '@xbrk/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@xbrk/errors':
+        specifier: workspace:*
+        version: link:../../packages/errors
       '@xbrk/md':
         specifier: workspace:*
         version: link:../../packages/md
@@ -598,6 +601,12 @@ importers:
       '@xbrk/db':
         specifier: workspace:*
         version: link:../db
+      '@xbrk/errors':
+        specifier: workspace:*
+        version: link:../errors
+      '@xbrk/shared':
+        specifier: workspace:*
+        version: link:../shared
       '@xbrk/utils':
         specifier: workspace:*
         version: link:../utils
@@ -696,6 +705,15 @@ importers:
         specifier: 'catalog:'
         version: 5.9.3
 
+  packages/errors:
+    devDependencies:
+      '@xbrk/tsconfig':
+        specifier: workspace:*
+        version: link:../../tooling/typescript
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
+
   packages/md:
     dependencies:
       '@shikijs/rehype':
@@ -783,6 +801,9 @@ importers:
       '@xbrk/config':
         specifier: workspace:*
         version: link:../config
+      '@xbrk/shared':
+        specifier: workspace:*
+        version: 'link:'
       '@xbrk/ui':
         specifier: workspace:*
         version: link:../ui
@@ -899,6 +920,9 @@ importers:
       '@unpic/react':
         specifier: ^1.0.2
         version: 1.0.2(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@xbrk/errors':
+        specifier: workspace:*
+        version: link:../errors
       class-variance-authority:
         specifier: ^0.7.1
         version: 0.7.1
@@ -939,6 +963,9 @@ importers:
         specifier: ^3.5.0
         version: 3.5.0
     devDependencies:
+      '@types/node':
+        specifier: 'catalog:'
+        version: 25.5.0
       '@types/react':
         specifier: 'catalog:'
         version: 19.2.14

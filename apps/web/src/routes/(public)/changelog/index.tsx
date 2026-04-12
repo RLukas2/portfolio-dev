@@ -17,8 +17,8 @@ export const Route = createFileRoute('/(public)/changelog/')({
     if (!response.ok) {
       throw new Error('Failed to load changelog');
     }
-    const data = (await response.json()) as { content: string; toc: TOC[] };
-    return { content: data.content, toc: data.toc ?? [] };
+    const result = (await response.json()) as { data: { content: string; toc: TOC[] } };
+    return { content: result.data.content, toc: result.data.toc ?? [] };
   },
   head: () => {
     const keywords = [...siteConfig.keywords.split(',').map((k) => k.trim()), 'changelog', 'updates', 'releases'].join(

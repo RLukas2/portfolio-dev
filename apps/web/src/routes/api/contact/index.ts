@@ -1,8 +1,10 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { createSuccessResponse, handleApiError } from '@xbrk/api';
 import { siteConfig } from '@xbrk/config';
+import { RateLimitError, ServiceUnavailableError, ValidationError } from '@xbrk/errors';
 import { Resend } from 'resend';
 import { env } from '@/lib/env/server';
-import { createRateLimitResponse, getClientIp, rateLimiters } from '@/lib/server/rate-limit';
+import { getClientIp, rateLimiters } from '@/lib/server/rate-limit';
 import { contactApiSchema } from '@/lib/validators';
 
 /**
@@ -41,7 +43,7 @@ export const Route = createFileRoute('/api/contact/')({
         // Check if email service is configured
         if (!(env.RESEND_API_KEY && env.RESEND_FROM_EMAIL)) {
           console.error('[Contact API] Email service not configured');
-          return Response.json({ error: 'Email service is not configured' }, { status: 500 });
+          return handleApiError(new ServiceUnavailableError('Email service is not configured'), request);
         }
 
         try {
@@ -49,7 +51,10 @@ export const Route = createFileRoute('/api/contact/')({
           const clientIp = getClientIp(request);
           if (rateLimiters.contact.isRateLimited(clientIp)) {
             console.warn(`[Contact API] Rate limit exceeded for IP: ${clientIp}`);
-            return createRateLimitResponse(rateLimiters.contact, clientIp);
+            return handleApiError(
+              new RateLimitError('Too many contact form submissions. Please try again later.'),
+              request,
+            );
           }
 
           const body = await request.json();
@@ -58,12 +63,11 @@ export const Route = createFileRoute('/api/contact/')({
           const validationResult = contactApiSchema.safeParse(body);
 
           if (!validationResult.success) {
-            return Response.json(
-              {
-                error: 'Invalid input',
-                details: env.NODE_ENV === 'development' ? validationResult.error.flatten() : undefined,
-              },
-              { status: 400 },
+            return handleApiError(
+              new ValidationError('Invalid input', {
+                details: validationResult.error.flatten(),
+              }),
+              request,
             );
           }
 
@@ -73,7 +77,7 @@ export const Route = createFileRoute('/api/contact/')({
           if (website && website.trim() !== '') {
             console.warn(`[Contact API] Honeypot triggered for IP: ${clientIp}`);
             // Return success to not alert the bot
-            return Response.json({ success: true });
+            return createSuccessResponse({ success: true });
           }
 
           // Sanitize inputs
@@ -92,27 +96,13 @@ export const Route = createFileRoute('/api/contact/')({
 
           if (error) {
             console.error('[Contact API] Resend error:', error);
-            return Response.json(
-              {
-                error: 'Failed to send email',
-                details: env.NODE_ENV === 'development' ? error : undefined,
-              },
-              { status: 500 },
-            );
+            return handleApiError(new ServiceUnavailableError('Failed to send email'), request);
           }
 
-          return Response.json({ success: true, data });
+          return createSuccessResponse({ success: true, emailId: data?.id });
         } catch (error) {
           console.error('[Contact API] Unexpected error:', error);
-
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-          return Response.json(
-            {
-              error: 'Failed to process contact form',
-              details: env.NODE_ENV === 'development' ? errorMessage : undefined,
-            },
-            { status: 500 },
-          );
+          return handleApiError(error, request);
         }
       },
     },

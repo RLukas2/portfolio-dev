@@ -6,7 +6,7 @@ import { type ContributionCountByDayOfWeek } from '@/lib/integrations/github';
 import { queryKeys } from '@/lib/query-keys';
 
 export default function GithubActivityGraph() {
-  const { data: contributions, isLoading } = useQuery({
+  const { data: result, isLoading } = useQuery({
     queryKey: queryKeys.github.activity(),
     queryFn: () => fetch('/api/stats/github/activity').then((res) => res.json()),
   });
@@ -15,8 +15,8 @@ export default function GithubActivityGraph() {
     return <div>Loading...</div>;
   }
 
+  const contributions = result?.data?.contributions;
   const contributionsByLast30Days = contributions?.contributionsByLast30Days as ContributionDay[];
-
   const contributionCountByDayOfWeek = contributions?.contributionCountByDayOfWeek as ContributionCountByDayOfWeek[];
 
   return (
