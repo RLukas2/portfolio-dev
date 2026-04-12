@@ -152,8 +152,6 @@ const initPostHog = createIsomorphicFn().client(() => {
     cookieless_mode: 'on_reject',
     disable_external_dependency_loading: true,
   });
-
-  posthog.capture('my_custom_event', { property: 'value' });
 });
 
 initPostHog();
