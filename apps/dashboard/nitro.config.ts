@@ -7,39 +7,45 @@ import { defineNitroConfig } from 'nitro/config';
 
 const CSP_SOURCES = {
   script: [
-    'https://cdn.jsdelivr.net',
-    'https://va.vercel-scripts.com',
-    'https://vercel.live',
+    // Sentry browser SDK
     'https://*.sentry.io',
-    'https://us.i.posthog.com',
-    'https://us-assets.i.posthog.com',
   ],
-  style: ['https://cdn.jsdelivr.net'],
-  font: ['https://cdn.jsdelivr.net'],
+  style: [] as string[],
+  font: [] as string[],
   connect: [
-    'https://api.github.com',
-    'https://api.raindrop.io',
+    // Sentry error reporting
     'https://*.sentry.io',
-    'https://us.i.posthog.com',
-    'https://us-assets.i.posthog.com',
-    'https://github-contributions-api.jogruber.de',
-    'wss://vercel.live',
+    'https://*.ingest.sentry.io',
+    // Vercel Blob storage (image uploads/reads)
+    'https://*.vercel-storage.com',
+    'https://blob.vercel-storage.com',
+    // Better Auth (same origin, but explicit for clarity)
+    "'self'",
   ],
-  frame: ['https://vercel.live'],
-  worker: ['https://us-assets.i.posthog.com'],
+  img: [
+    // Vercel Blob CDN for uploaded images
+    'https://*.vercel-storage.com',
+    'https://blob.vercel-storage.com',
+    // OAuth provider avatars
+    'https://avatars.githubusercontent.com',
+    'https://lh3.googleusercontent.com',
+    'https://pbs.twimg.com',
+    'https://platform-lookaside.fbsbx.com',
+  ],
+  frame: [] as string[],
 };
 
 function buildCsp(): string {
   const directives: string[] = [
     "default-src 'self'",
     `script-src 'self' 'unsafe-inline' 'unsafe-eval' ${CSP_SOURCES.script.join(' ')}`,
-    `style-src 'self' 'unsafe-inline' ${CSP_SOURCES.style.join(' ')}`,
-    "img-src 'self' data: https: blob:",
-    `font-src 'self' data: ${CSP_SOURCES.font.join(' ')}`,
-    `connect-src 'self' ${CSP_SOURCES.connect.join(' ')}`,
-    `frame-src 'self' ${CSP_SOURCES.frame.join(' ')}`,
-    `worker-src 'self' ${CSP_SOURCES.worker.join(' ')}`,
-    "media-src 'self' https:",
+    `style-src 'self' 'unsafe-inline' ${CSP_SOURCES.style.join(' ')}`.trimEnd(),
+    `img-src 'self' data: blob: ${CSP_SOURCES.img.join(' ')}`,
+    `font-src 'self' data:`,
+    `connect-src ${CSP_SOURCES.connect.join(' ')}`,
+    `frame-src 'none'`,
+    `worker-src 'self' blob:`,
+    "media-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",
     "form-action 'self'",
@@ -55,13 +61,29 @@ function buildCsp(): string {
 
 const SECURITY_HEADERS = {
   'Content-Security-Policy': buildCsp(),
+  // Prevent clickjacking (redundant with frame-ancestors but kept for older browsers)
   'X-Frame-Options': 'DENY',
+  // Prevent MIME-type sniffing
   'X-Content-Type-Options': 'nosniff',
+  // Disable legacy XSS auditor (can introduce vulnerabilities itself)
   'X-XSS-Protection': '0',
+  // Limit referrer info sent to third parties
   'Referrer-Policy': 'strict-origin-when-cross-origin',
-  'Permissions-Policy': ['camera=()', 'microphone=()', 'geolocation=()', 'payment=()', 'fullscreen=(self)'].join(', '),
+  // Restrict browser feature access
+  'Permissions-Policy': [
+    'camera=()',
+    'microphone=()',
+    'geolocation=()',
+    'payment=()',
+    'fullscreen=(self)',
+    'clipboard-read=(self)',
+    'clipboard-write=(self)',
+  ].join(', '),
+  // Force HTTPS for 1 year (only applied by browsers over HTTPS)
   'Strict-Transport-Security': 'max-age=31536000; includeSubDomains; preload',
+  // Prevent this page from being opened in a popup by a cross-origin page
   'Cross-Origin-Opener-Policy': 'same-origin',
+  // Prevent cross-origin reads of this page's resources
   'Cross-Origin-Resource-Policy': 'same-origin',
 } as const;
 
@@ -73,6 +95,7 @@ export default defineNitroConfig({
   compatibilityDate: '2026-04-06',
 
   routeRules: {
+    // Apply security headers to all routes
     '/**': {
       headers: SECURITY_HEADERS,
     },
