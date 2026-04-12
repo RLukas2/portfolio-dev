@@ -1,5 +1,6 @@
 import { createMiddleware } from '@tanstack/react-start';
 import { getRequest, setResponseStatus } from '@tanstack/react-start/server';
+import { UnauthorizedError } from '@xbrk/errors';
 import { auth } from '@/lib/auth/server';
 
 // https://tanstack.com/start/latest/docs/framework/react/middleware
@@ -20,7 +21,7 @@ export const authMiddleware = createMiddleware().server(async ({ next }) => {
 
   if (!session) {
     setResponseStatus(401);
-    throw new Error('Unauthorized');
+    throw new UnauthorizedError();
   }
 
   return next({ context: { user: session.user } });

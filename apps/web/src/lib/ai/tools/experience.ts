@@ -1,6 +1,7 @@
 import { toolDefinition } from '@tanstack/ai';
 import { db } from '@xbrk/db/client';
 import { experience } from '@xbrk/db/schema';
+import { NotFoundError } from '@xbrk/errors';
 import { and, desc, eq, ilike, or } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -76,7 +77,7 @@ export const recommendExperience = recommendExperienceDef.server(async ({ id }) 
   });
 
   if (!exp) {
-    throw new Error(`Experience with ID ${id} not found`);
+    throw new NotFoundError(`Experience ${id}`);
   }
 
   return exp;

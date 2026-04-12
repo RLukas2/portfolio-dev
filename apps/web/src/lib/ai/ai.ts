@@ -1,6 +1,7 @@
 import { toolDefinition } from '@tanstack/ai';
 import { db } from '@xbrk/db/client';
 import { articles, experience, project } from '@xbrk/db/schema';
+import { NotFoundError } from '@xbrk/errors';
 import { and, desc, eq, ilike, or } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -127,7 +128,7 @@ const recommendProject = recommendProjectDef.server(async ({ id }) => {
   });
 
   if (!proj) {
-    throw new Error(`Project with ID ${id} not found`);
+    throw new NotFoundError(`Project ${id}`);
   }
 
   return proj;
@@ -210,7 +211,7 @@ const recommendArticle = recommendArticleDef.server(async ({ id }) => {
   });
 
   if (!article) {
-    throw new Error(`Article with ID ${id} not found`);
+    throw new NotFoundError(`Article ${id}`);
   }
 
   return article;
@@ -304,7 +305,7 @@ const recommendExperience = recommendExperienceDef.server(async ({ id }) => {
   });
 
   if (!exp) {
-    throw new Error(`Experience with ID ${id} not found`);
+    throw new NotFoundError(`Experience ${id}`);
   }
 
   return exp;
