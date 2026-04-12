@@ -21,7 +21,7 @@ export const $createArticle = createServerFn({ method: 'POST' })
   .inputValidator(CreateArticleSchema)
   .handler(async ({ context, data }) => {
     const result = await blogService.create(context.db, data);
-    await context.audit('article.create', 'article', result?.id, { title: result?.title });
+    context.audit('article.create', 'article', result?.id, { title: result?.title });
     return result;
   });
 
@@ -30,7 +30,7 @@ export const $updateArticle = createServerFn({ method: 'POST' })
   .inputValidator(UpdateArticleSchema)
   .handler(async ({ context, data }) => {
     const result = await blogService.update(context.db, data);
-    await context.audit('article.update', 'article', result?.id, { title: result?.title });
+    context.audit('article.update', 'article', result?.id, { title: result?.title });
     return result;
   });
 
@@ -39,6 +39,6 @@ export const $deleteArticle = createServerFn({ method: 'POST' })
   .inputValidator(z.string())
   .handler(async ({ context, data }) => {
     const result = await blogService.remove(context.db, data);
-    await context.audit('article.delete', 'article', data);
+    context.audit('article.delete', 'article', data);
     return result;
   });

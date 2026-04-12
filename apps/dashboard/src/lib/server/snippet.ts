@@ -21,7 +21,7 @@ export const $createSnippet = createServerFn({ method: 'POST' })
   .inputValidator(CreateSnippetSchema)
   .handler(async ({ context, data }) => {
     const result = await snippetService.create(context.db, data);
-    await context.audit('snippet.create', 'snippet', result?.id, { title: result?.title });
+    context.audit('snippet.create', 'snippet', result?.id, { title: result?.title });
     return result;
   });
 
@@ -30,7 +30,7 @@ export const $updateSnippet = createServerFn({ method: 'POST' })
   .inputValidator(UpdateSnippetSchema)
   .handler(async ({ context, data }) => {
     const result = await snippetService.update(context.db, data);
-    await context.audit('snippet.update', 'snippet', result?.id, { title: result?.title });
+    context.audit('snippet.update', 'snippet', result?.id, { title: result?.title });
     return result;
   });
 
@@ -39,6 +39,6 @@ export const $deleteSnippet = createServerFn({ method: 'POST' })
   .inputValidator(z.string())
   .handler(async ({ context, data }) => {
     const result = await snippetService.remove(context.db, data);
-    await context.audit('snippet.delete', 'snippet', data);
+    context.audit('snippet.delete', 'snippet', data);
     return result;
   });

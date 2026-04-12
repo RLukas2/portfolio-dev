@@ -21,7 +21,7 @@ export const $createExperience = createServerFn({ method: 'POST' })
   .inputValidator(CreateExperienceSchema)
   .handler(async ({ context, data }) => {
     const result = await experienceService.create(context.db, data);
-    await context.audit('experience.create', 'experience', result?.id, { title: result?.title });
+    context.audit('experience.create', 'experience', result?.id, { title: result?.title });
     return result;
   });
 
@@ -30,7 +30,7 @@ export const $updateExperience = createServerFn({ method: 'POST' })
   .inputValidator(UpdateExperienceSchema)
   .handler(async ({ context, data }) => {
     const result = await experienceService.update(context.db, data);
-    await context.audit('experience.update', 'experience', result?.id, { title: result?.title });
+    context.audit('experience.update', 'experience', result?.id, { title: result?.title });
     return result;
   });
 
@@ -39,6 +39,6 @@ export const $deleteExperience = createServerFn({ method: 'POST' })
   .inputValidator(z.string())
   .handler(async ({ context, data }) => {
     const result = await experienceService.remove(context.db, data);
-    await context.audit('experience.delete', 'experience', data);
+    context.audit('experience.delete', 'experience', data);
     return result;
   });

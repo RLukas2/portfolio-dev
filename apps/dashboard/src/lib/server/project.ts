@@ -21,7 +21,7 @@ export const $createProject = createServerFn({ method: 'POST' })
   .inputValidator(CreateProjectSchema)
   .handler(async ({ context, data }) => {
     const result = await projectService.create(context.db, data);
-    await context.audit('project.create', 'project', result?.id, { title: result?.title });
+    context.audit('project.create', 'project', result?.id, { title: result?.title });
     return result;
   });
 
@@ -30,7 +30,7 @@ export const $updateProject = createServerFn({ method: 'POST' })
   .inputValidator(UpdateProjectSchema)
   .handler(async ({ context, data }) => {
     const result = await projectService.update(context.db, data);
-    await context.audit('project.update', 'project', result?.id, { title: result?.title });
+    context.audit('project.update', 'project', result?.id, { title: result?.title });
     return result;
   });
 
@@ -39,6 +39,6 @@ export const $deleteProject = createServerFn({ method: 'POST' })
   .inputValidator(z.string())
   .handler(async ({ context, data }) => {
     const result = await projectService.remove(context.db, data);
-    await context.audit('project.delete', 'project', data);
+    context.audit('project.delete', 'project', data);
     return result;
   });

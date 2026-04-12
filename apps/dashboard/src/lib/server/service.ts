@@ -21,7 +21,7 @@ export const $createService = createServerFn({ method: 'POST' })
   .inputValidator(CreateServiceSchema)
   .handler(async ({ context, data }) => {
     const result = await serviceService.create(context.db, data);
-    await context.audit('service.create', 'service', result?.id, { title: result?.title });
+    context.audit('service.create', 'service', result?.id, { title: result?.title });
     return result;
   });
 
@@ -30,7 +30,7 @@ export const $updateService = createServerFn({ method: 'POST' })
   .inputValidator(UpdateServiceSchema)
   .handler(async ({ context, data }) => {
     const result = await serviceService.update(context.db, data);
-    await context.audit('service.update', 'service', result?.id, { title: result?.title });
+    context.audit('service.update', 'service', result?.id, { title: result?.title });
     return result;
   });
 
@@ -39,6 +39,6 @@ export const $deleteService = createServerFn({ method: 'POST' })
   .inputValidator(z.string())
   .handler(async ({ context, data }) => {
     const result = await serviceService.remove(context.db, data);
-    await context.audit('service.delete', 'service', data);
+    context.audit('service.delete', 'service', data);
     return result;
   });
