@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { createSuccessResponse, handleApiError } from '@xbrk/api';
+import { ServiceUnavailableError } from '@xbrk/errors';
 import { getGithubActivities } from '@/lib/integrations/github';
 
 /**
@@ -13,10 +15,12 @@ import { getGithubActivities } from '@/lib/integrations/github';
  * GET /api/stats/github/activity
  * Response:
  * {
- *   "contributions": [
- *     { "date": "2024-01-01", "count": 5 },
- *     { "date": "2024-01-02", "count": 3 }
- *   ]
+ *   "data": {
+ *     "contributions": [
+ *       { "date": "2024-01-01", "count": 5 },
+ *       { "date": "2024-01-02", "count": 3 }
+ *     ]
+ *   }
  * }
  *
  * @returns JSON response with contribution activity data
@@ -24,21 +28,20 @@ import { getGithubActivities } from '@/lib/integrations/github';
 export const Route = createFileRoute('/api/stats/github/activity')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
         try {
           const contributions = await getGithubActivities();
-          return Response.json(contributions);
+          return createSuccessResponse({ contributions });
         } catch (error) {
           console.error('[GitHub Activity API] Error fetching activity:', error);
 
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-          return Response.json(
-            {
-              error: 'Failed to fetch GitHub activity',
-              details: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
-            },
-            { status: 500 },
-          );
+          // Wrap GitHub API errors as service unavailable
+          const apiError =
+            error instanceof Error
+              ? new ServiceUnavailableError(`GitHub API error: ${error.message}`)
+              : new ServiceUnavailableError('Failed to fetch GitHub activity');
+
+          return handleApiError(apiError, request);
         }
       },
     },

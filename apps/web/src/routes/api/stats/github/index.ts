@@ -1,4 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
+import { createSuccessResponse, handleApiError } from '@xbrk/api';
+import { ServiceUnavailableError } from '@xbrk/errors';
 import { getGithubStats } from '@/lib/integrations/github';
 
 /**
@@ -16,9 +18,11 @@ import { getGithubStats } from '@/lib/integrations/github';
  * GET /api/stats/github
  * Response:
  * {
- *   "user": { "login": "rlukas2", "name": "Tuan Ngo-Hoang", ... },
- *   "repos": [{ "name": "repo1", "stars": 10, ... }],
- *   "starsCount": 42
+ *   "data": {
+ *     "user": { "login": "rlukas2", "name": "Tuan Ngo-Hoang", ... },
+ *     "repos": [{ "name": "repo1", "stars": 10, ... }],
+ *     "starsCount": 42
+ *   }
  * }
  *
  * @returns JSON response with GitHub statistics
@@ -26,21 +30,20 @@ import { getGithubStats } from '@/lib/integrations/github';
 export const Route = createFileRoute('/api/stats/github/')({
   server: {
     handlers: {
-      GET: async () => {
+      GET: async ({ request }) => {
         try {
           const { user, repos, starsCount } = (await getGithubStats()) || {};
-          return Response.json({ user, repos, starsCount });
+          return createSuccessResponse({ user, repos, starsCount });
         } catch (error) {
           console.error('[GitHub Stats API] Error fetching stats:', error);
 
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-          return Response.json(
-            {
-              error: 'Failed to fetch GitHub statistics',
-              details: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
-            },
-            { status: 500 },
-          );
+          // Wrap GitHub API errors as service unavailable
+          const apiError =
+            error instanceof Error
+              ? new ServiceUnavailableError(`GitHub API error: ${error.message}`)
+              : new ServiceUnavailableError('Failed to fetch GitHub statistics');
+
+          return handleApiError(apiError, request);
         }
       },
     },

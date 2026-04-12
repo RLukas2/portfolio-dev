@@ -30,7 +30,7 @@ export const ContactForm = ({ onMessageSent }: { onMessageSent?: () => void }) =
 
         if (!response.ok) {
           const errorData = await response.json();
-          throw new Error(errorData.error || 'Network response was not ok');
+          throw new Error(errorData.error?.message || errorData.error || 'Network response was not ok');
         }
 
         toast.success('Message sent successfully!');

@@ -1,10 +1,12 @@
 import { chat, toServerSentEventsResponse } from '@tanstack/ai';
 import { openaiText } from '@tanstack/ai-openai';
 import { createFileRoute } from '@tanstack/react-router';
+import { handleApiError } from '@xbrk/api';
 import { siteConfig } from '@xbrk/config';
+import { RateLimitError, ValidationError } from '@xbrk/errors';
 import getTools from '@/lib/ai';
 import { chatAbuseConfig, validateChatRequest } from '@/lib/ai/abuse-guard';
-import { createRateLimitResponse, getClientIp, rateLimiters } from '@/lib/server/rate-limit';
+import { getClientIp, rateLimiters } from '@/lib/server/rate-limit';
 
 /**
  * AI Chat API Route
@@ -41,7 +43,7 @@ export const Route = createFileRoute('/api/chat/')({
           const clientIp = getClientIp(request);
           if (rateLimiters.chat.isRateLimited(clientIp)) {
             console.warn(`[Chat API] Rate limit exceeded for IP: ${clientIp}`);
-            return createRateLimitResponse(rateLimiters.chat, clientIp, 'Too many chat requests. Please slow down.');
+            return handleApiError(new RateLimitError('Too many chat requests. Please slow down.'), request);
           }
 
           const { messages } = await request.json();
@@ -54,15 +56,11 @@ export const Route = createFileRoute('/api/chat/')({
 
           if (!validation.valid) {
             console.warn(`[Chat API] Validation failed for IP ${clientIp}:`, validation.error);
-            return new Response(
-              JSON.stringify({
-                error: validation.error,
-                details: process.env.NODE_ENV === 'development' ? validation.details : undefined,
+            return handleApiError(
+              new ValidationError(validation.error || 'Invalid chat request', {
+                details: validation.details,
               }),
-              {
-                status: 400,
-                headers: { 'Content-Type': 'application/json' },
-              },
+              request,
             );
           }
 
@@ -133,18 +131,7 @@ Always be helpful, professional, and enthusiastic about ${siteConfig.author.name
           return toServerSentEventsResponse(stream);
         } catch (error) {
           console.error('[Chat API] Error:', error);
-
-          const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-          return new Response(
-            JSON.stringify({
-              error: 'Failed to process chat request',
-              details: process.env.NODE_ENV === 'development' ? errorMessage : undefined,
-            }),
-            {
-              status: 500,
-              headers: { 'Content-Type': 'application/json' },
-            },
-          );
+          return handleApiError(error, request);
         }
       },
     },

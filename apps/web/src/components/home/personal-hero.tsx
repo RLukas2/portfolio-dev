@@ -66,7 +66,7 @@ const PersonalHero = () => (
         {/* CTAs - Call-to-action buttons for navigation */}
         <motion.div
           animate={{ opacity: 1, y: 0 }}
-          className="mt-2 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
+          className="mt-2 flex flex-col items-center justify-center gap-4 sm:flex-row lg:justify-start"
           initial={{ opacity: 0, y: 20 }}
           transition={{ delay: 0.4 }}
         >

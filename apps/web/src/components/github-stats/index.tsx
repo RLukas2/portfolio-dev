@@ -6,10 +6,12 @@ import GithubContributor from '@/components/github-stats/github-contributor';
 import { queryKeys } from '@/lib/query-keys';
 
 export default function Stats() {
-  const { data: githubData } = useQuery({
+  const { data: result } = useQuery({
     queryKey: queryKeys.github.stats(),
     queryFn: () => fetch('/api/stats/github').then((res) => res.json()),
   });
+
+  const githubData = result?.data;
 
   const statCards = [
     {
