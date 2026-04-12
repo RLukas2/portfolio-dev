@@ -5,6 +5,8 @@ import { defineNitroConfig } from 'nitro/config';
 // Edit these arrays to manage allowed sources per directive.
 // ============================================================
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const CSP_SOURCES = {
   script: [
     // Sentry browser SDK
@@ -21,6 +23,9 @@ const CSP_SOURCES = {
     'https://blob.vercel-storage.com',
     // Better Auth (same origin, but explicit for clarity)
     "'self'",
+
+    // Allow devtools WebSocket in development (TanStack Devtools, Vite HMR)
+    ...(isDev ? ['ws://localhost:*', 'http://localhost:*'] : []),
   ],
   img: [
     // Vercel Blob CDN for uploaded images

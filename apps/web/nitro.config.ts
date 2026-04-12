@@ -5,6 +5,8 @@ import { defineNitroConfig } from 'nitro/config';
 // Edit these arrays to manage allowed sources per directive.
 // ============================================================
 
+const isDev = process.env.NODE_ENV === 'development';
+
 const CSP_SOURCES = {
   script: [
     'https://cdn.jsdelivr.net',
@@ -24,6 +26,8 @@ const CSP_SOURCES = {
     'https://us-assets.i.posthog.com',
     'https://github-contributions-api.jogruber.de',
     'wss://vercel.live',
+    // Allow devtools WebSocket in development (TanStack Devtools, Vite HMR)
+    ...(isDev ? ['ws://localhost:*', 'http://localhost:*'] : []),
   ],
   frame: ['https://vercel.live'],
   worker: ['https://us-assets.i.posthog.com'],
