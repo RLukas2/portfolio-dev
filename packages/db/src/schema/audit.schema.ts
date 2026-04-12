@@ -17,10 +17,7 @@ export const auditLogs = pgTable('audit_logs', (t) => ({
   action: t.varchar({ length: 100 }).notNull(),
   resource: t.varchar({ length: 100 }).notNull(),
   resourceId: t.text(),
-  actorId: t
-    .text()
-    .references(() => user.id, { onDelete: 'set null' })
-    .notNull(),
+  actorId: t.text().references(() => user.id, { onDelete: 'set null' }),
   metadata: t.jsonb().$type<Record<string, unknown>>(),
   createdAt: t.timestamp({ withTimezone: true }).defaultNow().notNull(),
 }));
