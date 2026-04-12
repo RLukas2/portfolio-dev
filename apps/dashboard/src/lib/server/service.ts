@@ -7,40 +7,38 @@ import { auditMiddleware } from '@/lib/middleware/audit';
 import { dbMiddleware } from '@/lib/middleware/db';
 import { sentryMiddleware } from '@/lib/middleware/sentry';
 
-const MW = [sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware];
-
 export const $getAllServices = createServerFn({ method: 'GET' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .handler(({ context }) => serviceService.getAll(context.db));
 
 export const $getServiceById = createServerFn({ method: 'GET' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(z.object({ id: z.string() }))
-  .handler((ctx) => serviceService.getById(ctx.context.db, ctx.data));
+  .handler(({ context, data }) => serviceService.getById(context.db, data));
 
 export const $createService = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(CreateServiceSchema)
-  .handler(async (ctx) => {
-    const result = await serviceService.create(ctx.context.db, ctx.data);
-    await ctx.context.audit('service.create', 'service', result.id, { title: result.title });
+  .handler(async ({ context, data }) => {
+    const result = await serviceService.create(context.db, data);
+    await context.audit('service.create', 'service', result?.id, { title: result?.title });
     return result;
   });
 
 export const $updateService = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(UpdateServiceSchema)
-  .handler(async (ctx) => {
-    const result = await serviceService.update(ctx.context.db, ctx.data);
-    await ctx.context.audit('service.update', 'service', result.id, { title: result.title });
+  .handler(async ({ context, data }) => {
+    const result = await serviceService.update(context.db, data);
+    await context.audit('service.update', 'service', result?.id, { title: result?.title });
     return result;
   });
 
 export const $deleteService = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(z.string())
-  .handler(async (ctx) => {
-    const result = await serviceService.remove(ctx.context.db, ctx.data);
-    await ctx.context.audit('service.delete', 'service', ctx.data);
+  .handler(async ({ context, data }) => {
+    const result = await serviceService.remove(context.db, data);
+    await context.audit('service.delete', 'service', data);
     return result;
   });

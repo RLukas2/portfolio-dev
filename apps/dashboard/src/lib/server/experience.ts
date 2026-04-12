@@ -7,40 +7,38 @@ import { auditMiddleware } from '@/lib/middleware/audit';
 import { dbMiddleware } from '@/lib/middleware/db';
 import { sentryMiddleware } from '@/lib/middleware/sentry';
 
-const MW = [sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware];
-
 export const $getAllExperiences = createServerFn({ method: 'GET' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .handler(({ context }) => experienceService.getAll(context.db));
 
 export const $getExperienceById = createServerFn({ method: 'GET' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(z.object({ id: z.string() }))
-  .handler((ctx) => experienceService.getById(ctx.context.db, ctx.data));
+  .handler(({ context, data }) => experienceService.getById(context.db, data));
 
 export const $createExperience = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(CreateExperienceSchema)
-  .handler(async (ctx) => {
-    const result = await experienceService.create(ctx.context.db, ctx.data);
-    await ctx.context.audit('experience.create', 'experience', result.id, { title: result.title });
+  .handler(async ({ context, data }) => {
+    const result = await experienceService.create(context.db, data);
+    await context.audit('experience.create', 'experience', result?.id, { title: result?.title });
     return result;
   });
 
 export const $updateExperience = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(UpdateExperienceSchema)
-  .handler(async (ctx) => {
-    const result = await experienceService.update(ctx.context.db, ctx.data);
-    await ctx.context.audit('experience.update', 'experience', result.id, { title: result.title });
+  .handler(async ({ context, data }) => {
+    const result = await experienceService.update(context.db, data);
+    await context.audit('experience.update', 'experience', result?.id, { title: result?.title });
     return result;
   });
 
 export const $deleteExperience = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(z.string())
-  .handler(async (ctx) => {
-    const result = await experienceService.remove(ctx.context.db, ctx.data);
-    await ctx.context.audit('experience.delete', 'experience', ctx.data);
+  .handler(async ({ context, data }) => {
+    const result = await experienceService.remove(context.db, data);
+    await context.audit('experience.delete', 'experience', data);
     return result;
   });

@@ -7,40 +7,38 @@ import { auditMiddleware } from '@/lib/middleware/audit';
 import { dbMiddleware } from '@/lib/middleware/db';
 import { sentryMiddleware } from '@/lib/middleware/sentry';
 
-const MW = [sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware];
-
 export const $getAllArticles = createServerFn({ method: 'GET' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .handler(({ context }) => blogService.getAll(context.db));
 
 export const $getArticleById = createServerFn({ method: 'GET' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(z.object({ id: z.string() }))
-  .handler((ctx) => blogService.getById(ctx.context.db, ctx.data));
+  .handler(({ context, data }) => blogService.getById(context.db, data));
 
 export const $createArticle = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(CreateArticleSchema)
-  .handler(async (ctx) => {
-    const result = await blogService.create(ctx.context.db, ctx.data);
-    await ctx.context.audit('article.create', 'article', result.id, { title: result.title });
+  .handler(async ({ context, data }) => {
+    const result = await blogService.create(context.db, data);
+    await context.audit('article.create', 'article', result?.id, { title: result?.title });
     return result;
   });
 
 export const $updateArticle = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(UpdateArticleSchema)
-  .handler(async (ctx) => {
-    const result = await blogService.update(ctx.context.db, ctx.data);
-    await ctx.context.audit('article.update', 'article', result.id, { title: result.title });
+  .handler(async ({ context, data }) => {
+    const result = await blogService.update(context.db, data);
+    await context.audit('article.update', 'article', result?.id, { title: result?.title });
     return result;
   });
 
 export const $deleteArticle = createServerFn({ method: 'POST' })
-  .middleware(MW)
+  .middleware([sentryMiddleware, dbMiddleware, authMiddleware, adminMiddleware, auditMiddleware])
   .inputValidator(z.string())
-  .handler(async (ctx) => {
-    const result = await blogService.remove(ctx.context.db, ctx.data);
-    await ctx.context.audit('article.delete', 'article', ctx.data);
+  .handler(async ({ context, data }) => {
+    const result = await blogService.remove(context.db, data);
+    await context.audit('article.delete', 'article', data);
     return result;
   });
